@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>API Reference</title>
 
-    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
-    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
     <style>
       .highlight table td { padding: 5px; }
 .highlight table pre { margin: 0; }
@@ -88,10 +86,12 @@
   color: #90a959;
 }
     </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -104,6 +104,7 @@
               <a href="#" data-language-name="shell">shell</a>
               <a href="#" data-language-name="ruby">ruby</a>
               <a href="#" data-language-name="python">python</a>
+              <a href="#" data-language-name="javascript">javascript</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -112,7 +113,7 @@
       <div id="toc">
       </div>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
+            <li><a href='http://www.scaleapi.com/'>Request Access to the Scale Beta</a></li>
             <li><a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
         </ul>
     </div>
@@ -121,147 +122,352 @@
       <div class="content">
         <h1 id="introduction">Introduction</h1>
 
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<blockquote>
+<p>API Endpoint</p>
+</blockquote>
+<pre class="highlight plaintext"><code>https://api.scaleapi.com/v1/
+</code></pre>
 
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>Welcome to the Scale API! You can use our API to access Scale API endpoints, which can create, access, and cancel human tasks.</p>
 
-<p>This example API documentation page was created with <a href="https://github.com/tripit/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&rsquo;s documentation.</p>
+<p>Currently our API is in Beta, so please <a href="http://www.scaleapi.com">contact us</a> to get started using Scale. We&rsquo;re working to handle as many customers as possible.</p>
+
+<!-- We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+ -->
 
 <h1 id="authentication">Authentication</h1>
 
 <blockquote>
 <p>To authorize, use this code:</p>
 </blockquote>
-<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'scale'</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
+<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'YOUR_API_KEY'</span><span class="p">)</span>
 </code></pre>
-<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">scale</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">scale</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'YOUR_API_KEY'</span><span class="p">)</span>
 </code></pre>
-<pre class="highlight shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<pre class="highlight shell"><code><span class="c"># With curl, you can just pass the correct header with each request</span>
+curl <span class="s2">"api_endpoint_here"</span> <span class="se">\</span>
+  -u <span class="s2">"YOUR_API_KEY:"</span>
+</code></pre>
+<pre class="highlight javascript"><code><span class="kr">const</span> <span class="nx">scale</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'scale'</span><span class="p">);</span>
+
+<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">scale</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'YOUR_API_KEY'</span><span class="p">);</span>
 </code></pre>
 
 <blockquote>
-<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key.</p>
+<p>Make sure to replace <code class="prettyprint">YOUR_API_KEY</code> with your API key.</p>
 </blockquote>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<p>Scale uses API keys to allow access to the API. You can register a new Scale API key on your dashboard (if you have access to Scale).</p>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+<p>Scale expects for the API key to be included in all API requests to the server via <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">HTTP Basic Auth</a>. Provide your API key as the basic auth username value. You do not need to provide a password. You can do this using the <code class="prettyprint">-u</code> flag:</p>
 
-<p><code class="prettyprint">Authorization: meowmeowmeow</code></p>
+<p><code class="prettyprint">-u YOUR_API_KEY:</code></p>
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must replace <code>YOUR_API_KEY</code> with your personal API key.
 </aside>
 
-<h1 id="kittens">Kittens</h1>
+<h1 id="task-object">Task Object</h1>
 
-<h2 id="get-all-kittens">Get All Kittens</h2>
-<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre>
-<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre>
-<pre class="highlight shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre>
-
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
+<p>The task object represents a single task that you create with Scale and is completed by a worker.</p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576ba74eec471ff9b01557cc"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T09:10:02.798Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T09:09:34.752Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Would you say this item is big or small?"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"car"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"categories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"big"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"small"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"big"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"status_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
   </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>This endpoint retrieves all kittens.</p>
-
-<h3 id="http-request">HTTP Request</h3>
-
-<p><code class="prettyprint">GET http://example.com/api/kittens</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
+<h3 id="attributes">Attributes</h3>
 
 <table><thead>
 <tr>
-<th>Parameter</th>
-<th>Default</th>
+<th>Attribute</th>
+<th>Type</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>task_id</td>
+<td>string</td>
+<td>The <code class="prettyprint">task_id</code> is the unique identifier for the task.</td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>type</td>
+<td>string</td>
+<td>The type of the task. Currently, we support <code class="prettyprint">categorization</code>.</td>
+</tr>
+<tr>
+<td>instruction</td>
+<td>string</td>
+<td>A plaintext string explaining the instructions for the task.</td>
+</tr>
+<tr>
+<td>params</td>
+<td>object</td>
+<td>An object with the parameters of the task based on the type. For <code class="prettyprint">categorization</code>, this will include <code class="prettyprint">attachment_type</code>, <code class="prettyprint">attachment</code>, and <code class="prettyprint">categories</code>.</td>
+</tr>
+<tr>
+<td>response</td>
+<td>object</td>
+<td>An object corresponding to the response once the task is completed. For <code class="prettyprint">categorization</code>, it will have the attribute <code class="prettyprint">category</code>, corresponding to the chosen category.</td>
+</tr>
+<tr>
+<td>callback_url</td>
+<td>string</td>
+<td>A string of the URL that should be POSTed once the task is completed for the response data. See the Callback section for more details.</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>The status of the task, one of <code class="prettyprint">pending</code>, <code class="prettyprint">completed</code>, or <code class="prettyprint">canceled</code>.</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>timestamp</td>
+<td>A string of the UTC timestamp of when the task was created.</td>
+</tr>
+<tr>
+<td>completed_at</td>
+<td>timestamp</td>
+<td>A string of the UTC timestamp of when the task was completed. This will only be filled in after it is completed.</td>
 </tr>
 </tbody></table>
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
+<h1 id="callbacks">Callbacks</h1>
 
-<h2 id="get-a-specific-kitten">Get a Specific Kitten</h2>
-<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<blockquote>
+<p>The <code class="prettyprint">callback_url</code> will be POSTed with <code class="prettyprint">x-www-form-urlencoded</code> data of the following object form:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T21:54:44.904Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"big"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"status_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T20:08:31.573Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Is this object red or blue?"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tomato"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"categories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"big"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"small"</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576c41bf13e36b0600b02b34"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"status_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"big"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576c41bf13e36b0600b02b34"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<p>On your tasks, you will be required to supply a <code class="prettyprint">callback_url</code>, a fully qualified URL that we will POST with the results of the task when completed. The data will be <code class="prettyprint">x-www-form-urlencoded</code>.</p>
+
+<p>You should respond to the POST request with a 200 status code. If we do not receive a 200 status code, we will retry one more time.</p>
+
+<h3 id="post-data">POST Data</h3>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>task_id</td>
+<td>string</td>
+<td>The <code class="prettyprint">task_id</code> is the unique identifier for the task.</td>
+</tr>
+<tr>
+<td>response</td>
+<td>object</td>
+<td>The response object of the completed request. For <code class="prettyprint">categorization</code>, it will contain a <code class="prettyprint">category</code> attribute of the assigned category.</td>
+</tr>
+<tr>
+<td>task</td>
+<td>object</td>
+<td>The full task object for reference and convenience.</td>
+</tr>
+</tbody></table>
+
+<h1 id="create-tasks">Create Tasks</h1>
+
+<h2 id="create-categorization-task">Create Categorization Task</h2>
+<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'scale'</span>
+
+<span class="n">api</span> <span class="o">=</span> <span class="no">Scale</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'YOUR_API_KEY'</span><span class="p">)</span>
+<span class="n">api</span><span class="p">.</span><span class="nf">tasks</span><span class="p">.</span><span class="nf">createCategorization</span><span class="p">()</span>
 </code></pre>
-<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">scale</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">scale</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'YOUR_API_KEY'</span><span class="p">)</span>
+<span class="n">api</span><span class="o">.</span><span class="n">tasks</span><span class="o">.</span><span class="n">createCategorization</span><span class="p">()</span>
 </code></pre>
-<pre class="highlight shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/api/task"</span> <span class="se">\</span>
+  -u YOUR_API_KEY:
+  -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
+  -d <span class="nv">instruction</span><span class="o">=</span><span class="s2">"Is this company public or private?"</span> <span class="se">\</span>
+  -d <span class="nv">attachment_type</span><span class="o">=</span>website <span class="se">\</span>
+  -d <span class="nv">attachment</span><span class="o">=</span><span class="s2">"http://www.google.com/"</span> <span class="se">\</span>
+  -d categories[]<span class="o">=</span>public <span class="se">\</span>
+  -d categories[]<span class="o">=</span>private
+</code></pre>
+<pre class="highlight javascript"><code><span class="kr">const</span> <span class="nx">scale</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'scale'</span><span class="p">);</span>
+
+<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">scale</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'YOUR_API_KEY'</span><span class="p">);</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">tasks</span><span class="p">.</span><span class="nx">createCategorization</span><span class="p">();</span>
 </code></pre>
 
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576ba74eec471ff9b01557cc"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T09:09:34.752Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Is this company public or private?"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"website"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.google.com/"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"categories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"public"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"private"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>This endpoint retrieves a specific kitten.</p>
+<p>This endpoint creates a <code class="prettyprint">categorization</code> task. </p>
 
-<aside class="warning">Inside HTML code blocks like this one, you can&rsquo;t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+<p>This task involves a plaintext <code class="prettyprint">instruction</code> about how to make the categorization, an <code class="prettyprint">attachment</code> of what you&rsquo;d like to categorize, an <code class="prettyprint">attachment_type</code>, and finally a list of categories.</p>
+
+<p>If successful, Scale will immediately return the generated task object, of which you should at least store the <code class="prettyprint">task_id</code>.</p>
+
+<p>The parameters <code class="prettyprint">attachment_type</code>, <code class="prettyprint">attachment</code>, and <code class="prettyprint">categories</code> will be stored in the <code class="prettyprint">params</code> object of the constructed <code class="prettyprint">task</code> object.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://example.com/kittens/&lt;ID&gt;</code></p>
+<p><code class="prettyprint">POST https://api.scaleapi.com/v1/task/categorize</code></p>
+
+<h3 id="parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>callback_url</td>
+<td>string</td>
+<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed.</td>
+</tr>
+<tr>
+<td>instruction</td>
+<td>string</td>
+<td>The plaintext instruction of how to categorize the item.</td>
+</tr>
+<tr>
+<td>attachment_type</td>
+<td>string</td>
+<td>One of <code class="prettyprint">text</code>, <code class="prettyprint">image</code>, <code class="prettyprint">video</code>, <code class="prettyprint">audio</code>, or <code class="prettyprint">website</code>. Describes what type of file the attachment is.</td>
+</tr>
+<tr>
+<td>attachment</td>
+<td>string</td>
+<td>The attachment to be categorized. If <code class="prettyprint">attachment_type</code> is <code class="prettyprint">text</code>, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.</td>
+</tr>
+<tr>
+<td>categories</td>
+<td>[string]</td>
+<td>An array of strings for the categories which you&rsquo;d like the object to be sorted between.</td>
+</tr>
+</tbody></table>
+
+<h1 id="task-endpoints">Task Endpoints</h1>
+
+<h2 id="retrieve-a-task">Retrieve a Task</h2>
+<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'scale'</span>
+
+<span class="n">api</span> <span class="o">=</span> <span class="no">Scale</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'YOUR_API_KEY'</span><span class="p">)</span>
+<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s1">'576ba74eec471ff9b01557c'</span><span class="p">)</span>
+</code></pre>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">scale</span>
+
+<span class="n">api</span> <span class="o">=</span> <span class="n">scale</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'YOUR_API_KEY'</span><span class="p">)</span>
+<span class="n">api</span><span class="o">.</span><span class="n">tasks</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'576ba74eec471ff9b01557cc'</span><span class="p">)</span>
+</code></pre>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/{task_id}"</span> <span class="se">\</span>
+  -u YOUR_API_KEY:
+</code></pre>
+<pre class="highlight javascript"><code><span class="kr">const</span> <span class="nx">scale</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'scale'</span><span class="p">);</span>
+
+<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">scale</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'YOUR_API_KEY'</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">tasks</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'576ba74eec471ff9b01557cc'</span><span class="p">);</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576ba74eec471ff9b01557cc"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T09:10:02.798Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T09:09:34.752Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Would you say this item is big or small?"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"car"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"categories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"big"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"small"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"big"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"status_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves a specific task.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.scaleapi.com/v1/task/{TASK_ID}</code></p>
 
 <h3 id="url-parameters">URL Parameters</h3>
 
@@ -272,16 +478,97 @@ Remember — a happy kitten is an authenticated kitten!
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
+<td>task_id</td>
+<td>The task_id of the task to retrieve</td>
 </tr>
 </tbody></table>
 
+<h3 id="returns">Returns</h3>
+
+<p>Returns a task if a valid identifier was provided, and returns a 404 error otherwise.</p>
+
+<h2 id="list-all-tasks">List All Tasks</h2>
+<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'scale'</span>
+
+<span class="n">api</span> <span class="o">=</span> <span class="no">Scale</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'YOUR_API_KEY'</span><span class="p">)</span>
+<span class="n">api</span><span class="p">.</span><span class="nf">tasks</span><span class="p">.</span><span class="nf">list</span><span class="p">()</span>
+</code></pre>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">scale</span>
+
+<span class="n">api</span> <span class="o">=</span> <span class="n">scale</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'YOUR_API_KEY'</span><span class="p">)</span>
+<span class="n">api</span><span class="o">.</span><span class="n">tasks</span><span class="o">.</span><span class="nb">list</span><span class="p">()</span>
+</code></pre>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/tasks"</span> <span class="se">\</span>
+  -u YOUR_API_KEY:
+</code></pre>
+<pre class="highlight javascript"><code><span class="kr">const</span> <span class="nx">scale</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'scale'</span><span class="p">);</span>
+
+<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">scale</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'YOUR_API_KEY'</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">tasks</span><span class="p">.</span><span class="nx">list</span><span class="p">();</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T08:10:51.032Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Is this object big or small?"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ant"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"categories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"big"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"small"</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T19:36:23.084Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"status_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"small"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576b998b4628d1bfaed7d3a4"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T08:51:13.903Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Is this object big or small?"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"T-Rex"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"categories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"big"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"small"</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T09:09:10.108Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"status_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"big"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576ba301eed30241b0e9bbf7"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint retrieves a list of your tasks.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.scaleapi.com/v1/tasks</code></p>
+
+<h3 id="returns">Returns</h3>
+
+<p>Returns a list of your tasks.</p>
+
           <h1 id="errors">Errors</h1>
 
-<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the `includes` folder and add them to the top of your `index.md`&rsquo;s frontmatter. Files are included in the order listed.</aside>
-
-<p>The Kittn API uses the following error codes:</p>
+<p>The Scale API uses the following HTTP codes:</p>
 
 <table><thead>
 <tr>
@@ -290,48 +577,28 @@ Remember — a happy kitten is an authenticated kitten!
 </tr>
 </thead><tbody>
 <tr>
+<td>200</td>
+<td>OK &ndash; Everything worked as expected.</td>
+</tr>
+<tr>
 <td>400</td>
-<td>Bad Request &ndash; Your request sucks</td>
+<td>Bad Request &ndash; The request was unacceptable, often due to missing a required parameter.</td>
 </tr>
 <tr>
 <td>401</td>
-<td>Unauthorized &ndash; Your API key is wrong</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Forbidden &ndash; The kitten requested is hidden for administrators only</td>
+<td>Unauthorized &ndash; No valid API key provided.</td>
 </tr>
 <tr>
 <td>404</td>
-<td>Not Found &ndash; The specified kitten could not be found</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed &ndash; You tried to access a kitten with an invalid method</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone &ndash; The kitten requested has been removed from our servers</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&rsquo;m a teapot</td>
+<td>Not Found &ndash; The requested resource doesn&rsquo;t exist.</td>
 </tr>
 <tr>
 <td>429</td>
-<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slow down!</td>
+<td>Too Many Requests &ndash; Too many requests hit the API too quickly.</td>
 </tr>
 <tr>
 <td>500</td>
 <td>Internal Server Error &ndash; We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable &ndash; We&rsquo;re temporarially offline for maintanance. Please try again later.</td>
 </tr>
 </tbody></table>
 
@@ -341,6 +608,7 @@ Remember — a happy kitten is an authenticated kitten!
                 <a href="#" data-language-name="shell">shell</a>
                 <a href="#" data-language-name="ruby">ruby</a>
                 <a href="#" data-language-name="python">python</a>
+                <a href="#" data-language-name="javascript">javascript</a>
           </div>
       </div>
     </div>
