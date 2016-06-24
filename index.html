@@ -306,14 +306,14 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 <h1 id="create-tasks">Create Tasks</h1>
 
 <h2 id="create-categorization-task">Create Categorization Task</h2>
-<pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/api/task"</span> <span class="se">\</span>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/categorize"</span> <span class="se">\</span>
   -u YOUR_API_KEY: <span class="se">\</span>
   -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
   -d <span class="nv">instruction</span><span class="o">=</span><span class="s2">"Is this company public or private?"</span> <span class="se">\</span>
   -d <span class="nv">attachment_type</span><span class="o">=</span>website <span class="se">\</span>
   -d <span class="nv">attachment</span><span class="o">=</span><span class="s2">"http://www.google.com/"</span> <span class="se">\</span>
-  -d categories[]<span class="o">=</span>public <span class="se">\</span>
-  -d categories[]<span class="o">=</span>private
+  -d <span class="nv">categories</span><span class="o">=</span>public <span class="se">\</span>
+  -d <span class="nv">categories</span><span class="o">=</span>private
 </code></pre>
 
 <blockquote>
