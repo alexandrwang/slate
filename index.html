@@ -209,7 +209,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 <tr>
 <td>params</td>
 <td>object</td>
-<td>An object with the parameters of the task based on the type. For <code class="prettyprint">categorization</code>, this will include <code class="prettyprint">attachment_type</code>, <code class="prettyprint">attachment</code>, and <code class="prettyprint">categories</code>.</td>
+<td>An object with the parameters of the task based on the type. For <code class="prettyprint">categorization</code>, for example, this will include <code class="prettyprint">attachment_type</code>, <code class="prettyprint">attachment</code>, and <code class="prettyprint">categories</code>.</td>
 </tr>
 <tr>
 <td>response</td>
@@ -371,7 +371,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 <tr>
 <td>attachment_type</td>
 <td>string</td>
-<td>One of <code class="prettyprint">text</code>, <code class="prettyprint">image</code>, <code class="prettyprint">video</code>, <code class="prettyprint">audio</code>, or <code class="prettyprint">website</code>. Describes what type of file the attachment is.</td>
+<td>One of <code class="prettyprint">text</code>, <code class="prettyprint">image</code>, <code class="prettyprint">video</code>, <code class="prettyprint">audio</code>, <code class="prettyprint">website</code>, or <code class="prettyprint">pdf</code>. Describes what type of file the attachment is.</td>
 </tr>
 <tr>
 <td>attachment</td>
@@ -384,6 +384,129 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 <td>An array of strings for the categories which you&rsquo;d like the object to be sorted between.</td>
 </tr>
 </tbody></table>
+
+<h3 id="response-on-callback">Response on Callback</h3>
+
+<p>The <code class="prettyprint">response</code> object will be of the form:</p>
+
+<p><code class="prettyprint">
+{
+  &quot;category&quot;: &quot;some_category&quot;
+}</code></p>
+
+<p><code class="prettyprint">category</code> will be one of the original categories.</p>
+
+<h2 id="create-transcription-task">Create Transcription Task</h2>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/transcription"</span> <span class="se">\</span>
+  -u YOUR_API_KEY: <span class="se">\</span>
+  -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
+  -d <span class="nv">instruction</span><span class="o">=</span><span class="s2">"Write down the normal fields. Then for each news item on the page, write down the information for the row."</span> <span class="se">\</span>
+  -d <span class="nv">attachment_type</span><span class="o">=</span>website <span class="se">\</span>
+  -d <span class="nv">attachment</span><span class="o">=</span><span class="s2">"http://www.reddit.com/"</span> <span class="se">\</span>
+  -d fields[title]<span class="o">=</span><span class="s2">"Title of Webpage"</span> <span class="se">\</span>
+  -d fields[top_result]<span class="o">=</span><span class="s2">"Title of the top result"</span> <span class="se">\</span>
+  -d row_fields[username]<span class="o">=</span><span class="s2">"Username of submitter"</span> <span class="se">\</span>
+  -d row_fields[comment_count]<span class="o">=</span><span class="s2">"Number of comments"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-25T02:18:04.248Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"transcription"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Write down the normal fields. Then for each news item on the page, write down the information for the row."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"row_fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Username of submitter"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"comment_count"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Number of comments"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Title of Webpage"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"top_result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Title of the top result"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.reddit.com/"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"website"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576de9dc1ea5f917d56fc2a0"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint creates a <code class="prettyprint">transcription</code> task. </p>
+
+<p>This task involves a plaintext <code class="prettyprint">instruction</code> about how to transcribe the attachment, an <code class="prettyprint">attachment</code> of what you&rsquo;d like to transcribe, an <code class="prettyprint">attachment_type</code>, a dictionary <code class="prettyprint">fields</code> which describes all the things you&rsquo;d like transcribed, and an optional dictionary <code class="prettyprint">row_fields</code> for items which need to be transcribed per row in the attachment.</p>
+
+<p>Both <code class="prettyprint">field</code> and <code class="prettyprint">row_fields</code> are dictionaries where the keys are the keys you&rsquo;d like the results to be returned under, and values are the descriptions you&rsquo;d like to show the human worker.</p>
+
+<p>If successful, Scale will immediately return the generated task object, of which you should at least store the <code class="prettyprint">task_id</code>.</p>
+
+<p>The parameters <code class="prettyprint">attachment_type</code>, <code class="prettyprint">attachment</code>, <code class="prettyprint">fields</code>, and <code class="prettyprint">row_fields</code> will be stored in the <code class="prettyprint">params</code> object of the constructed <code class="prettyprint">task</code> object.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://api.scaleapi.com/v1/task/transcription</code></p>
+
+<h3 id="parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>callback_url</td>
+<td>string</td>
+<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed.</td>
+</tr>
+<tr>
+<td>instruction</td>
+<td>string</td>
+<td>The plaintext instruction of how to transcribe the attachment.</td>
+</tr>
+<tr>
+<td>attachment_type</td>
+<td>string</td>
+<td>One of <code class="prettyprint">text</code>, <code class="prettyprint">image</code>, <code class="prettyprint">video</code>, <code class="prettyprint">audio</code>, <code class="prettyprint">website</code>, or <code class="prettyprint">pdf</code>. Describes what type of file the attachment is.</td>
+</tr>
+<tr>
+<td>attachment</td>
+<td>string</td>
+<td>The attachment to be categorized. If <code class="prettyprint">attachment_type</code> is <code class="prettyprint">text</code>, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.</td>
+</tr>
+<tr>
+<td>fields</td>
+<td>dictionary</td>
+<td>A dictionary corresponding to the fields to be transcribed. Keys are the keys you&rsquo;d like the fields to be returned under, and values are descriptions to be shown to human workers.</td>
+</tr>
+<tr>
+<td>row_fields (optional)</td>
+<td>dictionary</td>
+<td>If your transcription requires a transcription of a variable number of row items, then this dictionary describes the fields for these rows. The format is the same as <code class="prettyprint">fields</code>,</td>
+</tr>
+</tbody></table>
+
+<h3 id="response-on-callback">Response on Callback</h3>
+
+<p>The <code class="prettyprint">response</code> object will be of the form:</p>
+
+<p><code class="prettyprint">
+{
+  &quot;fields&quot;: {
+    ...
+  },
+  &quot;rows&quot;: [{
+    ...
+  },
+  {
+    ...
+  }]
+}</code></p>
+
+<p><code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value. <code class="prettyprint">rows</code> will be an array of such dictionaries, with keys corresponding to the keys you provided in the parameters, and values corresponding to the transcribed value.</p>
 
 <h1 id="task-endpoints">Task Endpoints</h1>
 
