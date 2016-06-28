@@ -337,7 +337,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>This endpoint creates a <code class="prettyprint">categorization</code> task. </p>
+<p>This endpoint creates a <code class="prettyprint">categorization</code> task. In this task, one of our workers will view the attachment and choose a category for it according to the instruction. Example use cases are spam detection, copyright detection, product categorization, etc. </p>
 
 <p>This task involves a plaintext <code class="prettyprint">instruction</code> about how to make the categorization, an <code class="prettyprint">attachment</code> of what you&rsquo;d like to categorize, an <code class="prettyprint">attachment_type</code>, and finally a list of categories.</p>
 
@@ -434,7 +434,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>This endpoint creates a <code class="prettyprint">transcription</code> task. </p>
+<p>This endpoint creates a <code class="prettyprint">transcription</code> task. In this task, one of our workers will read an attachment and arbitrarily transcribe any information you&rsquo;d like. Example use cases could be transcribing information from PDFs, manually scraping a web page for information, etc.</p>
 
 <p>This task involves a plaintext <code class="prettyprint">instruction</code> about how to transcribe the attachment, an <code class="prettyprint">attachment</code> of what you&rsquo;d like to transcribe, an <code class="prettyprint">attachment_type</code>, a dictionary <code class="prettyprint">fields</code> which describes all the things you&rsquo;d like transcribed, and an optional dictionary <code class="prettyprint">row_fields</code> for items which need to be transcribed per row in the attachment.</p>
 
@@ -475,7 +475,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 <tr>
 <td>attachment</td>
 <td>string</td>
-<td>The attachment to be categorized. If <code class="prettyprint">attachment_type</code> is <code class="prettyprint">text</code>, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.</td>
+<td>The attachment to be transcribed. If <code class="prettyprint">attachment_type</code> is <code class="prettyprint">text</code>, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.</td>
 </tr>
 <tr>
 <td>fields</td>
@@ -507,6 +507,119 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 }</code></p>
 
 <p><code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value. <code class="prettyprint">rows</code> will be an array of such dictionaries, with keys corresponding to the keys you provided in the parameters, and values corresponding to the transcribed value.</p>
+
+<h2 id="create-phone-call-task">Create Phone Call Task</h2>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/phonecall"</span> <span class="se">\</span>
+  -u YOUR_API_KEY: <span class="se">\</span>
+  -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
+  -d <span class="nv">instruction</span><span class="o">=</span><span class="s2">"Call this person and tell me his email address"</span> <span class="se">\</span>
+  -d <span class="nv">phone_number</span><span class="o">=</span>5055006865 <span class="se">\</span>
+  -d <span class="nv">entity_name</span><span class="o">=</span><span class="s2">"Alexandr Wang"</span> <span class="se">\</span>
+  -d fields[email]<span class="o">=</span><span class="s2">"Email Address"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-27T23:53:10.367Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"phonecall"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Call this man and tell me his email."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Email Address"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"entity_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Alexandr Wang"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5055006865"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5771bc6631b72659f0d3692b"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint creates a <code class="prettyprint">phonecall</code> task. In this task, one of our workers will call the specified phone number and follow the instructions. Potential use cases could be making reservations or appointments, confirming reservations, asking for contact numbers or emails, etc.</p>
+
+<p>This task involves a plaintext <code class="prettyprint">instruction</code> about how to transcribe the attachment, a <code class="prettyprint">phone_number</code> for the phone number to call, and an <code class="prettyprint">entity_name</code> which describes the phone number.</p>
+
+<p>The optional fields are <code class="prettyprint">attachment_type</code> and <code class="prettyprint">attachment</code> for an optional attachment, a plaintext string <code class="prettyprint">script</code> for an optional script for the worker to follow, and <code class="prettyprint">fields</code> for optional fields you&rsquo;d like to be written down and returned to you.</p>
+
+<p>The optional <code class="prettyprint">field</code> parameter is a dictionary where the keys are the keys you&rsquo;d like the results to be returned under, and values are the descriptions you&rsquo;d like to show the human worker.</p>
+
+<p>If successful, Scale will immediately return the generated task object, of which you should at least store the <code class="prettyprint">task_id</code>.</p>
+
+<p>The parameters <code class="prettyprint">phone_number</code>, <code class="prettyprint">entity_name</code>, <code class="prettyprint">script</code>, <code class="prettyprint">attachment_type</code>, <code class="prettyprint">attachment</code>, and <code class="prettyprint">fields</code> will be stored in the <code class="prettyprint">params</code> object of the constructed <code class="prettyprint">task</code> object.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://api.scaleapi.com/v1/task/phonecall</code></p>
+
+<h3 id="parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>callback_url</td>
+<td>string</td>
+<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed.</td>
+</tr>
+<tr>
+<td>instruction</td>
+<td>string</td>
+<td>The plaintext instruction of how to transcribe the attachment.</td>
+</tr>
+<tr>
+<td>phone_number</td>
+<td>string</td>
+<td>The phone number which will be called by our worker. Should include a country code (+1 for US numbers).</td>
+</tr>
+<tr>
+<td>script (optional)</td>
+<td>string</td>
+<td>An optional script to be shown the the worker as they make the phone call. You should use this if you&rsquo;ve already optimized a script for phone calling.</td>
+</tr>
+<tr>
+<td>entity_name</td>
+<td>name</td>
+<td>The name of the entity which corresponds to the person or business of the phone number.</td>
+</tr>
+<tr>
+<td>attachment_type (optional)</td>
+<td>string</td>
+<td>One of <code class="prettyprint">text</code>, <code class="prettyprint">image</code>, <code class="prettyprint">video</code>, <code class="prettyprint">audio</code>, <code class="prettyprint">website</code>, or <code class="prettyprint">pdf</code>. Describes what type of file the attachment is.</td>
+</tr>
+<tr>
+<td>attachment (optional)</td>
+<td>string</td>
+<td>The optional attachment to be used for the phone call. If <code class="prettyprint">attachment_type</code> is <code class="prettyprint">text</code>, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.</td>
+</tr>
+<tr>
+<td>fields (optional)</td>
+<td>dictionary</td>
+<td>A dictionary corresponding to the fields to be recorded. Keys are the keys you&rsquo;d like the fields to be returned under, and values are descriptions to be shown to human workers.</td>
+</tr>
+</tbody></table>
+
+<h3 id="response-on-callback">Response on Callback</h3>
+
+<p>The <code class="prettyprint">response</code> object will be of the form:</p>
+
+<p><code class="prettyprint">
+{
+  &quot;outcome&quot;: ...
+  &quot;fields&quot;: {
+    ...
+  },
+}</code></p>
+
+<p>The outcome will be a string equal to one of <code class="prettyprint">no_pickup</code> (meaning nobody picked up), <code class="prettyprint">hung_up</code> (meaning the recipient hung up before the task could be completed), or <code class="prettyprint">success</code> (the call succeeded). </p>
+
+<p>If your original call provided <code class="prettyprint">fields</code>, <code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.</p>
 
 <h1 id="task-endpoints">Task Endpoints</h1>
 
