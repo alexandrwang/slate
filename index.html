@@ -91,7 +91,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;python&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -102,6 +102,7 @@
       <img src="images/logo.png" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
+              <a href="#" data-language-name="python">python</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -140,6 +141,10 @@
 <pre class="highlight shell"><code><span class="c"># With curl, you can just pass the correct header with each request</span>
 curl <span class="s2">"api_endpoint_here"</span> <span class="se">\</span>
   -u <span class="s2">"YOUR_API_KEY:"</span>
+</code></pre>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'api_endpoint_here'</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s">'YOUR_API_KEY'</span><span class="p">,</span> <span class="s">''</span><span class="p">))</span>
 </code></pre>
 
 <blockquote>
@@ -277,7 +282,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 
 <p>You should respond to the POST request with a 200 status code. If we do not receive a 200 status code, we will retry one more time.</p>
 
-<p>If you&rsquo;re just starting out and want the easiest way to set up your own callback URL, we recommend using <a href="https://ngrok.com/">ngrok</a> to expose a local server to the internet. Feel free to <a href="mailto:alex@scaleapi.com">contact us</a> if you have any trouble.</p>
+<p>If you&rsquo;re just starting out and want the easiest way to set up your own callback URL, we recommend using <a href="https://ngrok.com/">ngrok</a> to expose a local server to the internet. Feel free to <a href="mailto:alex@scaleapig.com">contact us</a> if you have any trouble.</p>
 
 <h3 id="post-data">POST Data</h3>
 
@@ -316,6 +321,21 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
   -d <span class="nv">attachment</span><span class="o">=</span><span class="s2">"http://www.google.com/"</span> <span class="se">\</span>
   -d <span class="nv">categories</span><span class="o">=</span>public <span class="se">\</span>
   -d <span class="nv">categories</span><span class="o">=</span>private
+</code></pre>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'callback_url'</span><span class="p">:</span> <span class="s">'http://www.example.com/callback'</span><span class="p">,</span>
+  <span class="s">'instruction'</span><span class="p">:</span> <span class="s">'Is this company public or private?'</span><span class="p">,</span>
+  <span class="s">'attachment_type'</span><span class="p">:</span> <span class="s">'website'</span><span class="p">,</span>
+  <span class="s">'attachment'</span><span class="p">:</span> <span class="s">'http://www.google.com/'</span><span class="p">,</span>
+  <span class="s">'categories'</span><span class="p">:</span> <span class="p">[</span><span class="s">'public'</span><span class="p">,</span> <span class="s">'private'</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"https://api.scaleapi.com/v1/task/categorize"</span><span class="p">,</span> 
+  <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> 
+  <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">YOUR_API_KEY</span><span class="p">,</span> <span class="s">''</span><span class="p">))</span>
+
 </code></pre>
 
 <blockquote>
@@ -409,6 +429,32 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
   -d fields[top_result]<span class="o">=</span><span class="s2">"Title of the top result"</span> <span class="se">\</span>
   -d row_fields[username]<span class="o">=</span><span class="s2">"Username of submitter"</span> <span class="se">\</span>
   -d row_fields[comment_count]<span class="o">=</span><span class="s2">"Number of comments"</span>
+</code></pre>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'callback_url'</span><span class="p">:</span> <span class="s">'http://www.example.com/callback'</span><span class="p">,</span>
+  <span class="s">'instruction'</span><span class="p">:</span> <span class="s">'Write down the normal fields. Then for each news item on the page, write down the information for the row.'</span><span class="p">,</span>
+  <span class="s">'attachment_type'</span><span class="p">:</span> <span class="s">'website'</span><span class="p">,</span>
+  <span class="s">'attachment'</span><span class="p">:</span> <span class="s">'http://www.google.com/'</span><span class="p">,</span>
+  <span class="s">'fields'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'title'</span><span class="p">:</span> <span class="s">'Title of Webpage'</span><span class="p">,</span>
+    <span class="s">'top_result'</span><span class="p">:</span> <span class="s">'Title of the top result'</span>
+  <span class="p">},</span>
+  <span class="s">'row_fields'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'username'</span><span class="p">:</span> <span class="s">'Username of submitter'</span><span class="p">,</span>
+    <span class="s">'comment_count'</span><span class="p">:</span> <span class="s">'Number of comments'</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
+
+<span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"https://api.scaleapi.com/v1/task/transcription"</span><span class="p">,</span> 
+  <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span> 
+  <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+  <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">YOUR_API_KEY</span><span class="p">,</span> <span class="s">''</span><span class="p">))</span>
+
 </code></pre>
 
 <blockquote>
@@ -518,6 +564,27 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
   -d <span class="nv">phone_number</span><span class="o">=</span>5055006865 <span class="se">\</span>
   -d <span class="nv">entity_name</span><span class="o">=</span><span class="s2">"Alexandr Wang"</span> <span class="se">\</span>
   -d fields[email]<span class="o">=</span><span class="s2">"Email Address"</span>
+</code></pre>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'callback_url'</span><span class="p">:</span> <span class="s">'http://www.example.com/callback'</span><span class="p">,</span>
+  <span class="s">'instruction'</span><span class="p">:</span> <span class="s">'Call this person and tell me his email address'</span><span class="p">,</span>
+  <span class="s">'phone_number'</span><span class="p">:</span> <span class="s">'5055006865'</span><span class="p">,</span>
+  <span class="s">'entity_name'</span><span class="p">:</span> <span class="s">'Alexandr Wang'</span><span class="p">,</span>
+  <span class="s">'fields'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'email'</span><span class="p">:</span> <span class="s">'Email Address'</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
+
+<span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"https://api.scaleapi.com/v1/task/phonecall"</span><span class="p">,</span> 
+  <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span> 
+  <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+  <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">YOUR_API_KEY</span><span class="p">,</span> <span class="s">''</span><span class="p">))</span>
+
 </code></pre>
 
 <blockquote>
@@ -629,6 +696,15 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/{task_id}"</span> <span class="se">\</span>
   -u YOUR_API_KEY:
 </code></pre>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">task_id</span> <span class="o">=</span> <span class="s">'YOUR_TASK_ID'</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.scaleapi.com/v1/task/</span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">task_id</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s">'YOUR_API_KEY'</span><span class="p">,</span> <span class="s">''</span><span class="p">))</span>
+
+<span class="c"># Return dictionary can be accessible in this way</span>
+<span class="n">response_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</code></pre>
 
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
@@ -683,6 +759,14 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 <h2 id="list-all-tasks">List All Tasks</h2>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/tasks"</span> <span class="se">\</span>
   -u YOUR_API_KEY:
+</code></pre>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.scaleapi.com/v1/tasks/'</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s">'YOUR_API_KEY'</span><span class="p">,</span> <span class="s">''</span><span class="p">))</span>
+
+<span class="c"># Return dictionary can be accessible in this way</span>
+<span class="n">response_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 </code></pre>
 
 <blockquote>
@@ -784,6 +868,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
+                <a href="#" data-language-name="python">python</a>
           </div>
       </div>
     </div>
