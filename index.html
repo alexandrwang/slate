@@ -243,76 +243,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 </tr>
 </tbody></table>
 
-<h1 id="callbacks">Callbacks</h1>
-
-<blockquote>
-<p>The <code class="prettyprint">callback_url</code> will be POSTed with <code class="prettyprint">x-www-form-urlencoded</code> data of the following object form:</p>
-</blockquote>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T21:54:44.904Z"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"big"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"status_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T20:08:31.573Z"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Is this object red or blue?"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tomato"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"categories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"big"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"small"</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576c41bf13e36b0600b02b34"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"status_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"big"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576c41bf13e36b0600b02b34"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<p>On your tasks, you will be required to supply a <code class="prettyprint">callback_url</code>, a fully qualified URL that we will POST with the results of the task when completed. The data will be <code class="prettyprint">x-www-form-urlencoded</code>.</p>
-
-<p>You should respond to the POST request with a 200 status code. If we do not receive a 200 status code, we will retry one more time.</p>
-
-<p>If you&rsquo;re just starting out and want the easiest way to set up your own callback URL, we recommend using <a href="https://ngrok.com/">ngrok</a> to expose a local server to the internet. Feel free to <a href="mailto:alex@scaleapig.com">contact us</a> if you have any trouble.</p>
-
-<h3 id="post-data">POST Data</h3>
-
-<table><thead>
-<tr>
-<th>Attribute</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>task_id</td>
-<td>string</td>
-<td>The <code class="prettyprint">task_id</code> is the unique identifier for the task.</td>
-</tr>
-<tr>
-<td>response</td>
-<td>object</td>
-<td>The response object of the completed request. For <code class="prettyprint">categorization</code>, it will contain a <code class="prettyprint">category</code> attribute of the assigned category.</td>
-</tr>
-<tr>
-<td>task</td>
-<td>object</td>
-<td>The full task object for reference and convenience.</td>
-</tr>
-</tbody></table>
-
-<h1 id="create-tasks">Create Tasks</h1>
-
-<h2 id="create-categorization-task">Create Categorization Task</h2>
+<h1 id="create-categorization-task">Create Categorization Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/categorize"</span> <span class="se">\</span>
   -u YOUR_API_KEY: <span class="se">\</span>
   -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
@@ -418,7 +349,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 
 <p><code class="prettyprint">category</code> will be one of the original categories.</p>
 
-<h2 id="create-transcription-task">Create Transcription Task</h2>
+<h1 id="create-transcription-task">Create Transcription Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/transcription"</span> <span class="se">\</span>
   -u YOUR_API_KEY: <span class="se">\</span>
   -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
@@ -556,7 +487,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 
 <p><code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value. <code class="prettyprint">rows</code> will be an array of such dictionaries, with keys corresponding to the keys you provided in the parameters, and values corresponding to the transcribed value.</p>
 
-<h2 id="create-phone-call-task">Create Phone Call Task</h2>
+<h1 id="create-phone-call-task">Create Phone Call Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/phonecall"</span> <span class="se">\</span>
   -u YOUR_API_KEY: <span class="se">\</span>
   -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
@@ -689,6 +620,73 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 <p>The outcome will be a string equal to one of <code class="prettyprint">no_pickup</code> (meaning nobody picked up), <code class="prettyprint">hung_up</code> (meaning the recipient hung up before the task could be completed), or <code class="prettyprint">success</code> (the call succeeded). </p>
 
 <p>If your original call provided <code class="prettyprint">fields</code>, <code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.</p>
+
+<h1 id="callbacks">Callbacks</h1>
+
+<blockquote>
+<p>The <code class="prettyprint">callback_url</code> will be POSTed with <code class="prettyprint">x-www-form-urlencoded</code> data of the following object form:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T21:54:44.904Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"big"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"status_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T20:08:31.573Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Is this object red or blue?"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tomato"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"categories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"big"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"small"</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576c41bf13e36b0600b02b34"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"status_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"big"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576c41bf13e36b0600b02b34"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>On your tasks, you will be required to supply a <code class="prettyprint">callback_url</code>, a fully qualified URL that we will POST with the results of the task when completed. The data will be <code class="prettyprint">x-www-form-urlencoded</code>.</p>
+
+<p>You should respond to the POST request with a 200 status code. If we do not receive a 200 status code, we will retry one more time.</p>
+
+<p>If you&rsquo;re just starting out and want the easiest way to set up your own callback URL, we recommend using <a href="https://ngrok.com/">ngrok</a> to expose a local server to the internet. Feel free to <a href="mailto:alex@scaleapig.com">contact us</a> if you have any trouble.</p>
+
+<h3 id="post-data">POST Data</h3>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>task_id</td>
+<td>string</td>
+<td>The <code class="prettyprint">task_id</code> is the unique identifier for the task.</td>
+</tr>
+<tr>
+<td>response</td>
+<td>object</td>
+<td>The response object of the completed request. For <code class="prettyprint">categorization</code>, it will contain a <code class="prettyprint">category</code> attribute of the assigned category.</td>
+</tr>
+<tr>
+<td>task</td>
+<td>object</td>
+<td>The full task object for reference and convenience.</td>
+</tr>
+</tbody></table>
 
 <h1 id="task-endpoints">Task Endpoints</h1>
 
