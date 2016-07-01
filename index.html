@@ -507,6 +507,10 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 
 <p>The parameters <code class="prettyprint">attachment_type</code>, <code class="prettyprint">attachment</code>, <code class="prettyprint">fields</code>, and <code class="prettyprint">row_fields</code> will be stored in the <code class="prettyprint">params</code> object of the constructed <code class="prettyprint">task</code> object.</p>
 
+<aside class="notice">
+We limit the number of rows you may transcribe per API request to 10 rows. If you need more rows, send multiple API requests.
+</aside>
+
 <h3 id="http-request">HTTP Request</h3>
 
 <p><code class="prettyprint">POST https://api.scaleapi.com/v1/task/transcription</code></p>
