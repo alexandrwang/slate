@@ -340,7 +340,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>This endpoint creates a <code class="prettyprint">categorization</code> task. In this task, one of our workers will view the attachment and choose a category for it according to the instruction. Example use cases are spam detection, copyright detection, product categorization, etc. </p>
+<p>This endpoint creates a <code class="prettyprint">categorization</code> task. In this task, one of our workers will view the attachment and choose a category for it according to the instruction. You may allow multiple categories to be chosen by setting <code class="prettyprint">allow_multiple</code> to <code class="prettyprint">true</code>. Example use cases are spam detection, copyright detection, product categorization, etc.</p>
 
 <p>This task involves a plaintext <code class="prettyprint">instruction</code> about how to make the categorization, an <code class="prettyprint">attachment</code> of what you&rsquo;d like to categorize, an <code class="prettyprint">attachment_type</code>, and finally a list of categories.</p>
 
@@ -386,6 +386,11 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 <td>[string]</td>
 <td>An array of strings for the categories which you&rsquo;d like the object to be sorted between.</td>
 </tr>
+<tr>
+<td><code class="prettyprint">allow_multiple</code> (optional)</td>
+<td>boolean</td>
+<td>Default is <code class="prettyprint">false</code>. Determines whether you allow multiple categories to be chosen for the attachment</td>
+</tr>
 </tbody></table>
 
 <h3 id="response-on-callback">Response on Callback</h3>
@@ -394,10 +399,12 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 
 <p><code class="prettyprint">
 {
-  &quot;category&quot;: &quot;some_category&quot;
+  &quot;category&quot;: ...
 }</code></p>
 
-<p><code class="prettyprint">category</code> will be one of the original categories.</p>
+<p>If <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">false</code>, then the value will be a string equal to one of the original categories. </p>
+
+<p>If <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">true</code>, the value will be an array of categories, each one being one of the original categories.</p>
 
 <h1 id="create-transcription-task">Create Transcription Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/transcription"</span> <span class="se">\</span>
