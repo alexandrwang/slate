@@ -129,7 +129,7 @@
 
 <p>Welcome to the Scale API! You can use our API to access Scale API endpoints, which can create, access, and cancel human tasks.</p>
 
-<p>Currently our API is in Beta, so please <a href="http://www.scaleapi.com">contact us</a> to get started using Scale. We&rsquo;re working to handle as many customers as possible.</p>
+<p>Anyone can use our API! <a href="https://api.scaleapi.com/signup">Sign up here</a> to get started using Scale. You can also <a href="mailto:hello@scaleapi.com">contact us</a> for volume pricing or any inquiries.</p>
 
 <!-- We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
  -->
@@ -909,7 +909,7 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 <h1 id="callbacks">Callbacks</h1>
 
 <blockquote>
-<p>The <code class="prettyprint">callback_url</code> will be POSTed with <code class="prettyprint">x-www-form-urlencoded</code> data of the following object form:</p>
+<p>The <code class="prettyprint">callback_url</code> will be POSTed with <code class="prettyprint">application/json</code> data of the following object form:</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -941,11 +941,11 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>On your tasks, you will be required to supply a <code class="prettyprint">callback_url</code>, a fully qualified URL that we will POST with the results of the task when completed. The data will be <code class="prettyprint">x-www-form-urlencoded</code>.</p>
+<p>On your tasks, you will be required to supply a <code class="prettyprint">callback_url</code>, a fully qualified URL that we will POST with the results of the task when completed. The data will be served as a JSON body (<code class="prettyprint">application/json</code>).</p>
 
 <p>You should respond to the POST request with a 200 status code. If we do not receive a 200 status code, we will retry one more time.</p>
 
-<p>If you&rsquo;re just starting out and want the easiest way to set up your own callback URL, we recommend using <a href="https://ngrok.com/">ngrok</a> to expose a local server to the internet. Feel free to <a href="mailto:alex@scaleapig.com">contact us</a> if you have any trouble.</p>
+<p>If you&rsquo;re just starting out and want the easiest way to set up your own callback URL, we recommend using <a href="https://ngrok.com/">ngrok</a> to expose a local server to the internet. Feel free to <a href="mailto:hello@scaleapi.com">contact us</a> if you have any trouble.</p>
 
 <h3 id="authentication">Authentication</h3>
 
