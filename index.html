@@ -674,6 +674,10 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 
 <p>The parameters <code class="prettyprint">phone_number</code>, <code class="prettyprint">entity_name</code>, <code class="prettyprint">script</code>, <code class="prettyprint">attachment_type</code>, <code class="prettyprint">attachment</code>, and <code class="prettyprint">fields</code> will be stored in the <code class="prettyprint">params</code> object of the constructed <code class="prettyprint">task</code> object.</p>
 
+<aside class="notice">
+For low volume, we currently only support calling US numbers. For higher volume international calls, please <a href="mailto:hello@scaleapi.com">contact us</a>!
+</aside>
+
 <h3 id="http-request">HTTP Request</h3>
 
 <p><code class="prettyprint">POST https://api.scaleapi.com/v1/task/phonecall</code></p>
