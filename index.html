@@ -344,11 +344,18 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 
 <p>This endpoint creates a <code class="prettyprint">categorization</code> task. In this task, one of our workers will view the attachment and choose a category for it according to the instruction. You may allow multiple categories to be chosen by setting <code class="prettyprint">allow_multiple</code> to <code class="prettyprint">true</code>. Example use cases are spam detection, copyright detection, product categorization, etc.</p>
 
-<p>This task involves a plaintext <code class="prettyprint">instruction</code> about how to make the categorization, an <code class="prettyprint">attachment</code> of what you&rsquo;d like to categorize, an <code class="prettyprint">attachment_type</code>, and finally a list of categories.</p>
+<p>This task involves a plaintext <code class="prettyprint">instruction</code> about how to make the categorization, an <code class="prettyprint">attachment</code> of what you&rsquo;d like to categorize, an <code class="prettyprint">attachment_type</code>, and finally a list of <code class="prettyprint">categories</code>. </p>
+
+<p>There is an optional <code class="prettyprint">category_ids</code> parameter, which you can use to impose an id system over the categories. The format of this parameter should be a dictionary, where the keys are the ids (as strings), and then the values are the category values provided in <code class="prettyprint">categories</code>. An example is:</p>
+
+<p><code class="prettyprint">&quot;category_ids&quot;: {
+  &quot;123&quot;: &quot;Blue Cross&quot;,
+  &quot;124&quot;: &quot;Red Cross&quot;
+}</code></p>
 
 <p>If successful, Scale will immediately return the generated task object, of which you should at least store the <code class="prettyprint">task_id</code>.</p>
 
-<p>The parameters <code class="prettyprint">attachment_type</code>, <code class="prettyprint">attachment</code>, and <code class="prettyprint">categories</code> will be stored in the <code class="prettyprint">params</code> object of the constructed <code class="prettyprint">task</code> object.</p>
+<p>The parameters <code class="prettyprint">attachment_type</code>, <code class="prettyprint">attachment</code>, <code class="prettyprint">categories</code>, and <code class="prettyprint">category_ids</code> (optional) will be stored in the <code class="prettyprint">params</code> object of the constructed <code class="prettyprint">task</code> object.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -389,6 +396,11 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 <td>An array of strings for the categories which you&rsquo;d like the object to be sorted between.</td>
 </tr>
 <tr>
+<td><code class="prettyprint">category_ids</code> (optional)</td>
+<td>dictionary</td>
+<td>An optional dictionary where the keys are the optional ids, and the values are the category values provided in <code class="prettyprint">categories</code>.</td>
+</tr>
+<tr>
 <td><code class="prettyprint">allow_multiple</code> (optional)</td>
 <td>boolean</td>
 <td>Default is <code class="prettyprint">false</code>. Determines whether you allow multiple categories to be chosen for the attachment</td>
@@ -407,6 +419,12 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 <p>If <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">false</code>, then the value will be a string equal to one of the original categories. </p>
 
 <p>If <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">true</code>, the value will be an array of categories, each one being one of the original categories.</p>
+
+<p>If <code class="prettyprint">category_ids</code> was provided, there will be another field <code class="prettyprint">category_id</code> corresponding to the given id of the chosen category/categories. For example, it could look like:</p>
+
+<p><code class="prettyprint">{
+  &quot;category&quot;: &quot;Blue Cross&quot;, &quot;category_id&quot;: &quot;123&quot;
+}</code></p>
 
 <h1 id="create-transcription-task">Create Transcription Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/transcription"</span> <span class="se">\</span>
@@ -760,7 +778,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
   -d <span class="nv">attachments</span><span class="o">=</span><span class="s2">"http://i.ebayimg.com/00/</span><span class="nv">$T2eC16dHJGwFFZKjy5ZjBRfNyMC4Ig</span><span class="s2">~~_32.JPG"</span> <span class="se">\</span>
   -d <span class="nv">attachments</span><span class="o">=</span><span class="s2">"http://images.wisegeek.com/checkered-tablecloth.jpg"</span> <span class="se">\</span>
   -d <span class="nv">choices</span><span class="o">=</span><span class="s2">"yes"</span> <span class="se">\</span>
-  -d <span class="nv">choices</span><span class="o">=</span><span class="s2">"no"</span> <span class="se">\</span>
+  -d <span class="nv">choices</span><span class="o">=</span><span class="s2">"no"</span>
 </code></pre>
 <pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">json</span>
