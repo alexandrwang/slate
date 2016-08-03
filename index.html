@@ -197,6 +197,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Would you say this item is big or small?"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"urgency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"immediate"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"car"</span><span class="p">,</span><span class="w">
@@ -240,6 +241,11 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 <td><code class="prettyprint">params</code></td>
 <td>object</td>
 <td>An object with the parameters of the task based on the type. For <code class="prettyprint">categorization</code>, for example, this will include <code class="prettyprint">attachment_type</code>, <code class="prettyprint">attachment</code>, and <code class="prettyprint">categories</code>.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">urgency</code></td>
+<td>string</td>
+<td>A string describing the urgency of the response. One of <code class="prettyprint">immediate</code>, <code class="prettyprint">day</code>, or <code class="prettyprint">week</code>, where <code class="prettyprint">immediate</code> is a 15-minute response time.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">response</code></td>
@@ -331,6 +337,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Is this company public or private?"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"urgency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"day"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"website"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.google.com/"</span><span class="p">,</span><span class="w">
@@ -394,6 +401,11 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 <td><code class="prettyprint">categories</code></td>
 <td>[string]</td>
 <td>An array of strings for the categories which you&rsquo;d like the object to be sorted between.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">urgency</code> (optional, default <code class="prettyprint">day</code>)</td>
+<td>string</td>
+<td>A string describing the urgency of the response. One of <code class="prettyprint">immediate</code>, <code class="prettyprint">day</code>, or <code class="prettyprint">week</code>, where <code class="prettyprint">immediate</code> is a 15-minute response time.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">category_ids</code> (optional)</td>
@@ -508,6 +520,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"transcription"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Write down the normal fields. Then for each news item on the page, write down the information for the row."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"urgency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"day"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"row_fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Username of submitter"</span><span class="p">,</span><span class="w">
@@ -575,6 +588,11 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 <td><code class="prettyprint">fields</code></td>
 <td>dictionary</td>
 <td>A dictionary corresponding to the fields to be transcribed. Keys are the keys you&rsquo;d like the fields to be returned under, and values are descriptions to be shown to human workers.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">urgency</code> (optional, default <code class="prettyprint">day</code>)</td>
+<td>string</td>
+<td>A string describing the urgency of the response. One of <code class="prettyprint">immediate</code>, <code class="prettyprint">day</code>, or <code class="prettyprint">week</code>, where <code class="prettyprint">immediate</code> is a 15-minute response time.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">row_fields</code> (optional)</td>
@@ -671,6 +689,7 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"phonecall"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Call this man and tell me his email."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"urgency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"day"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Email Address"</span><span class="w">
@@ -735,6 +754,11 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <td><code class="prettyprint">entity_name</code></td>
 <td>name</td>
 <td>The name of the entity which corresponds to the person or business of the phone number.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">urgency</code> (optional, default <code class="prettyprint">day</code>)</td>
+<td>string</td>
+<td>A string describing the urgency of the response. One of <code class="prettyprint">immediate</code>, <code class="prettyprint">day</code>, or <code class="prettyprint">week</code>, where <code class="prettyprint">immediate</code> is a 15-minute response time.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">attachment_type</code> (optional)</td>
@@ -842,6 +866,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"comparison"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Do the objects in these images have the same pattern?"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"urgency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"day"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"choices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="s2">"yes"</span><span class="p">,</span><span class="w">
@@ -903,6 +928,11 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <td>An array of attachments to compare. If <code class="prettyprint">attachment_type</code> is <code class="prettyprint">text</code>, then each attachment should be plaintext. Otherwise, they should be URLs pointing to the attachments.</td>
 </tr>
 <tr>
+<td><code class="prettyprint">urgency</code> (optional, default <code class="prettyprint">day</code>)</td>
+<td>string</td>
+<td>A string describing the urgency of the response. One of <code class="prettyprint">immediate</code>, <code class="prettyprint">day</code>, or <code class="prettyprint">week</code>, where <code class="prettyprint">immediate</code> is a 15-minute response time.</td>
+</tr>
+<tr>
 <td><code class="prettyprint">fields</code> (optional)</td>
 <td>dictionary</td>
 <td>A dictionary corresponding to the fields to be recorded. Keys are the keys you&rsquo;d like the fields to be returned under, and values are descriptions to be shown to human workers.</td>
@@ -947,6 +977,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
     </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Is this object red or blue?"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"urgency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"day"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tomato"</span><span class="p">,</span><span class="w">
@@ -1048,6 +1079,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Would you say this item is big or small?"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"urgency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"day"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"car"</span><span class="p">,</span><span class="w">
@@ -1132,6 +1164,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"canceled"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Would you say this item is big or small?"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"urgency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"week"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"car"</span><span class="p">,</span><span class="w">
@@ -1210,6 +1243,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
     </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Is this object big or small?"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"urgency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"immediate"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ant"</span><span class="p">,</span><span class="w">
@@ -1231,6 +1265,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
     </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Is this object big or small?"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"urgency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"day"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"T-Rex"</span><span class="p">,</span><span class="w">
