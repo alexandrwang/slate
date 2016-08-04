@@ -295,7 +295,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 <span class="p">}</span>
 
 <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"https://api.scaleapi.com/v1/task/categorize"</span><span class="p">,</span> 
-  <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> 
+  <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> 
   <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s">'YOUR_API_KEY'</span><span class="p">,</span> <span class="s">''</span><span class="p">))</span>
 
 </code></pre>
@@ -471,7 +471,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
 
 <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"https://api.scaleapi.com/v1/task/transcription"</span><span class="p">,</span> 
-  <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span> 
+  <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> 
   <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
   <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s">'YOUR_API_KEY'</span><span class="p">,</span> <span class="s">''</span><span class="p">))</span>
 
@@ -645,7 +645,7 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
 
 <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"https://api.scaleapi.com/v1/task/phonecall"</span><span class="p">,</span> 
-  <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span> 
+  <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> 
   <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
   <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s">'YOUR_API_KEY'</span><span class="p">,</span> <span class="s">''</span><span class="p">))</span>
 
@@ -821,7 +821,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
 
 <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"https://api.scaleapi.com/v1/task/comparison"</span><span class="p">,</span> 
-  <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span> 
+  <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> 
   <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
   <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s">'YOUR_API_KEY'</span><span class="p">,</span> <span class="s">''</span><span class="p">))</span>
 
