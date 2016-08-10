@@ -442,7 +442,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/transcription"</span> <span class="se">\</span>
   -u YOUR_API_KEY: <span class="se">\</span>
   -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
-  -d <span class="nv">instruction</span><span class="o">=</span><span class="s2">"Write down the normal fields. Then for each news item on the page, write down the information for the row."</span> <span class="se">\</span>
+  -d <span class="nv">instruction</span><span class="o">=</span><span class="s2">"Transcribe the given fields. Then for each news item on the page, transcribe the information for the row."</span> <span class="se">\</span>
   -d <span class="nv">attachment_type</span><span class="o">=</span>website <span class="se">\</span>
   -d <span class="nv">attachment</span><span class="o">=</span><span class="s2">"http://www.reddit.com/"</span> <span class="se">\</span>
   -d fields[title]<span class="o">=</span><span class="s2">"Title of Webpage"</span> <span class="se">\</span>
@@ -455,7 +455,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 
 <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'callback_url'</span><span class="p">:</span> <span class="s">'http://www.example.com/callback'</span><span class="p">,</span>
-  <span class="s">'instruction'</span><span class="p">:</span> <span class="s">'Write down the normal fields. Then for each news item on the page, write down the information for the row.'</span><span class="p">,</span>
+  <span class="s">'instruction'</span><span class="p">:</span> <span class="s">'Transcribe the given fields. Then for each news item on the page, transcribe the information for the row.'</span><span class="p">,</span>
   <span class="s">'attachment_type'</span><span class="p">:</span> <span class="s">'website'</span><span class="p">,</span>
   <span class="s">'attachment'</span><span class="p">:</span> <span class="s">'http://www.google.com/'</span><span class="p">,</span>
   <span class="s">'fields'</span><span class="p">:</span> <span class="p">{</span>
@@ -481,7 +481,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 
 <span class="kd">var</span> <span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s1">'callback_url'</span><span class="p">:</span> <span class="s1">'http://www.example.com/callback'</span><span class="p">,</span>
-  <span class="s1">'instruction'</span><span class="p">:</span> <span class="s1">'Write down the normal fields. Then for each news item on the page, write down the information for the row.'</span><span class="p">,</span>
+  <span class="s1">'instruction'</span><span class="p">:</span> <span class="s1">'Transcribe the given fields. Then for each news item on the page, transcribe the information for the row.'</span><span class="p">,</span>
   <span class="s1">'attachment_type'</span><span class="p">:</span> <span class="s1">'website'</span><span class="p">,</span>
   <span class="s1">'attachment'</span><span class="p">:</span> <span class="s1">'http://www.google.com/'</span><span class="p">,</span>
   <span class="s1">'fields'</span><span class="p">:</span> <span class="p">{</span>
@@ -519,7 +519,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
   </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"transcription"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Write down the normal fields. Then for each news item on the page, write down the information for the row."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Transcribe the given fields. Then for each news item on the page, transcribe the information for the row."</span><span class="p">,</span><span class="w">
   </span><span class="nt">"urgency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"day"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"row_fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -539,9 +539,9 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 
 <p>This endpoint creates a <code class="prettyprint">transcription</code> task. In this task, one of our workers will read an attachment and arbitrarily transcribe any information you&rsquo;d like. Example use cases could be transcribing information from PDFs, manually scraping a web page for information, etc.</p>
 
-<p>This task involves a plaintext <code class="prettyprint">instruction</code> about how to transcribe the attachment, an <code class="prettyprint">attachment</code> of what you&rsquo;d like to transcribe, an <code class="prettyprint">attachment_type</code>, a dictionary <code class="prettyprint">fields</code> which describes all the things you&rsquo;d like transcribed, and an optional dictionary <code class="prettyprint">row_fields</code> for items which need to be transcribed per row in the attachment.</p>
+<p>This task involves a plaintext <code class="prettyprint">instruction</code> about how to transcribe the attachment, an <code class="prettyprint">attachment</code> of what you&rsquo;d like to transcribe, an <code class="prettyprint">attachment_type</code>, and at least one of <code class="prettyprint">fields</code> and <code class="prettyprint">row_fields</code>. <code class="prettyprint">fields</code> is a dictionary which describes items you&rsquo;d like transcribed once per attachment, and <code class="prettyprint">row_fields</code> is a dictionary which describes items which need to be transcribed per row in the attachment.</p>
 
-<p>Both <code class="prettyprint">field</code> and <code class="prettyprint">row_fields</code> are dictionaries where the keys are the keys you&rsquo;d like the results to be returned under, and values are the descriptions you&rsquo;d like to show the human worker.</p>
+<p>At least one of <code class="prettyprint">fields</code> or <code class="prettyprint">row_fields</code> is required. Both <code class="prettyprint">fields</code> and <code class="prettyprint">row_fields</code> are dictionaries where the keys are the keys you&rsquo;d like the results to be returned under, and values are the descriptions you&rsquo;d like to show the human worker.</p>
 
 <p>If successful, Scale will immediately return the generated task object, of which you should at least store the <code class="prettyprint">task_id</code>.</p>
 
@@ -585,19 +585,19 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 <td>The attachment to be transcribed. If <code class="prettyprint">attachment_type</code> is <code class="prettyprint">text</code>, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.</td>
 </tr>
 <tr>
-<td><code class="prettyprint">fields</code></td>
+<td><code class="prettyprint">fields</code> (optional if using <code class="prettyprint">row_fields</code>)</td>
 <td>dictionary</td>
 <td>A dictionary corresponding to the fields to be transcribed. Keys are the keys you&rsquo;d like the fields to be returned under, and values are descriptions to be shown to human workers.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">row_fields</code> (optional if using <code class="prettyprint">fields</code>)</td>
+<td>dictionary</td>
+<td>If your transcription requires a transcription of a variable number of row items, then this dictionary describes the fields for these rows. The format is the same as <code class="prettyprint">fields</code>.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">urgency</code> (optional, default <code class="prettyprint">day</code>)</td>
 <td>string</td>
 <td>A string describing the urgency of the response. One of <code class="prettyprint">immediate</code>, <code class="prettyprint">day</code>, or <code class="prettyprint">week</code>, where <code class="prettyprint">immediate</code> is a 15-minute response time.</td>
-</tr>
-<tr>
-<td><code class="prettyprint">row_fields</code> (optional)</td>
-<td>dictionary</td>
-<td>If your transcription requires a transcription of a variable number of row items, then this dictionary describes the fields for these rows. The format is the same as <code class="prettyprint">fields</code>,</td>
 </tr>
 </tbody></table>
 
