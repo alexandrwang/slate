@@ -862,7 +862,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-30T07:38:32.368Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:5000/internal/test_callback"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"comparison"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Do the objects in these images have the same pattern?"</span><span class="p">,</span><span class="w">
@@ -960,6 +960,188 @@ For low volume, we currently only support calling US numbers. For higher volume 
 
 <p>If your original call provided <code class="prettyprint">fields</code>, <code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.</p>
 
+<h1 id="create-annotation-task-bounding-box">Create Annotation Task (Bounding Box)</h1>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/annotation"</span> <span class="se">\</span>
+  -u YOUR_API_KEY: <span class="se">\</span>
+  -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
+  -d <span class="nv">instruction</span><span class="o">=</span><span class="s2">"Draw a box around each baby cow and big cow."</span> <span class="se">\</span>
+  -d <span class="nv">attachment_type</span><span class="o">=</span>image <span class="se">\</span>
+  -d <span class="nv">attachment</span><span class="o">=</span><span class="s2">"http://i.imgur.com/v4cBreD.jpg"</span> <span class="se">\</span>
+  -d <span class="nv">objects_to_annotate</span><span class="o">=</span><span class="s2">"baby cow"</span> <span class="se">\</span>
+  -d <span class="nv">objects_to_annotate</span><span class="o">=</span><span class="s2">"big cow"</span> <span class="se">\</span>
+  -d <span class="nv">with_labels</span><span class="o">=</span><span class="nb">true</span>
+</code></pre>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'callback_url'</span><span class="p">:</span> <span class="s">'http://www.example.com/callback'</span><span class="p">,</span>
+  <span class="s">'instruction'</span><span class="p">:</span> <span class="s">'Draw a box around each baby cow and big cow.'</span><span class="p">,</span>
+  <span class="s">'attachment_type'</span><span class="p">:</span> <span class="s">'image'</span><span class="p">,</span>
+  <span class="s">'attachment'</span><span class="p">:</span> <span class="s">'http://i.imgur.com/v4cBreD.jpg'</span><span class="p">,</span>
+  <span class="s">'objects_to_annotate'</span><span class="p">:</span> <span class="p">[</span><span class="s">'baby cow'</span><span class="p">,</span> <span class="s">'big cow'</span><span class="p">],</span>
+  <span class="s">'with_labels'</span><span class="p">:</span> <span class="bp">True</span>
+<span class="p">}</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
+
+<span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"https://api.scaleapi.com/v1/task/annotation"</span><span class="p">,</span> 
+  <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> 
+  <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+  <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s">'YOUR_API_KEY'</span><span class="p">,</span> <span class="s">''</span><span class="p">))</span>
+
+</code></pre>
+<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"request"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">SCALE_API_KEY</span> <span class="o">=</span> <span class="s1">'YOUR_API_KEY'</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'callback_url'</span><span class="p">:</span> <span class="s1">'http://www.example.com/callback'</span><span class="p">,</span>
+  <span class="s1">'instruction'</span><span class="p">:</span> <span class="s1">'Draw a box around each baby cow and big cow.'</span><span class="p">,</span>
+  <span class="s1">'attachment_type'</span><span class="p">:</span> <span class="s1">'image'</span><span class="p">,</span>
+  <span class="s1">'attachment'</span><span class="p">:</span> <span class="s1">'http://i.imgur.com/v4cBreD.jpg'</span><span class="p">,</span>
+  <span class="s1">'objects_to_annotate'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'baby cow'</span><span class="p">,</span> <span class="s1">'big cow'</span><span class="p">],</span>
+  <span class="s1">'with_labels'</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'https://api.scaleapi.com/v1/task/annotation'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="s1">'auth'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'user'</span><span class="p">:</span> <span class="nx">SCALE_API_KEY</span><span class="p">,</span>
+    <span class="s1">'pass'</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
+    <span class="s1">'sendImmediately'</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">},</span>
+  <span class="s1">'form'</span><span class="err">:</span> <span class="nx">payload</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-9-03T07:38:32.368Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"annotation"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Draw a box around each baby cow and big cow."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"urgency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"day"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://i.imgur.com/v4cBreD.jpg"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"objects_to_annotate"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"baby cow"</span><span class="p">,</span><span class="w"> </span><span class="s2">"big cow"</span><span class="p">],</span><span class="w">
+    </span><span class="nt">"with_labels"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5774cc78b01249ab09f089dd"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint creates a <code class="prettyprint">annotation</code> task. In this task, one of our Scalers view the given image and draw bounding boxes around the specified objects, returning the positions and sizes of these boxes.</p>
+
+<p>The required parameters for this task are <code class="prettyprint">callback_url</code>, <code class="prettyprint">attachment</code>, and <code class="prettyprint">objects_to_annotate</code>. The <code class="prettyprint">callback_url</code> is the URL which will be POSTed on task completion, and is described in more detail in the <a href="#callbacks">Callbacks section</a>. The <code class="prettyprint">attachment</code> is a URL to an image you&rsquo;d like to be annotated.</p>
+
+<p><code class="prettyprint">objects_to_annotate</code> is an array of strings describing the different types of objects you&rsquo;d like annotated.</p>
+
+<p>You can optionally provide additional plaintext instructions via the <code class="prettyprint">instruction</code> parameter. </p>
+
+<p>You can also optionally set <code class="prettyprint">with_labels</code> to <code class="prettyprint">true</code>, which will have Scalers provide labels for each box specifying what type of object it is. The labels will be strings in the <code class="prettyprint">objects_to_annotate</code> list.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://api.scaleapi.com/v1/task/annotation</code></p>
+
+<h3 id="parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">callback_url</code></td>
+<td>string</td>
+<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">objects_to_annotate</code></td>
+<td>[string]</td>
+<td>An array of strings describing which objects you&rsquo;d like bounding boxes to be drawn around. Each string should be singular and self-descriptive (ex: &ldquo;cat&rdquo;, &ldquo;street sign&rdquo;, &ldquo;potato&rdquo;)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">attachment</code></td>
+<td>string</td>
+<td>A URL to the image you&rsquo;d like to be annotated with bounding boxes.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">with_labels</code> (optional, default <code class="prettyprint">false</code>)</td>
+<td>boolean</td>
+<td>Specifies whether you&rsquo;d like labels for each bounding box in the response. Each label will be a member of the <code class="prettyprint">objects_to_annotate</code> array.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">urgency</code> (optional, default <code class="prettyprint">day</code>)</td>
+<td>string</td>
+<td>A string describing the urgency of the response. One of <code class="prettyprint">immediate</code>, <code class="prettyprint">day</code>, or <code class="prettyprint">week</code>, where <code class="prettyprint">immediate</code> is a 15-minute response time.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">instruction</code> (optional)</td>
+<td>string</td>
+<td>The plaintext instruction of how the bounding boxes should be drawn.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">attachment_type</code> (optional, default <code class="prettyprint">image</code>)</td>
+<td>string</td>
+<td>Describes what type of file the attachment is. We currently only support <code class="prettyprint">image</code> for the annotation endpoint.</td>
+</tr>
+</tbody></table>
+
+<h3 id="response-on-callback">Response on Callback</h3>
+
+<blockquote>
+<p>Example of what the response field of the task will look like after completion</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"annotations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"left"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"top"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">121</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">39</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"big cow"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"left"</span><span class="p">:</span><span class="w"> </span><span class="mi">82</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"top"</span><span class="p">:</span><span class="w"> </span><span class="mi">56</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"baby cow"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="err">...</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5774cc78b01249ab09f089dd"</span><span class="p">,</span><span class="w">
+  </span><span class="err">...</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+
+<p>The <code class="prettyprint">response</code> field, which is part of the callback POST request and permanently stored as part of the <code class="prettyprint">task</code> object, will contain only an <code class="prettyprint">annotations</code> field.</p>
+
+<p>The <code class="prettyprint">annotations</code> field will contain an array of annotations. Each annotation will have the following values:</p>
+
+<ul>
+<li><code class="prettyprint">left</code>: The distance, in pixels, between the left border of the bounding box and the left border of the image.</li>
+<li><code class="prettyprint">top</code>: The distance, in pixels, between the top border of the bounding box and the top border of the image.</li>
+<li><code class="prettyprint">width</code>: The width, in pixels, of the bounding box.</li>
+<li><code class="prettyprint">height</code>: The height, in pixels, of the bounding box.</li>
+<li><code class="prettyprint">label</code> (if specified <code class="prettyprint">with_labels</code> as <code class="prettyprint">true</code>): The label for the bounding box, which will be one of the specified <code class="prettyprint">task.params.objects_to_annotate</code>.</li>
+</ul>
+
 <h1 id="callbacks">Callbacks</h1>
 
 <blockquote>
@@ -999,6 +1181,8 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <p>On your tasks, you will be required to supply a <code class="prettyprint">callback_url</code>, a fully qualified URL that we will POST with the results of the task when completed. The data will be served as a JSON body (<code class="prettyprint">application/json</code>).</p>
 
 <p>You should respond to the POST request with a 200 status code. If we do not receive a 200 status code, we will retry one more time.</p>
+
+<p>If you&rsquo;re just testing and want to try a few requests, the easiest way to get started is to use a <a href="http://requestb.in/">RequestBin</a> and send requests using your <code class="prettyprint">http://requestb.in/someHash</code> URL as the <code class="prettyprint">callback_url</code>.</p>
 
 <p>If you&rsquo;re just starting out and want the easiest way to set up your own callback URL, we recommend using <a href="https://ngrok.com/">ngrok</a> to expose a local server to the internet. Feel free to <a href="mailto:hello@scaleapi.com">contact us</a> if you have any trouble.</p>
 
