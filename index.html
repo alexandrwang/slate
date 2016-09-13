@@ -624,10 +624,12 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/phonecall"</span> <span class="se">\</span>
   -u YOUR_API_KEY: <span class="se">\</span>
   -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
-  -d <span class="nv">instruction</span><span class="o">=</span><span class="s2">"Call this person and tell me his email address"</span> <span class="se">\</span>
+  -d <span class="nv">instruction</span><span class="o">=</span><span class="s2">"Call this person and tell me his email address. Ask if he's happy too."</span> <span class="se">\</span>
   -d <span class="nv">phone_number</span><span class="o">=</span>5055006865 <span class="se">\</span>
   -d <span class="nv">entity_name</span><span class="o">=</span><span class="s2">"Alexandr Wang"</span> <span class="se">\</span>
-  -d fields[email]<span class="o">=</span><span class="s2">"Email Address"</span>
+  -d fields[email]<span class="o">=</span><span class="s2">"Email Address"</span> <span class="se">\</span>
+  -d <span class="nv">choices</span><span class="o">=</span><span class="s2">"He is happy"</span> <span class="se">\</span>
+  -d <span class="nv">choices</span><span class="o">=</span><span class="s2">"He is not happy"</span>
 </code></pre>
 <pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -639,7 +641,8 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
   <span class="s">'entity_name'</span><span class="p">:</span> <span class="s">'Alexandr Wang'</span><span class="p">,</span>
   <span class="s">'fields'</span><span class="p">:</span> <span class="p">{</span>
     <span class="s">'email'</span><span class="p">:</span> <span class="s">'Email Address'</span><span class="p">,</span>
-  <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s">'choices'</span><span class="p">:</span> <span class="p">[</span><span class="s">'He is happy'</span><span class="p">,</span> <span class="s">'He is not happy'</span><span class="p">]</span>
 <span class="p">}</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">}</span>
@@ -660,7 +663,8 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
   <span class="s1">'entity_name'</span><span class="p">:</span> <span class="s1">'Alexandr Wang'</span><span class="p">,</span>
   <span class="s1">'fields'</span><span class="p">:</span> <span class="p">{</span>
     <span class="s1">'email'</span><span class="p">:</span> <span class="s1">'Email Address'</span><span class="p">,</span>
-  <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s1">'choices'</span><span class="err">:</span> <span class="p">[</span><span class="s1">'He is happy'</span><span class="p">,</span> <span class="s1">'He is not happy'</span><span class="p">]</span>
 <span class="p">};</span>
 
 <span class="nx">request</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'https://api.scaleapi.com/v1/task/phonecall'</span><span class="p">,</span> <span class="p">{</span>
@@ -694,7 +698,11 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
     </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Email Address"</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"entity_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Alexandr Wang"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"choices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"He is happy"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"He is not happy"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+    </span><span class="s2">"entity_name"</span><span class="err">:</span><span class="w"> </span><span class="s2">"Alexandr Wang"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5055006865"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5771bc6631b72659f0d3692b"</span><span class="w">
@@ -703,11 +711,11 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 
 <p>This endpoint creates a <code class="prettyprint">phonecall</code> task. In this task, one of our workers will call the specified phone number and follow the instructions. Potential use cases could be making reservations or appointments, confirming reservations, asking for contact numbers or emails, etc.</p>
 
-<p>This task involves a plaintext <code class="prettyprint">instruction</code> about how to transcribe the attachment, a <code class="prettyprint">phone_number</code> for the phone number to call, and an <code class="prettyprint">entity_name</code> which describes the phone number.</p>
+<p>The required parameters are a plaintext <code class="prettyprint">instruction</code> about how to transcribe the attachment, a <code class="prettyprint">phone_number</code> for the phone number to call, and an <code class="prettyprint">entity_name</code> which describes the phone number.</p>
 
-<p>The optional fields are <code class="prettyprint">attachment_type</code> and <code class="prettyprint">attachment</code> for an optional attachment, a plaintext string <code class="prettyprint">script</code> for an optional script for the worker to follow, and <code class="prettyprint">fields</code> for optional fields you&rsquo;d like to be written down and returned to you.</p>
+<p>The optional parameters are <code class="prettyprint">attachment_type</code> and <code class="prettyprint">attachment</code> for an optional attachment, a plaintext string <code class="prettyprint">script</code> for an optional script for the worker to follow, <code class="prettyprint">fields</code>, and <code class="prettyprint">choices</code>.</p>
 
-<p>The optional <code class="prettyprint">field</code> parameter is a dictionary where the keys are the keys you&rsquo;d like the results to be returned under, and values are the descriptions you&rsquo;d like to show the human worker.</p>
+<p>There are two potential ways to record more information from the phonecall - the <code class="prettyprint">field</code> and <code class="prettyprint">choices</code> parameters. <code class="prettyprint">choices</code> is an array of strings from which the worker to choose, and <code class="prettyprint">fields</code> is useful for free-text response.</p>
 
 <p>If successful, Scale will immediately return the generated task object, of which you should at least store the <code class="prettyprint">task_id</code>.</p>
 
@@ -775,6 +783,11 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <td>dictionary</td>
 <td>A dictionary corresponding to the fields to be recorded. Keys are the keys you&rsquo;d like the fields to be returned under, and values are descriptions to be shown to human workers.</td>
 </tr>
+<tr>
+<td><code class="prettyprint">choices</code> (optional)</td>
+<td>[string]</td>
+<td>An array of strings for the choices to be given to the worker. They will choose one of these in accordance with your <code class="prettyprint">instruction</code>.</td>
+</tr>
 </tbody></table>
 
 <h3 id="response-on-callback">Response on Callback</h3>
@@ -786,12 +799,15 @@ For low volume, we currently only support calling US numbers. For higher volume 
   &quot;outcome&quot;: ...,
   &quot;fields&quot;: {
     ...
-  }
+  },
+  &quot;choice&quot;: &quot;some_choice&quot;
 }</code></p>
 
 <p>The outcome will be a string equal to one of <code class="prettyprint">no_pickup</code> (meaning nobody picked up), <code class="prettyprint">hung_up</code> (meaning the recipient hung up before the task could be completed), or <code class="prettyprint">success</code> (the call succeeded). </p>
 
-<p>If your original call provided <code class="prettyprint">fields</code>, <code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.</p>
+<p>If your original API request provided <code class="prettyprint">fields</code>, <code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.</p>
+
+<p>If your original API request provided <code class="prettyprint">choices</code>, <code class="prettyprint">choice</code> will be one of the original choices.</p>
 
 <h1 id="create-comparison-task">Create Comparison Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/comparison"</span> <span class="se">\</span>
@@ -886,7 +902,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 
 <p>This task involves a plaintext <code class="prettyprint">instruction</code>, an array of <code class="prettyprint">attachments</code>, and an <code class="prettyprint">attachment_type</code>.</p>
 
-<p>At least of the <code class="prettyprint">fields</code> or <code class="prettyprint">choices</code> parameters must specified for the data to be returned. <code class="prettyprint">choices</code> is an array of strings from which the user to choose, and <code class="prettyprint">fields</code> is useful for free-text response. </p>
+<p>At least of the <code class="prettyprint">fields</code> or <code class="prettyprint">choices</code> parameters must specified for the data to be returned. <code class="prettyprint">choices</code> is an array of strings from which the worker to choose, and <code class="prettyprint">fields</code> is useful for free-text response. </p>
 
 <p><code class="prettyprint">fields</code> is a dictionary where the keys are the keys you&rsquo;d like the results to be returned under, and values are the descriptions you&rsquo;d like to show the human worker.</p>
 
@@ -1049,6 +1065,8 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <p>You can optionally provide additional plaintext instructions via the <code class="prettyprint">instruction</code> parameter. </p>
 
 <p>You can also optionally set <code class="prettyprint">with_labels</code> to <code class="prettyprint">true</code>, which will have Scalers provide labels for each box specifying what type of object it is. The labels will be strings in the <code class="prettyprint">objects_to_annotate</code> list.</p>
+
+<p>If successful, Scale will immediately return the generated task object, of which you should at least store the <code class="prettyprint">task_id</code>.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
