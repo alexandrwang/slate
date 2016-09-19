@@ -193,7 +193,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
   </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576ba74eec471ff9b01557cc"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T09:10:02.798Z"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T09:09:34.752Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Would you say this item is big or small?"</span><span class="p">,</span><span class="w">
@@ -444,7 +444,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
   -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
   -d <span class="nv">instruction</span><span class="o">=</span><span class="s2">"Transcribe the given fields. Then for each news item on the page, transcribe the information for the row."</span> <span class="se">\</span>
   -d <span class="nv">attachment_type</span><span class="o">=</span>website <span class="se">\</span>
-  -d <span class="nv">attachment</span><span class="o">=</span><span class="s2">"http://www.reddit.com/"</span> <span class="se">\</span>
+  -d <span class="nv">attachment</span><span class="o">=</span><span class="s2">"http://www.google.com/"</span> <span class="se">\</span>
   -d fields[title]<span class="o">=</span><span class="s2">"Title of Webpage"</span> <span class="se">\</span>
   -d fields[top_result]<span class="o">=</span><span class="s2">"Title of the top result"</span> <span class="se">\</span>
   -d row_fields[username]<span class="o">=</span><span class="s2">"Username of submitter"</span> <span class="se">\</span>
@@ -516,7 +516,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-25T02:18:04.248Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"transcription"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Transcribe the given fields. Then for each news item on the page, transcribe the information for the row."</span><span class="p">,</span><span class="w">
@@ -530,7 +530,7 @@ You must replace <code>YOUR_API_KEY</code> with your personal API key.
       </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Title of Webpage"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"top_result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Title of the top result"</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.reddit.com/"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.google.com/"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"website"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576de9dc1ea5f917d56fc2a0"</span><span class="w">
@@ -689,10 +689,10 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-27T23:53:10.367Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"phonecall"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Call this man and tell me his email."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Call this person and tell me his email address"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"urgency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"day"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -701,8 +701,8 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
     </span><span class="nt">"choices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="s2">"He is happy"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"He is not happy"</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-    </span><span class="s2">"entity_name"</span><span class="err">:</span><span class="w"> </span><span class="s2">"Alexandr Wang"</span><span class="p">,</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"entity_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Alexandr Wang"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5055006865"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5771bc6631b72659f0d3692b"</span><span class="w">
@@ -1173,7 +1173,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
       </span><span class="nt">"status_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T20:08:31.573Z"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Is this object red or blue?"</span><span class="p">,</span><span class="w">
@@ -1277,7 +1277,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
   </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576ba74eec471ff9b01557cc"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T09:10:02.798Z"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T09:09:34.752Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Would you say this item is big or small?"</span><span class="p">,</span><span class="w">
@@ -1362,7 +1362,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576ba74eec471ff9b01557cc"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T09:09:34.752Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"canceled"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Would you say this item is big or small?"</span><span class="p">,</span><span class="w">
@@ -1441,7 +1441,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <pre class="highlight json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T08:10:51.032Z"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Is this object big or small?"</span><span class="p">,</span><span class="w">
@@ -1463,7 +1463,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T08:51:13.903Z"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/test_callback"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Is this object big or small?"</span><span class="p">,</span><span class="w">
