@@ -641,9 +641,10 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/phonecall"</span> <span class="se">\</span>
   -u YOUR_API_KEY: <span class="se">\</span>
   -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
-  -d <span class="nv">instruction</span><span class="o">=</span><span class="s2">"Call this person and tell me his email address. Ask if he's happy too."</span> <span class="se">\</span>
+  -d <span class="nv">instruction</span><span class="o">=</span><span class="s2">"Call this person and follow the script provided, recording responses"</span> <span class="se">\</span>
   -d <span class="nv">phone_number</span><span class="o">=</span>5055006865 <span class="se">\</span>
   -d <span class="nv">entity_name</span><span class="o">=</span><span class="s2">"Alexandr Wang"</span> <span class="se">\</span>
+  -d <span class="nv">script</span><span class="o">=</span><span class="s2">"Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?"</span>
   -d fields[email]<span class="o">=</span><span class="s2">"Email Address"</span> <span class="se">\</span>
   -d <span class="nv">choices</span><span class="o">=</span><span class="s2">"He is happy"</span> <span class="se">\</span>
   -d <span class="nv">choices</span><span class="o">=</span><span class="s2">"He is not happy"</span>
@@ -653,9 +654,10 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 
 <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'callback_url'</span><span class="p">:</span> <span class="s">'http://www.example.com/callback'</span><span class="p">,</span>
-  <span class="s">'instruction'</span><span class="p">:</span> <span class="s">'Call this person and tell me his email address'</span><span class="p">,</span>
+  <span class="s">'instruction'</span><span class="p">:</span> <span class="s">'Call this person and follow the script provided, recording responses'</span><span class="p">,</span>
   <span class="s">'phone_number'</span><span class="p">:</span> <span class="s">'5055006865'</span><span class="p">,</span>
   <span class="s">'entity_name'</span><span class="p">:</span> <span class="s">'Alexandr Wang'</span><span class="p">,</span>
+  <span class="s">'script'</span><span class="p">:</span> <span class="s">'Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?'</span><span class="p">,</span>
   <span class="s">'fields'</span><span class="p">:</span> <span class="p">{</span>
     <span class="s">'email'</span><span class="p">:</span> <span class="s">'Email Address'</span><span class="p">,</span>
   <span class="p">},</span>
@@ -675,9 +677,10 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 
 <span class="kd">var</span> <span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s1">'callback_url'</span><span class="p">:</span> <span class="s1">'http://www.example.com/callback'</span><span class="p">,</span>
-  <span class="s1">'instruction'</span><span class="p">:</span> <span class="s1">'Call this person and tell me his email address'</span><span class="p">,</span>
+  <span class="s1">'instruction'</span><span class="p">:</span> <span class="s1">'Call this person and follow the script provided, recording responses'</span><span class="p">,</span>
   <span class="s1">'phone_number'</span><span class="p">:</span> <span class="s1">'5055006865'</span><span class="p">,</span>
   <span class="s1">'entity_name'</span><span class="p">:</span> <span class="s1">'Alexandr Wang'</span><span class="p">,</span>
+  <span class="s1">'script'</span><span class="p">:</span> <span class="s1">'Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?'</span><span class="p">,</span>
   <span class="s1">'fields'</span><span class="p">:</span> <span class="p">{</span>
     <span class="s1">'email'</span><span class="p">:</span> <span class="s1">'Email Address'</span><span class="p">,</span>
   <span class="p">},</span>
@@ -709,9 +712,10 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
   </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"phonecall"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Call this person and tell me his email address"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"urgency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"day"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Call this person and follow the script provided, recording responses"</span><span class="p">,</span><span class="w">
+  </span><span class="err">'script'</span><span class="p">:</span><span class="w"> </span><span class="err">'Hello</span><span class="w"> </span><span class="p">{</span><span class="err">{name</span><span class="p">}}</span><span class="err">!</span><span class="w"> </span><span class="err">Are</span><span class="w"> </span><span class="err">you</span><span class="w"> </span><span class="err">happy</span><span class="w"> </span><span class="err">today?</span><span class="w"> </span><span class="err">(pause)</span><span class="w"> </span><span class="err">One</span><span class="w"> </span><span class="err">more</span><span class="w"> </span><span class="err">thing</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">what</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">your</span><span class="w"> </span><span class="err">email</span><span class="w"> </span><span class="err">address?',</span><span class="w">
+  </span><span class="s2">"urgency"</span><span class="err">:</span><span class="w"> </span><span class="s2">"day"</span><span class="err">,</span><span class="w">
+  </span><span class="s2">"params"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Email Address"</span><span class="w">
     </span><span class="p">},</span><span class="w">
@@ -721,16 +725,16 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
     </span><span class="p">],</span><span class="w">
     </span><span class="nt">"entity_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Alexandr Wang"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5055006865"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5771bc6631b72659f0d3692b"</span><span class="w">
-</span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="err">,</span><span class="w">
+  </span><span class="s2">"task_id"</span><span class="err">:</span><span class="w"> </span><span class="s2">"5771bc6631b72659f0d3692b"</span><span class="w">
+</span><span class="err">}</span><span class="w">
 </span></code></pre>
 
 <p>This endpoint creates a <code class="prettyprint">phonecall</code> task. In this task, one of our workers will call the specified phone number and follow the instructions. Potential use cases could be making reservations or appointments, confirming reservations, asking for contact numbers or emails, etc.</p>
 
-<p>The required parameters are a plaintext <code class="prettyprint">instruction</code> about how to transcribe the attachment, a <code class="prettyprint">phone_number</code> for the phone number to call, and an <code class="prettyprint">entity_name</code> which describes the phone number.</p>
+<p>The required parameters are a plaintext <code class="prettyprint">instruction</code> about how to transcribe the attachment, a <code class="prettyprint">script</code> for the Scaler to follow, a <code class="prettyprint">phone_number</code> for the phone number to call, and an <code class="prettyprint">entity_name</code> which describes the phone number.</p>
 
-<p>The optional parameters are <code class="prettyprint">attachment_type</code> and <code class="prettyprint">attachment</code> for an optional attachment, a plaintext string <code class="prettyprint">script</code> for an optional script for the worker to follow, <code class="prettyprint">fields</code>, and <code class="prettyprint">choices</code>.</p>
+<p>The optional parameters are <code class="prettyprint">attachment_type</code> and <code class="prettyprint">attachment</code> for an optional attachment, <code class="prettyprint">fields</code>, and <code class="prettyprint">choices</code>.</p>
 
 <p>There are two potential ways to record more information from the phonecall - the <code class="prettyprint">field</code> and <code class="prettyprint">choices</code> parameters. <code class="prettyprint">choices</code> is an array of strings from which the worker to choose, and <code class="prettyprint">fields</code> is useful for free-text response.</p>
 
@@ -771,9 +775,9 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <td>The phone number which will be called by our worker. Should include a country code (+1 for US numbers).</td>
 </tr>
 <tr>
-<td><code class="prettyprint">script</code> (optional)</td>
+<td><code class="prettyprint">script</code></td>
 <td>string</td>
-<td>An optional script to be shown the the worker as they make the phone call. You should use this if you&rsquo;ve already optimized a script for phone calling.</td>
+<td>A script to be shown the the worker as they make the phone call. Your script will greatly impact the quality of the results you receive.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">entity_name</code></td>
