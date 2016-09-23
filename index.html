@@ -136,6 +136,23 @@
 <!-- We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
  -->
 
+<h1 id="client-libraries-sdks">Client Libraries / SDKs</h1>
+
+<p>We&rsquo;re working hard to build official client libraries as quickly as possible! We intend on releasing SDKs soon for the following languages:</p>
+
+<ul>
+<li>JavaScript</li>
+<li>Python</li>
+</ul>
+
+<p>We also have unnoficial SDKs in the following languages:</p>
+
+<ul>
+<li><a href="https://github.com/wikiti/scaleapi-ruby">Ruby</a> (thanks to <a href="https://github.com/wikiti">wikiti</a>!)</li>
+</ul>
+
+<p><a href="mailto:hello@scaleapi.com">Let us know</a> if you want (or are interested in writing) a library for a language not represented here, or if you’re eagerly waiting for us to get our JavaScript/Python SDKs out the door!</p>
+
 <h1 id="authentication">Authentication</h1>
 
 <blockquote>
@@ -1196,7 +1213,8 @@ For low volume, we currently only support calling US numbers. For higher volume 
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>On your tasks, you will be required to supply a <code class="prettyprint">callback_url</code>, a fully qualified URL that we will POST with the results of the task when completed. The data will be served as a JSON body (<code class="prettyprint">application/json</code>).</p>
+<p>On your tasks, you will be required to supply a <code class="prettyprint">callback_url</code>, a fully qualified URL that we will POST with the results of the task when completed. The data will be served as a JSON body (<code class="prettyprint">application/json</code>). Alternately,
+you can set a default callback URL in your profile, which will be used for tasks that do not specify one.</p>
 
 <p>You should respond to the POST request with a 200 status code. If we do not receive a 200 status code, we will retry one more time.</p>
 
