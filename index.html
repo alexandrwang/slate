@@ -116,7 +116,7 @@
       </div>
         <ul class="toc-footer">
             <li><a href='https://dashboard.scaleapi.com/signup'>Signup for Scale</a></li>
-            <li><a href="https://scalesupport.herokuapp.com/">Join the Scale Support Slack channel!</a></li>
+            <li><a href="https://chat.scaleapi.com/">Join the Scale Support Slack channel!</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
@@ -193,7 +193,7 @@ curl <span class="s2">"api_endpoint_here"</span> <span class="se">\</span>
 <span ng-if="user.testApiKey">Your test API key <code>{{ApiKey}}</code> is included in all the examples on this page, so you can test any example right away. Only you can see this value.</span></p>
 </blockquote>
 
-<p>Scale uses API keys to allow access to the API. You can register a new Scale API key on your dashboard (if you have access to Scale).</p>
+<p>Scale uses API keys to allow access to the API. You can find your API keys on your <a href="https://dashboard.scaleapi.com/dashboard">dashboard</a>, which you can access by <a href="https://dashboard.scaleapi.com/login">logging in</a> or <a href="https://dashboard.scaleapi.com/signup">signing up</a>.</p>
 
 <p>Scale expects for the API key to be included in all API requests to the server via <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">HTTP Basic Auth</a>. Provide your API key as the basic auth username value. You do not need to provide a password. You can do this using the <code class="prettyprint">-u</code> flag:</p>
 
@@ -206,6 +206,12 @@ You must replace <code>{{ApiKey}}</code> with your personal API key. If you <a h
 <aside class="notice" ng-if="user.testApiKey">
 Your test API key <code>{{ApiKey}}</code> is included in all the examples on this page, so you can test any example right away. Only you can see this value.
 </aside>
+
+<h3 id="test-and-live-modes">Test and Live Modes</h3>
+
+<p>To make the API as explorable as possible, accounts have test mode and live mode API keys. There is no &ldquo;switch&rdquo; for changing between modes, just use the appropriate key to perform a live or test API requests.</p>
+
+<p>Requests made with test mode credentials are not completed by a human, and therefore have incorrect test responses. Requests made with live mode credentials are always completed by a human, and will incur a charge past your first 5 API requests.</p>
 
 <h3 id="callback-authentication">Callback Authentication</h3>
 
