@@ -1234,9 +1234,18 @@ you can set a default callback URL in your profile, which will be used for tasks
 
 <p>You should respond to the POST request with a 200 status code. If we do not receive a 200 status code, we will retry one more time.</p>
 
-<p>If you&rsquo;re just testing and want to try a few requests, the easiest way to get started is to use a <a href="http://requestb.in/">RequestBin</a> and send requests using your <code class="prettyprint">http://requestb.in/someHash</code> URL as the <code class="prettyprint">callback_url</code>.</p>
+<h3 id="getting-started">Getting Started</h3>
 
-<p>If you&rsquo;re just starting out and want the easiest way to set up your own callback URL, we recommend using <a href="https://ngrok.com/">ngrok</a> to expose a local server to the internet. Feel free to <a href="mailto:hello@scaleapi.com">contact us</a> if you have any trouble.</p>
+<p>We have sample callback server implementations, which you can deploy to Heroku in seconds, in the following languages:</p>
+
+<ul>
+<li><a href="https://github.com/scaleapi/sample-callback-server-node">Node.js</a></li>
+<li>Python (coming soon!)</li>
+</ul>
+
+<p>If you&rsquo;re just testing and want to try a few requests, the easiest way to get started is to use a <a href="http://requestb.in/">RequestBin</a> and send requests using your <code class="prettyprint">http://requestb.in/someHash</code> URL as the <code class="prettyprint">callback_url</code>. You can also use <a href="https://ngrok.com/">ngrok</a> to expose a local server to the internet for fast prototyping.</p>
+
+<p>Feel free to <a href="https://chat.scaleapi.com">chat us on Slack</a> or <a href="mailto:hello@scaleapi.com">email us</a> if you have any trouble.</p>
 
 <h3 id="authentication">Authentication</h3>
 
