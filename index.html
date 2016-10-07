@@ -220,6 +220,8 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <h1 id="task-object">Task Object</h1>
 
 <p>The task object represents a single task that you create with Scale and is completed by a worker.</p>
+
+<h2 id="attributes">Attributes</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576ba74eec471ff9b01557cc"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T09:10:02.798Z"</span><span class="p">,</span><span class="w">
@@ -239,11 +241,10 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"big"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-
-<h3 id="attributes">Attributes</h3>
 
 <table><thead>
 <tr>
@@ -302,7 +303,18 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <td>timestamp</td>
 <td>A string of the UTC timestamp of when the task was completed. This will only be filled in after it is completed.</td>
 </tr>
+<tr>
+<td><code class="prettyprint">metadata</code></td>
+<td>object, default <code class="prettyprint">{}</code></td>
+<td>A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.</td>
+</tr>
 </tbody></table>
+
+<h2 id="metadata">Metadata</h2>
+
+<p>Tasks objects have a metadata parameter. You can use this parameter to attach key-value data to tasks.</p>
+
+<p>Metadata is useful for storing additional, structured information on an object. As an example, you could store a video&rsquo;s unique identifier in your system on its content moderation <code class="prettyprint">categorization</code> task. You can also use it to denote the end use case for the task, as &ldquo;content moderation&rdquo; or &ldquo;data categorization&rdquo; for example. Metadata is not used by Scale (e.g., to affect how the task is done).</p>
 
 <h1 id="create-categorization-task">Create Categorization Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/categorize"</span> <span class="se">\</span>
@@ -447,9 +459,14 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <td>boolean</td>
 <td>Default is <code class="prettyprint">false</code>. Determines whether you allow multiple categories to be chosen for the attachment</td>
 </tr>
+<tr>
+<td><code class="prettyprint">metadata</code> (optional, default <code class="prettyprint">{}</code>)</td>
+<td>object</td>
+<td>A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.</td>
+</tr>
 </tbody></table>
 
-<h3 id="response-on-callback">Response on Callback</h3>
+<h2 id="response-on-callback">Response on Callback</h2>
 
 <p>The <code class="prettyprint">response</code> object will be of the form:</p>
 
@@ -629,9 +646,14 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 <td>string</td>
 <td>A string describing the urgency of the response. One of <code class="prettyprint">immediate</code>, <code class="prettyprint">day</code>, or <code class="prettyprint">week</code>, where <code class="prettyprint">immediate</code> is a one-hour response time.</td>
 </tr>
+<tr>
+<td><code class="prettyprint">metadata</code> (optional, default <code class="prettyprint">{}</code>)</td>
+<td>object</td>
+<td>A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.</td>
+</tr>
 </tbody></table>
 
-<h3 id="response-on-callback">Response on Callback</h3>
+<h2 id="response-on-callback">Response on Callback</h2>
 
 <p>The <code class="prettyprint">response</code> object will be of the form:</p>
 
@@ -822,9 +844,14 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <td>[string]</td>
 <td>An array of strings for the choices to be given to the worker. They will choose one of these in accordance with your <code class="prettyprint">instruction</code>.</td>
 </tr>
+<tr>
+<td><code class="prettyprint">metadata</code> (optional, default <code class="prettyprint">{}</code>)</td>
+<td>object</td>
+<td>A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.</td>
+</tr>
 </tbody></table>
 
-<h3 id="response-on-callback">Response on Callback</h3>
+<h2 id="response-on-callback">Response on Callback</h2>
 
 <p>The <code class="prettyprint">response</code> object will be of the form:</p>
 
@@ -992,9 +1019,14 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <td>[string]</td>
 <td>An array of strings for the choices to be given to the worker. One of <code class="prettyprint">choices</code> or <code class="prettyprint">fields</code> must be specified.</td>
 </tr>
+<tr>
+<td><code class="prettyprint">metadata</code> (optional, default <code class="prettyprint">{}</code>)</td>
+<td>object</td>
+<td>A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.</td>
+</tr>
 </tbody></table>
 
-<h3 id="response-on-callback">Response on Callback</h3>
+<h2 id="response-on-callback">Response on Callback</h2>
 
 <p>The <code class="prettyprint">response</code> object will be of the form:</p>
 
@@ -1150,9 +1182,14 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <td>string</td>
 <td>Describes what type of file the attachment is. We currently only support <code class="prettyprint">image</code> for the annotation endpoint.</td>
 </tr>
+<tr>
+<td><code class="prettyprint">metadata</code> (optional, default <code class="prettyprint">{}</code>)</td>
+<td>object</td>
+<td>A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.</td>
+</tr>
 </tbody></table>
 
-<h3 id="response-on-callback">Response on Callback</h3>
+<h2 id="response-on-callback">Response on Callback</h2>
 
 <blockquote>
 <p>Example of what the response field of the task will look like after completion</p>
