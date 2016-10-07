@@ -387,7 +387,8 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
       </span><span class="s2">"public"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"private"</span><span class="w">
     </span><span class="p">]</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -562,6 +563,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576de9dc1ea5f917d56fc2a0"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-25T02:18:04.248Z"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"transcription"</span><span class="p">,</span><span class="w">
@@ -580,7 +582,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
     </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.google.com/"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"website"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576de9dc1ea5f917d56fc2a0"</span><span class="w">
+  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -743,6 +745,7 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5771bc6631b72659f0d3692b"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-27T23:53:10.367Z"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"phonecall"</span><span class="p">,</span><span class="w">
@@ -761,7 +764,7 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
     </span><span class="nt">"entity_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Alexandr Wang"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5055006865"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5771bc6631b72659f0d3692b"</span><span class="w">
+  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -938,6 +941,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5774cc78b02487c424f089dd"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-30T07:38:32.368Z"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"comparison"</span><span class="p">,</span><span class="w">
@@ -955,7 +959,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
       </span><span class="s2">"http://images.wisegeek.com/checkered-tablecloth.jpg"</span><span class="w">
     </span><span class="p">]</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5774cc78b02487c424f089dd"</span><span class="w">
+  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -1106,6 +1110,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5774cc78b01249ab09f089dd"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-9-03T07:38:32.368Z"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"annotation"</span><span class="p">,</span><span class="w">
@@ -1118,7 +1123,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
     </span><span class="nt">"objects_to_annotate"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"baby cow"</span><span class="p">,</span><span class="w"> </span><span class="s2">"big cow"</span><span class="p">],</span><span class="w">
     </span><span class="nt">"with_labels"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5774cc78b01249ab09f089dd"</span><span class="w">
+  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -1239,6 +1244,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576c41bf13e36b0600b02b34"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T21:54:44.904Z"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"big"</span><span class="w">
@@ -1257,7 +1263,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
         </span><span class="s2">"blue"</span><span class="w">
       </span><span class="p">]</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576c41bf13e36b0600b02b34"</span><span class="w">
+    </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"red"</span><span class="w">
@@ -1372,7 +1378,8 @@ you can set a default callback URL in your profile, which will be used for tasks
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"big"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -1453,7 +1460,8 @@ you can set a default callback URL in your profile, which will be used for tasks
       </span><span class="s2">"big"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"small"</span><span class="w">
     </span><span class="p">]</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -1519,6 +1527,7 @@ you can set a default callback URL in your profile, which will be used for tasks
 </blockquote>
 <pre class="highlight json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576b998b4628d1bfaed7d3a4"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T08:10:51.032Z"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
@@ -1537,9 +1546,10 @@ you can set a default callback URL in your profile, which will be used for tasks
     </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"small"</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576b998b4628d1bfaed7d3a4"</span><span class="w">
+    </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576ba301eed30241b0e9bbf7"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-23T08:51:13.903Z"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"categorization"</span><span class="p">,</span><span class="w">
@@ -1558,7 +1568,7 @@ you can set a default callback URL in your profile, which will be used for tasks
     </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"big"</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576ba301eed30241b0e9bbf7"</span><span class="w">
+    </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
