@@ -470,22 +470,47 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 
 <h2 id="response-on-callback">Response on Callback</h2>
 
-<p>The <code class="prettyprint">response</code> object will be of the form:</p>
+<blockquote>
+<p>If <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">false</code>, the <code class="prettyprint">response</code> will look like:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"one_of_the_categories"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
-<p><code class="prettyprint">
-{
-  &quot;category&quot;: ...
-}</code></p>
+<blockquote>
+<p>If <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">true</code>, the <code class="prettyprint">response</code> will look like:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"some_of"</span><span class="p">,</span><span class="w"> </span><span class="s2">"the_categories"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<blockquote>
+<p>Example if <code class="prettyprint">category_ids</code> is provided and <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">false</code></p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Blue Cross"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"category_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<blockquote>
+<p>Example if <code class="prettyprint">category_ids</code> is provided and <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">true</code></p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Blue Cross"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Red Cross"</span><span class="p">],</span><span class="w">
+  </span><span class="nt">"category_id"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"123"</span><span class="p">,</span><span class="w"> </span><span class="s2">"124"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have a <code class="prettyprint">category</code> field and potentially a <code class="prettyprint">category_id</code> field.</p>
 
 <p>If <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">false</code>, then the value will be a string equal to one of the original categories. </p>
 
 <p>If <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">true</code>, the value will be an array of categories, each one being one of the original categories.</p>
 
 <p>If <code class="prettyprint">category_ids</code> was provided, there will be another field <code class="prettyprint">category_id</code> corresponding to the given id of the chosen category/categories. For example, it could look like:</p>
-
-<p><code class="prettyprint">{
-  &quot;category&quot;: &quot;Blue Cross&quot;, &quot;category_id&quot;: &quot;123&quot;
-}</code></p>
 
 <h1 id="create-transcription-task">Create Transcription Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/transcription"</span> <span class="se">\</span>
@@ -658,22 +683,32 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 
 <h2 id="response-on-callback">Response on Callback</h2>
 
-<p>The <code class="prettyprint">response</code> object will be of the form:</p>
+<blockquote>
+<p>Example response object if both <code class="prettyprint">fields</code> and <code class="prettyprint">row_fields</code> are specified</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Some Title"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"top_result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The Top Result or Something"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"rows"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"connaissance"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"comment_count"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"alexandr_wang"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"comment_count"</span><span class="p">:</span><span class="w"> </span><span class="s2">"132"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
-<p><code class="prettyprint">
-{
-  &quot;fields&quot;: {
-    ...
-  },
-  &quot;rows&quot;: [{
-    ...
-  },
-  {
-    ...
-  }]
-}</code></p>
+<p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have either a <code class="prettyprint">fields</code> field, a <code class="prettyprint">rows</code> field, or both.</p>
 
-<p><code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value. <code class="prettyprint">rows</code> will be an array of such dictionaries, with keys corresponding to the keys you provided in the parameters, and values corresponding to the transcribed value.</p>
+<p><code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value. </p>
+
+<p><code class="prettyprint">rows</code> will be an array of such dictionaries, with keys corresponding to the keys you provided in the parameters, and values corresponding to the transcribed value.</p>
 
 <h1 id="create-phone-call-task">Create Phone Call Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/phonecall"</span> <span class="se">\</span>
@@ -857,16 +892,19 @@ For low volume, we currently only support calling US numbers. For higher volume 
 
 <h2 id="response-on-callback">Response on Callback</h2>
 
-<p>The <code class="prettyprint">response</code> object will be of the form:</p>
+<blockquote>
+<p>Example <code class="prettyprint">response</code> object:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello@scaleapi.com"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"choice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"He is happy"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
-<p><code class="prettyprint">
-{
-  &quot;outcome&quot;: ...,
-  &quot;fields&quot;: {
-    ...
-  },
-  &quot;choice&quot;: &quot;some_choice&quot;
-}</code></p>
+<p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have an <code class="prettyprint">outcome</code> field, and a <code class="prettyprint">fields</code> field and/or <code class="prettyprint">choice</code> field depending on the original request.</p>
 
 <p>The outcome will be a string equal to one of <code class="prettyprint">no_pickup</code> (meaning nobody picked up), <code class="prettyprint">hung_up</code> (meaning the recipient hung up before the task could be completed), or <code class="prettyprint">success</code> (the call succeeded). </p>
 
@@ -1033,15 +1071,18 @@ For low volume, we currently only support calling US numbers. For higher volume 
 
 <h2 id="response-on-callback">Response on Callback</h2>
 
-<p>The <code class="prettyprint">response</code> object will be of the form:</p>
+<blockquote>
+<p>Example <code class="prettyprint">response</code> object:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"choice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yes"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"difference"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The patterns are identical."</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
-<p><code class="prettyprint">
-{
-  &quot;choice&quot;: &quot;some_choice&quot;,
-  &quot;fields&quot;: {
-    ...
-  }
-}</code></p>
+<p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have a <code class="prettyprint">fields</code> field and/or <code class="prettyprint">choice</code> field depending on the original request.</p>
 
 <p>If your original call provided <code class="prettyprint">choices</code>, <code class="prettyprint">choice</code> will be one of the original choices.</p>
 
