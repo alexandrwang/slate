@@ -1274,14 +1274,14 @@ This endpoint retrieves a list of your tasks.
 
 ### URL Parameters
 
-Parameter | Description
---------- | -----------
-`start_time` | The minimum value of created_at for tasks to be returned (ISO 8601 Date)
-`end_time`   | The maximum value of created_at for tasks to be returned (ISO 8601 Date)
-`status`     | The status of the task - can be: `completed`, `pending`, or `canceled`
-`type`       | The type of the task - can be: `transcription`, `categorization`, `phonecall`, `comparison`, `annotation`, `datacollection`, or any other task type.
-`limit`      | The maximum number of results to display per page
-`offset`     | How many results to skip, for showing the next page
+Parameter | Type | Description | Required
+--------- | ---- | ----------- | --------
+`start_time` | ISO 8601 Date | The minimum value of created_at for tasks to be returned | Optional
+`end_time`   | ISO 8601 Date | The maximum value of created_at for tasks to be returned | Optional
+`status`     | string | The status of the task - can be: `completed`, `pending`, or `canceled` | Optional
+`type`       | string | The type of the task - can be: `transcription`, `categorization`, `phonecall`, `comparison`, `annotation`, `datacollection`, or any other task type. | Optional
+`limit`      | integer | The maximum number of results to display per page | Optional
+`offset`     | integer | How many results to skip, for showing the next page | Optional
 
 ### Returns
 
