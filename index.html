@@ -267,7 +267,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <tr>
 <td><code class="prettyprint">instruction</code></td>
 <td>string</td>
-<td>A plaintext string explaining the instructions for the task.</td>
+<td>A markdown-enabled string explaining the instructions for the task. You can use <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown</a> to show example images, give structure to your instructions, and more.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">params</code></td>
@@ -395,7 +395,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 
 <p>This endpoint creates a <code class="prettyprint">categorization</code> task. In this task, one of our workers will view the attachment and choose a category for it according to the instruction. You may allow multiple categories to be chosen by setting <code class="prettyprint">allow_multiple</code> to <code class="prettyprint">true</code>. Example use cases are spam detection, copyright detection, product categorization, etc.</p>
 
-<p>This task involves a plaintext <code class="prettyprint">instruction</code> about how to make the categorization, an <code class="prettyprint">attachment</code> of what you&rsquo;d like to categorize, an <code class="prettyprint">attachment_type</code>, and finally a list of <code class="prettyprint">categories</code>. </p>
+<p>This task involves a <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown-enabled</a> <code class="prettyprint">instruction</code> about how to make the categorization, an <code class="prettyprint">attachment</code> of what you&rsquo;d like to categorize, an <code class="prettyprint">attachment_type</code>, and finally a list of <code class="prettyprint">categories</code>. </p>
 
 <p>There is an optional <code class="prettyprint">category_ids</code> parameter, which you can use to impose an id system over the categories. The format of this parameter should be a dictionary, where the keys are the ids (as strings), and then the values are the category values provided in <code class="prettyprint">categories</code>. An example is:</p>
 
@@ -429,7 +429,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <tr>
 <td><code class="prettyprint">instruction</code></td>
 <td>string</td>
-<td>The plaintext instruction of how to categorize the item.</td>
+<td>A markdown-enabled string explaining how to categorize the item. You can use <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown</a> to show example images, give structure to your instructions, and more.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">attachment_type</code></td>
@@ -614,7 +614,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 
 <p>This endpoint creates a <code class="prettyprint">transcription</code> task. In this task, one of our workers will read an attachment and arbitrarily transcribe any information you&rsquo;d like. Example use cases could be transcribing information from PDFs, manually scraping a web page for information, etc.</p>
 
-<p>This task involves a plaintext <code class="prettyprint">instruction</code> about how to transcribe the attachment, an <code class="prettyprint">attachment</code> of what you&rsquo;d like to transcribe, an <code class="prettyprint">attachment_type</code>, and at least one of <code class="prettyprint">fields</code> and <code class="prettyprint">row_fields</code>. <code class="prettyprint">fields</code> is a dictionary which describes items you&rsquo;d like transcribed once per attachment, and <code class="prettyprint">row_fields</code> is a dictionary which describes items which need to be transcribed per row in the attachment.</p>
+<p>This task involves a <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown-enabled</a> <code class="prettyprint">instruction</code> about how to transcribe the attachment, an <code class="prettyprint">attachment</code> of what you&rsquo;d like to transcribe, an <code class="prettyprint">attachment_type</code>, and at least one of <code class="prettyprint">fields</code> and <code class="prettyprint">row_fields</code>. <code class="prettyprint">fields</code> is a dictionary which describes items you&rsquo;d like transcribed once per attachment, and <code class="prettyprint">row_fields</code> is a dictionary which describes items which need to be transcribed per row in the attachment.</p>
 
 <p>At least one of <code class="prettyprint">fields</code> or <code class="prettyprint">row_fields</code> is required. Both <code class="prettyprint">fields</code> and <code class="prettyprint">row_fields</code> are dictionaries where the keys are the keys you&rsquo;d like the results to be returned under, and values are the descriptions you&rsquo;d like to show the human worker.</p>
 
@@ -647,7 +647,7 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 <tr>
 <td><code class="prettyprint">instruction</code></td>
 <td>string</td>
-<td>The plaintext instruction of how to transcribe the attachment.</td>
+<td>A markdown-enabled string explaining how to transcribe the attachment. You can use <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown</a> to show example images, give structure to your instructions, and more.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">attachment_type</code></td>
@@ -806,7 +806,7 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 
 <p>This endpoint creates a <code class="prettyprint">phonecall</code> task. In this task, one of our workers will call the specified phone number and follow the instructions. Potential use cases could be making reservations or appointments, confirming reservations, asking for contact numbers or emails, etc.</p>
 
-<p>The required parameters are a plaintext <code class="prettyprint">instruction</code> about how to transcribe the attachment, a <code class="prettyprint">script</code> for the Scaler to follow, a <code class="prettyprint">phone_number</code> for the phone number to call, and an <code class="prettyprint">entity_name</code> which describes the phone number.</p>
+<p>The required parameters are a <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown-enabled</a> <code class="prettyprint">instruction</code> about how to transcribe the attachment, a <code class="prettyprint">script</code> for the Scaler to follow, a <code class="prettyprint">phone_number</code> for the phone number to call, and an <code class="prettyprint">entity_name</code> which describes the phone number.</p>
 
 <p>The optional parameters are <code class="prettyprint">attachment_type</code> and <code class="prettyprint">attachment</code> for an optional attachment, <code class="prettyprint">fields</code>, and <code class="prettyprint">choices</code>.</p>
 
@@ -841,7 +841,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <tr>
 <td><code class="prettyprint">instruction</code></td>
 <td>string</td>
-<td>The plaintext instruction of how to make the phone call.</td>
+<td>A markdown-enabled string explaining how to complete the phone call. You can use <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown</a> to show example images, give structure to your instructions, and more.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">phone_number</code></td>
@@ -1004,7 +1004,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 
 <p>This endpoint creates a <code class="prettyprint">comparison</code> task. In this task, one of our workers view the given attachments and do any comparison requested.</p>
 
-<p>This task involves a plaintext <code class="prettyprint">instruction</code>, an array of <code class="prettyprint">attachments</code>, and an <code class="prettyprint">attachment_type</code>.</p>
+<p>This task involves a <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown-enabled</a> <code class="prettyprint">instruction</code>, an array of <code class="prettyprint">attachments</code>, and an <code class="prettyprint">attachment_type</code>.</p>
 
 <p>At least of the <code class="prettyprint">fields</code> or <code class="prettyprint">choices</code> parameters must specified for the data to be returned. <code class="prettyprint">choices</code> is an array of strings from which the worker to choose, and <code class="prettyprint">fields</code> is useful for free-text response. </p>
 
@@ -1035,7 +1035,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <tr>
 <td><code class="prettyprint">instruction</code></td>
 <td>string</td>
-<td>The plaintext instruction of how to compare the attachments.</td>
+<td>A markdown-enabled string explaining how to compare the attachments. You can use <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown</a> to show example images, give structure to your instructions, and more.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">attachment_type</code></td>
@@ -1092,7 +1092,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/annotation"</span> <span class="se">\</span>
   -u <span class="s2">"{{ApiKey}}:"</span> <span class="se">\</span>
   -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
-  -d <span class="nv">instruction</span><span class="o">=</span><span class="s2">"Draw a box around each baby cow and big cow."</span> <span class="se">\</span>
+  -d <span class="nv">instruction</span><span class="o">=</span><span class="s2">"Draw a box around each **baby cow** and **big cow**."</span> <span class="se">\</span>
   -d <span class="nv">attachment_type</span><span class="o">=</span>image <span class="se">\</span>
   -d <span class="nv">attachment</span><span class="o">=</span><span class="s2">"http://i.imgur.com/v4cBreD.jpg"</span> <span class="se">\</span>
   -d <span class="nv">objects_to_annotate</span><span class="o">=</span><span class="s2">"baby cow"</span> <span class="se">\</span>
@@ -1104,7 +1104,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 
 <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'callback_url'</span><span class="p">:</span> <span class="s">'http://www.example.com/callback'</span><span class="p">,</span>
-  <span class="s">'instruction'</span><span class="p">:</span> <span class="s">'Draw a box around each baby cow and big cow.'</span><span class="p">,</span>
+  <span class="s">'instruction'</span><span class="p">:</span> <span class="s">'Draw a box around each **baby cow** and **big cow**'</span><span class="p">,</span>
   <span class="s">'attachment_type'</span><span class="p">:</span> <span class="s">'image'</span><span class="p">,</span>
   <span class="s">'attachment'</span><span class="p">:</span> <span class="s">'http://i.imgur.com/v4cBreD.jpg'</span><span class="p">,</span>
   <span class="s">'objects_to_annotate'</span><span class="p">:</span> <span class="p">[</span><span class="s">'baby cow'</span><span class="p">,</span> <span class="s">'big cow'</span><span class="p">],</span>
@@ -1124,7 +1124,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 
 <span class="kd">var</span> <span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s1">'callback_url'</span><span class="p">:</span> <span class="s1">'http://www.example.com/callback'</span><span class="p">,</span>
-  <span class="s1">'instruction'</span><span class="p">:</span> <span class="s1">'Draw a box around each baby cow and big cow.'</span><span class="p">,</span>
+  <span class="s1">'instruction'</span><span class="p">:</span> <span class="s1">'Draw a box around each **baby cow** and **big cow**'</span><span class="p">,</span>
   <span class="s1">'attachment_type'</span><span class="p">:</span> <span class="s1">'image'</span><span class="p">,</span>
   <span class="s1">'attachment'</span><span class="p">:</span> <span class="s1">'http://i.imgur.com/v4cBreD.jpg'</span><span class="p">,</span>
   <span class="s1">'objects_to_annotate'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'baby cow'</span><span class="p">,</span> <span class="s1">'big cow'</span><span class="p">],</span>
@@ -1157,7 +1157,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
   </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"annotation"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Draw a box around each baby cow and big cow."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Draw a box around each **baby cow** and **big cow**"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"urgency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"day"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image"</span><span class="p">,</span><span class="w">
@@ -1175,7 +1175,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 
 <p><code class="prettyprint">objects_to_annotate</code> is an array of strings describing the different types of objects you&rsquo;d like annotated.</p>
 
-<p>You can optionally provide additional plaintext instructions via the <code class="prettyprint">instruction</code> parameter. </p>
+<p>You can optionally provide additional <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown-enabled</a> instructions via the <code class="prettyprint">instruction</code> parameter. </p>
 
 <p>You can also optionally set <code class="prettyprint">with_labels</code> to <code class="prettyprint">true</code>, which will have Scalers provide labels for each box specifying what type of object it is. The labels will be strings in the <code class="prettyprint">objects_to_annotate</code> list.</p>
 
@@ -1222,7 +1222,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <tr>
 <td><code class="prettyprint">instruction</code> (optional)</td>
 <td>string</td>
-<td>The plaintext instruction of how the bounding boxes should be drawn.</td>
+<td>A markdown-enabled string explaining how to draw the bounding boxes. You can use <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown</a> to show example images, give structure to your instructions, and more.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">attachment_type</code> (optional, default <code class="prettyprint">image</code>)</td>
