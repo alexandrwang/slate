@@ -1266,7 +1266,7 @@ request.get('https://api.scaleapi.com/v1/tasks/', {
 }
 ```
 
-This endpoint retrieves a list of your tasks.
+This is a paged endpoint retrieves a list of your tasks. The tasks will be returned in descending order based on `created_at` time. The pagination is based on the `limit` and `offset` parameters, which determine the page size and how many results to skip.
 
 ### HTTP Request
 
@@ -1276,12 +1276,12 @@ This endpoint retrieves a list of your tasks.
 
 Parameter | Type | Description | Required
 --------- | ---- | ----------- | --------
-`start_time` | ISO 8601 Date | The minimum value of created_at for tasks to be returned | Optional
-`end_time`   | ISO 8601 Date | The maximum value of created_at for tasks to be returned | Optional
-`status`     | string | The status of the task - can be: `completed`, `pending`, or `canceled` | Optional
-`type`       | string | The type of the task - can be: `transcription`, `categorization`, `phonecall`, `comparison`, `annotation`, `datacollection`, or any other task type. | Optional
-`limit`      | integer | The maximum number of results to display per page | Optional
-`offset`     | integer | How many results to skip, for showing the next page | Optional
+`start_time` | ISO 8601 Date | The minimum value of `created_at` for tasks to be returned | optional
+`end_time`   | ISO 8601 Date | The maximum value of `created_at` for tasks to be returned | optional
+`status`     | string | The status of the task - can be: `completed`, `pending`, or `canceled` | optional
+`type`       | string | The type of the task - can be: `transcription`, `categorization`, `phonecall`, `comparison`, `annotation`, `datacollection`, or any other task type. | optional
+`limit`      | integer | A number between 1 and 100, the maximum number of results to display per page | optional, default 100
+`offset`     | integer | The number of results to skip, for showing the next page | optional, default 0
 
 ### Returns
 
