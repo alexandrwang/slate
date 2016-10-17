@@ -951,7 +951,7 @@ The `annotations` field will contain an array of annotations. Each annotation wi
     "task_id": "576c41bf13e36b0600b02b34",
     "completed_at": "2016-06-23T21:54:44.904Z",
     "response": {
-      "category": "big"
+      "category": "red"
     },
     "created_at": "2016-06-23T20:08:31.573Z",
     "callback_url": "http://www.example.com/callback",
