@@ -35,10 +35,11 @@ You can also join our [Slack channel here](https://chat.scaleapi.com/)!
 
 # Client Libraries / SDKs
 
+Currently we have a [Python](https://github.com/scaleapi/scaleapi-python-client) client library available.
+
 We're working hard to build official client libraries as quickly as possible! We intend on releasing SDKs soon for the following languages:
 
 * JavaScript
-* Python
 
 We also have unnoficial SDKs in the following languages:
 
@@ -58,9 +59,9 @@ curl "api_endpoint_here" \
 ```
 
 ```python
-import requests
+import scaleapi
 
-requests.get('api_endpoint_here', auth=('{{ApiKey}}', ''))
+client = scaleapi.ScaleClient({{ApiKey}})
 ```
 
 ```javascript
@@ -175,19 +176,17 @@ curl "https://api.scaleapi.com/v1/task/categorize" \
 ```
 
 ```python
-import requests
+import scaleapi
 
-payload = {
-  'callback_url': 'http://www.example.com/callback',
-  'instruction': 'Is this company public or private?',
-  'attachment_type': 'website',
-  'attachment': 'http://www.google.com/',
-  'categories': ['public', 'private']
-}
+client = scaleapi.ScaleClient({{ApiKey}})
 
-requests.post("https://api.scaleapi.com/v1/task/categorize", 
-  json=payload, 
-  auth=('{{ApiKey}}', ''))
+client.create_categorization_task(
+    callback_url='http://www.example.com/callback',
+    instruction='Is this company public or private?',
+    attachment_type='website',
+    attachment='http://www.google.com/',
+    categories=['public', 'private']
+)
 
 ```
 
@@ -220,7 +219,7 @@ request.post('https://api.scaleapi.com/v1/task/categorize', {
 });
 ```
 
-> The above command returns JSON structured like this:
+> The above command returns an object structured like this:
 
 ```json
 {
@@ -333,31 +332,24 @@ curl "https://api.scaleapi.com/v1/task/transcription" \
 ```
 
 ```python
-import requests
-import json
+import scaleapi
 
-payload = {
-  'callback_url': 'http://www.example.com/callback',
-  'instruction': 'Transcribe the given fields. Then for each news item on the page, transcribe the information for the row.',
-  'attachment_type': 'website',
-  'attachment': 'http://www.google.com/',
-  'fields': {
-    'title': 'Title of Webpage',
-    'top_result': 'Title of the top result'
-  },
-  'row_fields': {
-    'username': 'Username of submitter',
-    'comment_count': 'Number of comments'
-  }
-}
+client = scaleapi.ScaleClient({{ApiKey}})
 
-headers = {"Content-Type": "application/json"}
-
-requests.post("https://api.scaleapi.com/v1/task/transcription", 
-  json=payload, 
-  headers=headers,
-  auth=('{{ApiKey}}', ''))
-
+client.create_transcription_task(
+    callback_url='http://www.example.com/callback',
+    instruction='Transcribe the given fields. Then for each news item on the page, transcribe the information for the row.',
+    attachment_type='website',
+    attachment='http://www.google.com/',
+    fields={
+        'title': 'Title of Webpage',
+        'top_result': 'Title of the top result'
+    },
+    row_fields={
+        'username': 'Username of submitter',
+        'comment_count': 'Number of comments'
+    }
+)
 ```
 
 ```javascript
@@ -396,7 +388,7 @@ request.post('https://api.scaleapi.com/v1/task/transcription', {
 });
 ```
 
-> The above command returns JSON structured like this:
+> The above command returns an object structured like this:
 
 ```json
 {
@@ -498,28 +490,21 @@ curl "https://api.scaleapi.com/v1/task/phonecall" \
   -d choices="He is not happy"
 ```
 ```python
-import requests
-import json
+import scaleapi
 
-payload = {
-  'callback_url': 'http://www.example.com/callback',
-  'instruction': 'Call this person and follow the script provided, recording responses',
-  'phone_number': '5055006865',
-  'entity_name': 'Alexandr Wang',
-  'script': 'Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?',
-  'fields': {
-    'email': 'Email Address',
-  },
-  'choices': ['He is happy', 'He is not happy']
-}
+client = scaleapi.ScaleClient({{ApiKey}})
 
-headers = {"Content-Type": "application/json"}
-
-requests.post("https://api.scaleapi.com/v1/task/phonecall", 
-  json=payload, 
-  headers=headers,
-  auth=('{{ApiKey}}', ''))
-
+client.create_phonecall_task(
+    callback_url='http://www.example.com/callback',
+    instruction='Call this person and follow the script provided, recording responses',
+    phone_number='5055006865',
+    entity_name='Alexandr Wang',
+    script='Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?',
+    fields={
+        'email': 'Email Address',
+    },
+    choices=['He is happy', 'He is not happy']
+)
 ```
 
 ```javascript
@@ -555,7 +540,7 @@ request.post('https://api.scaleapi.com/v1/task/phonecall', {
 });
 ```
 
-> The above command returns JSON structured like this:
+> The above command returns an object structured like this:
 
 ```json
 {
@@ -655,27 +640,20 @@ curl "https://api.scaleapi.com/v1/task/comparison" \
   -d choices="no"
 ```
 ```python
-import requests
-import json
+import scaleapi
 
-payload = {
-  'callback_url': 'http://www.example.com/callback',
-  'instruction': 'Do the objects in these images have the same pattern?',
-  'attachment_type': 'image',
-  'attachments': [
-    'http://i.ebayimg.com/00/$T2eC16dHJGwFFZKjy5ZjBRfNyMC4Ig~~_32.JPG',
-    'http://images.wisegeek.com/checkered-tablecloth.jpg'
-  ],
-  'choices': ['yes', 'no']
-}
+client = scaleapi.ScaleClient({{ApiKey}})
 
-headers = {"Content-Type": "application/json"}
-
-requests.post("https://api.scaleapi.com/v1/task/comparison", 
-  json=payload, 
-  headers=headers,
-  auth=('{{ApiKey}}', ''))
-
+client.create_comparison_task(
+    callback_url='http://www.example.com/callback',
+    instruction='Do the objects in these images have the same pattern?',
+    attachment_type='image',
+    attachments=[
+        'http://i.ebayimg.com/00/$T2eC16dHJGwFFZKjy5ZjBRfNyMC4Ig~~_32.JPG',
+        'http://images.wisegeek.com/checkered-tablecloth.jpg'
+    ],
+    choices=['yes', 'no']
+)
 ```
 
 ```javascript
@@ -710,7 +688,7 @@ request.post('https://api.scaleapi.com/v1/task/comparison', {
 });
 ```
 
-> The above command returns JSON structured like this:
+> The above command returns an object structured like this:
 
 ```json
 {
@@ -798,25 +776,18 @@ curl "https://api.scaleapi.com/v1/task/annotation" \
   -d with_labels=true
 ```
 ```python
-import requests
-import json
+import scaleapi
 
-payload = {
-  'callback_url': 'http://www.example.com/callback',
-  'instruction': 'Draw a box around each **baby cow** and **big cow**',
-  'attachment_type': 'image',
-  'attachment': 'http://i.imgur.com/v4cBreD.jpg',
-  'objects_to_annotate': ['baby cow', 'big cow'],
-  'with_labels': True
-}
+client = scaleapi.ScaleClient({{ApiKey}})
 
-headers = {"Content-Type": "application/json"}
-
-requests.post("https://api.scaleapi.com/v1/task/annotation", 
-  json=payload, 
-  headers=headers,
-  auth=('{{ApiKey}}', ''))
-
+client.create_annotation_task(
+    callback_url='http://www.example.com/callback',
+    instruction='Draw a box around each **baby cow** and **big cow**',
+    attachment_type='image',
+    attachment='http://i.imgur.com/v4cBreD.jpg',
+    objects_to_annotate=['baby cow', 'big cow'],
+    with_labels=True
+)
 ```
 
 ```javascript
@@ -849,7 +820,7 @@ request.post('https://api.scaleapi.com/v1/task/annotation', {
 });
 ```
 
-> The above command returns JSON structured like this:
+> The above command returns an object structured like this:
 
 ```json
 {
@@ -954,26 +925,19 @@ curl "https://api.scaleapi.com/v1/task/datacollection" \
 ```
 
 ```python
-import requests
-import json
+import scaleapi
 
-payload = {
-  'callback_url': 'http://www.example.com/callback',
-  'instruction': 'Find the URL for the hiring page for the company with attached website.',
-  'attachment_type': 'website',
-  'attachment': 'https://www.scaleapi.com/',
-  'fields': {
-    'hiring_page': 'Hiring Page URL'
-  }
-}
+client = scaleapi.ScaleClient({{ApiKey}})
 
-headers = {"Content-Type": "application/json"}
-
-requests.post("https://api.scaleapi.com/v1/task/datacollection",
-  json=payload,
-  headers=headers,
-  auth=('{{ApiKey}}', ''))
-
+client.create_annotation_task(
+    callback_url='http://www.example.com/callback',
+    instruction='Find the URL for the hiring page for the company with attached website.',
+    attachment_type='website',
+    attachment='https://www.scaleapi.com',
+    fields={
+        'hiring_page': 'Hiring Page URL'
+    }
+)
 ```
 
 ```javascript
@@ -1007,7 +971,7 @@ request.post('https://api.scaleapi.com/v1/task/datacollection', {
 });
 ```
 
-> The above command returns JSON structured like this:
+> The above command returns an object structured like this:
 
 ```json
 {
@@ -1145,14 +1109,12 @@ curl "https://api.scaleapi.com/v1/task/{task_id}" \
 ```
 
 ```python
-import requests
+import scaleapi
 
+client = scaleapi.ScaleClient({{ApiKey}})
 task_id = 'YOUR_TASK_ID'
 
-response = requests.get('https://api.scaleapi.com/v1/task/%s' % task_id, auth=('{{ApiKey}}', ''))
-
-# Return dictionary can be accessible in this way
-response_dict = json.loads(response.content)
+task = client.fetch_task(task_id)
 ```
 
 ```javascript
@@ -1177,7 +1139,7 @@ request.get('https://api.scaleapi.com/v1/task/' + task_id + '/', {
 });
 ```
 
-> The above command returns JSON structured like this:
+> The above command returns an object structured like this:
 
 ```json
 {
@@ -1228,15 +1190,12 @@ curl -X POST "https://api.scaleapi.com/v1/task/{task_id}/cancel" \
 ```
 
 ```python
-import requests
-import json
+import scaleapi
 
+client = scaleapi.ScaleClient({{ApiKey}})
 task_id = 'YOUR_TASK_ID'
 
-response = requests.post('https://api.scaleapi.com/v1/task/%s/cancel/' % task_id, auth=('{{ApiKey}}', ''))
-
-# Return dictionary can be accessible in this way
-response_dict = json.loads(response.content)
+task = client.cancel_task(task_id)
 ```
 
 ```javascript
@@ -1261,7 +1220,7 @@ request.post('https://api.scaleapi.com/v1/task/' + task_id + '/cancel/', {
 });
 ```
 
-> The above command returns JSON structured like this:
+> The above command returns an object structured like this:
 
 ```json
 {
@@ -1310,13 +1269,12 @@ curl "https://api.scaleapi.com/v1/tasks" \
 ```
 
 ```python
-import requests
-import json
+import scaleapi
 
-response = requests.get('https://api.scaleapi.com/v1/tasks/', auth=('{{ApiKey}}', ''))
+client = scaleapi.ScaleClient({{ApiKey}})
+task_id = 'YOUR_TASK_ID'
 
-# Return dictionary can be accessible in this way
-response_dict = json.loads(response.content)
+tasklist = client.tasks()
 ```
 
 ```javascript
@@ -1339,7 +1297,7 @@ request.get('https://api.scaleapi.com/v1/tasks/', {
 });
 ```
 
-> The above command returns JSON structured like this:
+> The above command returns an object structured like this:
 
 ```json
 {
