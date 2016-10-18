@@ -1022,7 +1022,7 @@ request.post('https://api.scaleapi.com/v1/task/datacollection', {
     "fields": {
       "hiring_page": "Hiring Page URL"
     },
-    "attachment": "http://www.google.com/",
+    "attachment": "http://www.scaleapi.com/",
     "attachment_type": "website"
   },
   "metadata": {}
