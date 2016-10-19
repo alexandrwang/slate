@@ -61,7 +61,7 @@ curl "api_endpoint_here" \
 ```python
 import scaleapi
 
-client = scaleapi.ScaleClient({{ApiKey}})
+client = scaleapi.ScaleClient('{{ApiKey}}')
 ```
 
 ```javascript
@@ -178,7 +178,7 @@ curl "https://api.scaleapi.com/v1/task/categorize" \
 ```python
 import scaleapi
 
-client = scaleapi.ScaleClient({{ApiKey}})
+client = scaleapi.ScaleClient('{{ApiKey}}')
 
 client.create_categorization_task(
     callback_url='http://www.example.com/callback',
@@ -334,7 +334,7 @@ curl "https://api.scaleapi.com/v1/task/transcription" \
 ```python
 import scaleapi
 
-client = scaleapi.ScaleClient({{ApiKey}})
+client = scaleapi.ScaleClient('{{ApiKey}}')
 
 client.create_transcription_task(
     callback_url='http://www.example.com/callback',
@@ -492,7 +492,7 @@ curl "https://api.scaleapi.com/v1/task/phonecall" \
 ```python
 import scaleapi
 
-client = scaleapi.ScaleClient({{ApiKey}})
+client = scaleapi.ScaleClient('{{ApiKey}}')
 
 client.create_phonecall_task(
     callback_url='http://www.example.com/callback',
@@ -642,7 +642,7 @@ curl "https://api.scaleapi.com/v1/task/comparison" \
 ```python
 import scaleapi
 
-client = scaleapi.ScaleClient({{ApiKey}})
+client = scaleapi.ScaleClient('{{ApiKey}}')
 
 client.create_comparison_task(
     callback_url='http://www.example.com/callback',
@@ -778,7 +778,7 @@ curl "https://api.scaleapi.com/v1/task/annotation" \
 ```python
 import scaleapi
 
-client = scaleapi.ScaleClient({{ApiKey}})
+client = scaleapi.ScaleClient('{{ApiKey}}')
 
 client.create_annotation_task(
     callback_url='http://www.example.com/callback',
@@ -927,7 +927,7 @@ curl "https://api.scaleapi.com/v1/task/datacollection" \
 ```python
 import scaleapi
 
-client = scaleapi.ScaleClient({{ApiKey}})
+client = scaleapi.ScaleClient('{{ApiKey}}')
 
 client.create_annotation_task(
     callback_url='http://www.example.com/callback',
@@ -1111,7 +1111,7 @@ curl "https://api.scaleapi.com/v1/task/{task_id}" \
 ```python
 import scaleapi
 
-client = scaleapi.ScaleClient({{ApiKey}})
+client = scaleapi.ScaleClient('{{ApiKey}}')
 task_id = 'YOUR_TASK_ID'
 
 task = client.fetch_task(task_id)
@@ -1192,7 +1192,7 @@ curl -X POST "https://api.scaleapi.com/v1/task/{task_id}/cancel" \
 ```python
 import scaleapi
 
-client = scaleapi.ScaleClient({{ApiKey}})
+client = scaleapi.ScaleClient('{{ApiKey}}')
 task_id = 'YOUR_TASK_ID'
 
 task = client.cancel_task(task_id)
@@ -1271,7 +1271,7 @@ curl "https://api.scaleapi.com/v1/tasks" \
 ```python
 import scaleapi
 
-client = scaleapi.ScaleClient({{ApiKey}})
+client = scaleapi.ScaleClient('{{ApiKey}}')
 task_id = 'YOUR_TASK_ID'
 
 tasklist = client.tasks()
