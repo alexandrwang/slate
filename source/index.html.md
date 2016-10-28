@@ -773,7 +773,13 @@ curl "https://api.scaleapi.com/v1/task/annotation" \
   -d attachment="http://i.imgur.com/v4cBreD.jpg" \
   -d objects_to_annotate="baby cow" \
   -d objects_to_annotate="big cow" \
-  -d with_labels=true
+  -d with_labels=true \
+  -d examples[0][correct]=true \
+  -d examples[0][image]="http://i.imgur.com/lj6e98s.jpg" \
+  -d examples[0][explanation]="The boxes are tight and accurate" \
+  -d examples[1][correct]=false \
+  -d examples[1][image]="http://i.imgur.com/HIrvIDq.jpg" \
+  -d examples[1][explanation]="The boxes are neither accurate nor complete"
 ```
 ```python
 import scaleapi
@@ -786,7 +792,18 @@ client.create_annotation_task(
     attachment_type='image',
     attachment='http://i.imgur.com/v4cBreD.jpg',
     objects_to_annotate=['baby cow', 'big cow'],
-    with_labels=True
+    with_labels=True,
+    examples=[
+    {
+        'correct': False,
+        'image': 'http://i.imgur.com/lj6e98s.jpg',
+        'explanation': 'The boxes are tight and accurate'
+    },
+    {
+        'correct': True,
+        'image': 'http://i.imgur.com/HIrvIDq.jpg',
+        'explanation': 'The boxes are neither accurate nor complete'
+    }]
 )
 ```
 
@@ -800,7 +817,18 @@ var payload = {
   'attachment_type': 'image',
   'attachment': 'http://i.imgur.com/v4cBreD.jpg',
   'objects_to_annotate': ['baby cow', 'big cow'],
-  'with_labels': true
+  'with_labels': true,
+  'examples': [
+  {
+      'correct': false,
+      'image': 'http://i.imgur.com/lj6e98s.jpg',
+      'explanation': 'The boxes are tight and accurate'
+  },
+  {
+      'correct': true,
+      'image': 'http://i.imgur.com/HIrvIDq.jpg',
+      'explanation': 'The boxes are neither accurate nor complete'
+  }]
 }
 
 request.post('https://api.scaleapi.com/v1/task/annotation', {
@@ -832,10 +860,25 @@ request.post('https://api.scaleapi.com/v1/task/annotation', {
   "instruction": "Draw a box around each **baby cow** and **big cow**",
   "urgency": "day",
   "params": {
+    "examples": [
+      {
+        "explanation": "The boxes are tight and accurate",
+        "image": "http://i.imgur.com/lj6e98s.jpg",
+        "correct": true
+      },
+      {
+        "explanation": "The boxes are neither accurate nor complete",
+        "image": "http://i.imgur.com/HIrvIDq.jpg",
+        "correct": false
+      }
+    ],
+    "with_labels": true,
+    "objects_to_annotate": [
+      "baby cow",
+      "big cow"
+    ],
     "attachment_type": "image",
-    "attachment": "http://i.imgur.com/v4cBreD.jpg",
-    "objects_to_annotate": ["baby cow", "big cow"],
-    "with_labels": true
+    "attachment": "http://i.imgur.com/v4cBreD.jpg"
   },
   "metadata": {}
 }
@@ -851,6 +894,8 @@ You can optionally provide additional [markdown-enabled](https://github.com/adam
 
 You can also optionally set `with_labels` to `true`, which will have Scalers provide labels for each box specifying what type of object it is. The labels will be strings in the `objects_to_annotate` list.
 
+It is recommended, but not required, for you to provide a list of examples, each of which detail either a correct or incorrect result.
+
 If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
 
 ### HTTP Request
@@ -865,6 +910,7 @@ Parameter | Type | Description
 `objects_to_annotate` | [string] | An array of strings describing which objects you'd like bounding boxes to be drawn around. Each string should be singular and self-descriptive (ex: "cat", "street sign", "potato")
 `attachment` | string | A URL to the image you'd like to be annotated with bounding boxes.
 `with_labels` (optional, default `false`) | boolean | Specifies whether you'd like labels for each bounding box in the response. Each label will be a member of the `objects_to_annotate` array.
+`examples` (optional) | object | A list of examples. Each example requires a `correct` boolean and an `image` URL of the example. Optionally, provide an `explanation` of the image.
 `urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
 `instruction` (optional) | string | A markdown-enabled string explaining how to draw the bounding boxes. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the annotation endpoint.
