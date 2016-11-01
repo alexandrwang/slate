@@ -897,7 +897,7 @@ If successful, Scale will immediately return the generated task object, of which
 Parameter | Type | Description
 --------- | ---- | -------
 `callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed.
-`objects_to_annotate` | [string] | An array of strings describing which objects you'd like bounding boxes to be drawn around. Each string should be singular and self-descriptive (ex: "cat", "street sign", "potato")
+`objects_to_annotate` | [string] | An array of strings describing which objects you'd like bounding boxes to be drawn around. Each string should be singular and self-descriptive (ex: "cat", "street sign", "potato"). You may include at most 6 objects.
 `attachment` | string | A URL to the image you'd like to be annotated with bounding boxes.
 `with_labels` (optional, default `false`) | boolean | Specifies whether you'd like labels for each bounding box in the response. Each label will be a member of the `objects_to_annotate` array.
 `examples` (optional) | [object] | A list of examples. Each example requires a `correct` boolean indicating whether it is a correct or incorrect example and an `image` URL to the example image. Optionally, provide an `explanation` for the example explaining why it is correct or incorrect.
