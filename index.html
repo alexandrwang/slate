@@ -644,7 +644,7 @@ We limit the number of rows you may transcribe per API request to 10 rows. If yo
 <tr>
 <td><code class="prettyprint">attachment_type</code></td>
 <td>string</td>
-<td>One of <code class="prettyprint">image</code>, <code class="prettyprint">video</code>, <code class="prettyprint">audio</code>, or <code class="prettyprint">pdf</code>. Describes what type of file the attachment is.</td>
+<td>One of <code class="prettyprint">image</code> or <code class="prettyprint">pdf</code>. Describes what type of file the attachment is.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">attachment</code></td>
@@ -1440,6 +1440,159 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have a <code class="prettyprint">fields</code> object.</p>
 
 <p><code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.</p>
+
+<h1 id="create-audio-transcription-task">Create Audio Transcription Task</h1>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/audiotranscription"</span> <span class="se">\</span>
+  -u <span class="s2">"{{ApiKey}}:"</span> <span class="se">\</span>
+  -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
+  -d <span class="nv">attachment_type</span><span class="o">=</span>audio <span class="se">\</span>
+  -d <span class="nv">attachment</span><span class="o">=</span><span class="s2">"https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav"</span> <span class="se">\</span>
+  -d <span class="nv">verbatim</span><span class="o">=</span><span class="nb">false</span>
+</code></pre>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">scaleapi</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">scaleapi</span><span class="o">.</span><span class="n">ScaleClient</span><span class="p">(</span><span class="s">'{{ApiKey}}'</span><span class="p">)</span>
+
+<span class="n">client</span><span class="o">.</span><span class="n">create_audiotranscription_task</span><span class="p">(</span>
+    <span class="n">callback_url</span><span class="o">=</span><span class="s">'http://www.example.com/callback'</span><span class="p">,</span>
+    <span class="n">attachment_type</span><span class="o">=</span><span class="s">'audio'</span><span class="p">,</span>
+    <span class="n">attachment</span><span class="o">=</span><span class="s">'https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav'</span><span class="p">,</span>
+    <span class="n">verbatim</span><span class="o">=</span><span class="bp">False</span>
+<span class="p">)</span>
+</code></pre>
+<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"request"</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">SCALE_API_KEY</span> <span class="o">=</span> <span class="s1">'{{ApiKey}}'</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'callback_url'</span><span class="p">:</span> <span class="s1">'http://www.example.com/callback'</span><span class="p">,</span>
+  <span class="s1">'attachment_type'</span><span class="p">:</span> <span class="s1">'audio'</span><span class="p">,</span>
+  <span class="s1">'attachment'</span><span class="p">:</span> <span class="s1">'https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav'</span><span class="p">,</span>
+  <span class="s1">'verbatim'</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">};</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'https://api.scaleapi.com/v1/task/audiotranscription'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="s1">'auth'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'user'</span><span class="p">:</span> <span class="nx">SCALE_API_KEY</span><span class="p">,</span>
+    <span class="s1">'pass'</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
+    <span class="s1">'sendImmediately'</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">},</span>
+  <span class="s1">'form'</span><span class="err">:</span> <span class="nx">payload</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns an object structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"582bfe0ee5d51cda4e903f4a"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-11-16T06:34:54.884Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.example.com/callback"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"audiotranscription"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"urgency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"day"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"instruction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Please transcribe the attached audio file."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"verbatim"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"attachment_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"audio"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"attachment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"is_test"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint creates an <code class="prettyprint">audiotranscription</code> task. In this task, we will transcribe the speech from the audio file you specify into plaintext.</p>
+
+<p>You are required to provide a URL to the audio file as the <code class="prettyprint">attachment</code>. The <code class="prettyprint">attachment_type</code> must be <code class="prettyprint">audio</code>.</p>
+
+<p>If you have more specific instructions about how to transcribe the audio file, you may optionally provide a <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown-enabled</a> <code class="prettyprint">instruction</code>.</p>
+
+<p>You may optionally specify <code class="prettyprint">verbatim</code> to <code class="prettyprint">true</code> or <code class="prettyprint">false</code>, determining whether non-words such as &ldquo;um&rdquo; and &ldquo;hm&rdquo; will be included in the transcript. The default is <code class="prettyprint">false</code>.</p>
+
+<p>If successful, Scale will immediately return the generated task object, of which you should at least store the <code class="prettyprint">task_id</code>.</p>
+
+<p>The parameters <code class="prettyprint">attachment_type</code>, <code class="prettyprint">attachment</code>, and <code class="prettyprint">verbatim</code> will be stored in the <code class="prettyprint">params</code> object of the constructed <code class="prettyprint">task</code> object.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://api.scaleapi.com/v1/task/audiotranscription</code></p>
+
+<h3 id="parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">callback_url</code></td>
+<td>string</td>
+<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">instruction</code> (optional)</td>
+<td>string</td>
+<td>An markdown-enabled string specifying any special instructions for the audio transcription. You can use <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown</a> to show examples, give structure to your instructions, and more.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">attachment</code></td>
+<td>string</td>
+<td>A URL pointing to the audio file attachment.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">attachment_type</code> (optional, default <code class="prettyprint">audio</code>)</td>
+<td>string</td>
+<td>Describes what type of file the attachment is. Only accepts <code class="prettyprint">audio</code>.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">verbatim</code> (optional, default <code class="prettyprint">false</code>)</td>
+<td>boolean</td>
+<td>Specifies whether or not to include non-words (ex: &ldquo;um&rdquo;, &ldquo;hm&rdquo;) in the transcript.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">urgency</code> (optional, default <code class="prettyprint">day</code>)</td>
+<td>string</td>
+<td>A string describing the urgency of the response. One of <code class="prettyprint">immediate</code>, <code class="prettyprint">day</code>, or <code class="prettyprint">week</code>, where <code class="prettyprint">immediate</code> is a one-hour response time.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">metadata</code> (optional, default <code class="prettyprint">{}</code>)</td>
+<td>object</td>
+<td>A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.</td>
+</tr>
+</tbody></table>
+
+<h2 id="response-on-callback">Response on Callback</h2>
+
+<blockquote>
+<p>Example response object on success</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"transcript"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The avocado is a pear-shaped fruit with leathery skin, smooth edible flesh, and a large stone."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<blockquote>
+<p>Example response object on error or issue</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The audio file cannot be loaded."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have either an <code class="prettyprint">error</code> field or a <code class="prettyprint">transcript</code> field.</p>
+
+<p>If the transcription was completed successfully, the transcript will be stored in plaintext under the <code class="prettyprint">transcript</code> field.</p>
+
+<p>If there was an error or issue during transcription, the error will be detailed in the <code class="prettyprint">error</code> field, and a partial transcript (if applicable) will be stored in the <code class="prettyprint">transcript</code> field.</p>
 
 <h1 id="callbacks">Callbacks</h1>
 
