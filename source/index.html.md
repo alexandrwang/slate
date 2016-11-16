@@ -439,7 +439,7 @@ Parameter | Type | Description
 --------- | ---- | -------
 `callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed.
 `instruction` | string | A markdown-enabled string explaining how to transcribe the attachment. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
-`attachment_type` | string | One of `image`, `video`, `audio`, or `pdf`. Describes what type of file the attachment is.
+`attachment_type` | string | One of `image` or `pdf`. Describes what type of file the attachment is.
 `attachment` | string | The attachment to be transcribed. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
 `fields` (optional if using `row_fields`) | dictionary | A dictionary corresponding to the fields to be transcribed. Keys are the keys you'd like the fields to be returned under, and values are descriptions to be shown to human workers.
 `row_fields` (optional if using `fields`) | dictionary | If your transcription requires a transcription of a variable number of row items, then this dictionary describes the fields for these rows. The format is the same as `fields`.
@@ -1070,6 +1070,131 @@ Parameter | Type | Description
 The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have a `fields` object.
 
 `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
+
+# Create Audio Transcription Task
+
+```shell
+curl "https://api.scaleapi.com/v1/task/audiotranscription" \
+  -u "{{ApiKey}}:" \
+  -d callback_url="http://www.example.com/callback" \
+  -d attachment_type=audio \
+  -d attachment="https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav" \
+  -d verbatim=false
+```
+
+```python
+import scaleapi
+
+client = scaleapi.ScaleClient('{{ApiKey}}')
+
+client.create_audiotranscription_task(
+    callback_url='http://www.example.com/callback',
+    attachment_type='audio',
+    attachment='https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav',
+    verbatim=False
+)
+```
+
+```javascript
+var request = require("request");
+var SCALE_API_KEY = '{{ApiKey}}';
+
+var payload = {
+  'callback_url': 'http://www.example.com/callback',
+  'attachment_type': 'audio',
+  'attachment': 'https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav',
+  'verbatim': false
+};
+
+request.post('https://api.scaleapi.com/v1/task/audiotranscription', {
+  'auth': {
+    'user': SCALE_API_KEY,
+    'pass': '',
+    'sendImmediately': true
+  },
+  'form': payload
+}, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    console.log(body);
+  } else {
+    console.log(error);
+    console.log(response.statusCode);
+  }
+});
+```
+
+> The above command returns an object structured like this:
+
+```json
+{
+  "task_id": "582bfe0ee5d51cda4e903f4a",
+  "created_at": "2016-11-16T06:34:54.884Z",
+  "callback_url": "http://www.example.com/callback",
+  "type": "audiotranscription",
+  "status": "pending",
+  "urgency": "day",
+  "instruction": "Please transcribe the attached audio file.",
+  "params": {
+    "verbatim": false,
+    "attachment_type": "audio",
+    "attachment": "https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav"
+  },
+  "is_test": true,
+  "metadata": {}
+}
+```
+
+This endpoint creates an `audiotranscription` task. In this task, we will transcribe the speech from the audio file you specify into plaintext.
+
+You are required to provide a URL to the audio file as the `attachment`. The `attachment_type` must be `audio`.
+
+If you have more specific instructions about how to transcribe the audio file, you may optionally provide a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction`.
+
+You may optionally specify `verbatim` to `true` or `false`, determining whether non-words such as "um" and "hm" will be included in the transcript. The default is `false`.
+
+If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
+
+The parameters `attachment_type`, `attachment`, and `verbatim` will be stored in the `params` object of the constructed `task` object.
+
+### HTTP Request
+
+`POST https://api.scaleapi.com/v1/task/audiotranscription`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ---- | -------
+`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed.
+`instruction` (optional) | string | An markdown-enabled string specifying any special instructions for the audio transcription. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show examples, give structure to your instructions, and more.
+`attachment` | string | A URL pointing to the audio file attachment.
+`attachment_type` (optional, default `audio`) | string | Describes what type of file the attachment is. Only accepts `audio`.
+`verbatim` (optional, default `false`) | boolean | Specifies whether or not to include non-words (ex: "um", "hm") in the transcript.
+`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
+`metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
+
+## Response on Callback
+
+> Example response object on success
+
+```json
+{
+  "transcript": "The avocado is a pear-shaped fruit with leathery skin, smooth edible flesh, and a large stone."
+}
+```
+
+> Example response object on error or issue
+
+```json
+{
+  "error": "The audio file cannot be loaded."
+}
+```
+
+The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have either an `error` field or a `transcript` field.
+
+If the transcription was completed successfully, the transcript will be stored in plaintext under the `transcript` field.
+
+If there was an error or issue during transcription, the error will be detailed in the `error` field, and a partial transcript (if applicable) will be stored in the `transcript` field.
 
 # Callbacks
 
