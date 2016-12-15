@@ -322,13 +322,11 @@ If `category_ids` was provided, there will be another field `category_id` corres
 curl "https://api.scaleapi.com/v1/task/transcription" \
   -u "{{ApiKey}}:" \
   -d callback_url="http://www.example.com/callback" \
-  -d instruction="Transcribe the given fields. Then for each news item on the page, transcribe the information for the row." \
+  -d instruction="Transcribe the given fields." \
   -d attachment_type=website \
-  -d attachment="http://www.google.com/" \
+  -d attachment="http://news.ycombinator.com/" \
   -d fields[title]="Title of Webpage" \
-  -d fields[top_result]="Title of the top result" \
-  -d row_fields[username]="Username of submitter" \
-  -d row_fields[comment_count]="Number of comments"
+  -d fields[top_result]="Title of the top result"
 ```
 
 ```python
@@ -338,16 +336,12 @@ client = scaleapi.ScaleClient('{{ApiKey}}')
 
 client.create_transcription_task(
     callback_url='http://www.example.com/callback',
-    instruction='Transcribe the given fields. Then for each news item on the page, transcribe the information for the row.',
+    instruction='Transcribe the given fields.',
     attachment_type='website',
-    attachment='http://www.google.com/',
+    attachment='http://news.ycombinator.com/',
     fields={
         'title': 'Title of Webpage',
         'top_result': 'Title of the top result'
-    },
-    row_fields={
-        'username': 'Username of submitter',
-        'comment_count': 'Number of comments'
     }
 )
 ```
@@ -358,16 +352,12 @@ var SCALE_API_KEY = '{{ApiKey}}';
 
 var payload = {
   'callback_url': 'http://www.example.com/callback',
-  'instruction': 'Transcribe the given fields. Then for each news item on the page, transcribe the information for the row.',
+  'instruction': 'Transcribe the given fields.',
   'attachment_type': 'website',
-  'attachment': 'http://www.google.com/',
+  'attachment': 'http://news.ycombinator.com/',
   'fields': {
     'title': 'Title of Webpage',
     'top_result': 'Title of the top result'
-  },
-  'row_fields': {
-    'username': 'Username of submitter',
-    'comment_count': 'Number of comments'
   }
 };
 
@@ -397,18 +387,14 @@ request.post('https://api.scaleapi.com/v1/task/transcription', {
   "callback_url": "http://www.example.com/callback",
   "type": "transcription",
   "status": "pending",
-  "instruction": "Transcribe the given fields. Then for each news item on the page, transcribe the information for the row.",
+  "instruction": "Transcribe the given fields.",
   "urgency": "day",
   "params": {
-    "row_fields": {
-      "username": "Username of submitter",
-      "comment_count": "Number of comments"
-    },
     "fields": {
       "title": "Title of Webpage",
       "top_result": "Title of the top result"
     },
-    "attachment": "http://www.google.com/",
+    "attachment": "http://news.ycombinator.com/",
     "attachment_type": "website"
   },
   "metadata": {}
@@ -417,17 +403,13 @@ request.post('https://api.scaleapi.com/v1/task/transcription', {
 
 This endpoint creates a `transcription` task. In this task, one of our workers will read an attachment and arbitrarily transcribe any information you'd like. Example use cases could be transcribing information from PDFs, manually scraping a web page for information, etc.
 
-This task involves a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction` about how to transcribe the attachment, an `attachment` of what you'd like to transcribe, an `attachment_type`, and at least one of `fields` and `row_fields`. `fields` is a dictionary which describes items you'd like transcribed once per attachment, and `row_fields` is a dictionary which describes items which need to be transcribed per row in the attachment.
+This task involves a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction` about how to transcribe the attachment, an `attachment` of what you'd like to transcribe, an `attachment_type`, and `fields`. `fields` is a dictionary which describes items you'd like transcribed for the attachment. Examples are phone numbers, names, etc.
 
-At least one of `fields` or `row_fields` is required. Both `fields` and `row_fields` are dictionaries where the keys are the keys you'd like the results to be returned under, and values are the descriptions you'd like to show the human worker.
+`fields` is a dictionary where the keys are the keys you'd like the results to be returned under, and values are the descriptions you'd like to show the human Scaler.
 
 If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
 
-The parameters `attachment_type`, `attachment`, `fields`, and `row_fields` will be stored in the `params` object of the constructed `task` object.
-
-<aside class="notice">
-We limit the number of rows you may transcribe per API request to 10 rows. If you need more rows, send multiple API requests.
-</aside>
+The parameters `attachment_type`, `attachment`, and `fields` will be stored in the `params` object of the constructed `task` object.
 
 ### HTTP Request
 
@@ -441,39 +423,26 @@ Parameter | Type | Description
 `instruction` | string | A markdown-enabled string explaining how to transcribe the attachment. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` | string | One of `image` or `pdf`. Describes what type of file the attachment is.
 `attachment` | string | The attachment to be transcribed. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
-`fields` (optional if using `row_fields`) | dictionary | A dictionary corresponding to the fields to be transcribed. Keys are the keys you'd like the fields to be returned under, and values are descriptions to be shown to human workers.
-`row_fields` (optional if using `fields`) | dictionary | If your transcription requires a transcription of a variable number of row items, then this dictionary describes the fields for these rows. The format is the same as `fields`.
+`fields` | object | A dictionary corresponding to the fields to be transcribed. Keys are the keys you'd like the fields to be returned under, and values are descriptions to be shown to human workers.
 `urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
 ## Response on Callback
 
-> Example response object if both `fields` and `row_fields` are specified
+> Example response object
 
 ```json
 {
   "fields": {
     "title": "Some Title",
     "top_result": "The Top Result or Something"
-  },
-  "rows": [
-    {
-      "username": "connaissance",
-      "comment_count": "12"
-    },
-    {
-      "username": "alexandr_wang",
-      "comment_count": "132"
-    }
-  ]
+  }
 }
 ```
 
-The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have either a `fields` field, a `rows` field, or both.
+The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have a `fields` field.
 
-`fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value. 
-
-`rows` will be an array of such dictionaries, with keys corresponding to the keys you provided in the parameters, and values corresponding to the transcribed value.
+`fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
 
 # Create Phone Call Task
 
@@ -965,7 +934,7 @@ import scaleapi
 
 client = scaleapi.ScaleClient('{{ApiKey}}')
 
-client.create_annotation_task(
+client.create_datacollection_task(
     callback_url='http://www.example.com/callback',
     instruction='Find the URL for the hiring page for the company with attached website.',
     attachment_type='website',
