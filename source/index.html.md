@@ -1147,7 +1147,8 @@ Parameter | Type | Description
 
 ```json
 {
-  "transcript": "The avocado is a pear-shaped fruit with leathery skin, smooth edible flesh, and a large stone."
+  "transcript": "The avocado is a pear-shaped fruit with leathery skin, smooth edible flesh, and a large stone.",
+  "duration": 5.106188
 }
 ```
 
@@ -1159,9 +1160,9 @@ Parameter | Type | Description
 }
 ```
 
-The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have either an `error` field or a `transcript` field.
+The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have either an `error` field or a `transcript` and `duration` field.
 
-If the transcription was completed successfully, the transcript will be stored in plaintext under the `transcript` field.
+If the transcription was completed successfully, the transcript will be stored in plaintext under the `transcript` field. It will also contain a `duration` field, which stores the duration of the audio file in seconds.
 
 If there was an error or issue during transcription, the error will be detailed in the `error` field, and a partial transcript (if applicable) will be stored in the `transcript` field.
 
