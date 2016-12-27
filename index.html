@@ -1541,7 +1541,8 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <p>Example response object on success</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"transcript"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The avocado is a pear-shaped fruit with leathery skin, smooth edible flesh, and a large stone."</span><span class="w">
+  </span><span class="nt">"transcript"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The avocado is a pear-shaped fruit with leathery skin, smooth edible flesh, and a large stone."</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">5.106188</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -1553,9 +1554,9 @@ For low volume, we currently only support calling US numbers. For higher volume 
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have either an <code class="prettyprint">error</code> field or a <code class="prettyprint">transcript</code> field.</p>
+<p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have either an <code class="prettyprint">error</code> field or a <code class="prettyprint">transcript</code> and <code class="prettyprint">duration</code> field.</p>
 
-<p>If the transcription was completed successfully, the transcript will be stored in plaintext under the <code class="prettyprint">transcript</code> field.</p>
+<p>If the transcription was completed successfully, the transcript will be stored in plaintext under the <code class="prettyprint">transcript</code> field. It will also contain a <code class="prettyprint">duration</code> field, which stores the duration of the audio file in seconds.</p>
 
 <p>If there was an error or issue during transcription, the error will be detailed in the <code class="prettyprint">error</code> field, and a partial transcript (if applicable) will be stored in the <code class="prettyprint">transcript</code> field.</p>
 
