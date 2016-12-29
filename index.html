@@ -1485,6 +1485,10 @@ For low volume, we currently only support calling US numbers. For higher volume 
 
 <p>The parameters <code class="prettyprint">attachment_type</code>, <code class="prettyprint">attachment</code>, and <code class="prettyprint">verbatim</code> will be stored in the <code class="prettyprint">params</code> object of the constructed <code class="prettyprint">task</code> object.</p>
 
+<aside class="notice">
+The maximum length of an audio file to be transcribed is 30 minutes, and we will only transcribe in English. Any audio file longer than that will return an error.
+</aside>
+
 <h3 id="http-request">HTTP Request</h3>
 
 <p><code class="prettyprint">POST https://api.scaleapi.com/v1/task/audiotranscription</code></p>
