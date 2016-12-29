@@ -1125,6 +1125,10 @@ If successful, Scale will immediately return the generated task object, of which
 
 The parameters `attachment_type`, `attachment`, and `verbatim` will be stored in the `params` object of the constructed `task` object.
 
+<aside class="notice">
+The maximum length of an audio file to be transcribed is 30 minutes, and we will only transcribe in English. Any audio file longer than that will return an error.
+</aside>
+
 ### HTTP Request
 
 `POST https://api.scaleapi.com/v1/task/audiotranscription`
