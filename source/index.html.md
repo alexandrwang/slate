@@ -135,6 +135,7 @@ The task object represents a single task that you create with Scale and is compl
       "small"
     ]
   },
+  "callback_succeeded": true,
   "response": {
     "category": "big"
   },
@@ -154,6 +155,7 @@ Attribute | Type | Description
 `status` | string | The status of the task, one of `pending`, `completed`, or `canceled`.
 `created_at` | timestamp | A string of the UTC timestamp of when the task was created.
 `completed_at` | timestamp | A string of the UTC timestamp of when the task was completed. This will only be filled in after it is completed.
+`callback_succeeded` | boolean | A boolean stating whether or not the callback succeeded. If the callback returns with a 200 status code, the value will be `true`. If the callback fails to return a 200 status code through all retries, then the value will be `false`.
 `metadata` | object, default `{}` | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
 ## Metadata
@@ -1208,7 +1210,9 @@ If there was an error or issue during transcription, the error will be detailed 
 On your tasks, you will be required to supply a `callback_url`, a fully qualified URL that we will POST with the results of the task when completed. The data will be served as a JSON body (`application/json`). Alternately,
 you can set a default callback URL in your profile, which will be used for tasks that do not specify one.
 
-You should respond to the POST request with a 200 status code. If we do not receive a 200 status code, we will retry one more time.
+You should respond to the POST request with a 200 status code. If we do not receive a 200 status code, we will continue to retry up to 20 times over the course of the next 24 hours.
+
+If we receive a 200 status code, the task will be populated with a `true` value for the `callback_succeeded` parameter. Otherwise, if we do not recieve a 200 status code on all retries, the task will be populated with a `false` value for the `callback_succeeded` parameter.
 
 ### Getting Started
 
