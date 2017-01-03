@@ -241,6 +241,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
       </span><span class="s2">"small"</span><span class="w">
     </span><span class="p">]</span><span class="w">
   </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"callback_succeeded"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"big"</span><span class="w">
   </span><span class="p">},</span><span class="w">
@@ -304,6 +305,11 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <td><code class="prettyprint">completed_at</code></td>
 <td>timestamp</td>
 <td>A string of the UTC timestamp of when the task was completed. This will only be filled in after it is completed.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">callback_succeeded</code></td>
+<td>boolean</td>
+<td>A boolean stating whether or not the callback succeeded. If the callback returns with a 200 status code, the value will be <code class="prettyprint">true</code>. If the callback fails to return a 200 status code through all retries, then the value will be <code class="prettyprint">false</code>.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">metadata</code></td>
@@ -1602,7 +1608,9 @@ The maximum length of an audio file to be transcribed is 30 minutes, and we will
 <p>On your tasks, you will be required to supply a <code class="prettyprint">callback_url</code>, a fully qualified URL that we will POST with the results of the task when completed. The data will be served as a JSON body (<code class="prettyprint">application/json</code>). Alternately,
 you can set a default callback URL in your profile, which will be used for tasks that do not specify one.</p>
 
-<p>You should respond to the POST request with a 200 status code. If we do not receive a 200 status code, we will retry one more time.</p>
+<p>You should respond to the POST request with a 200 status code. If we do not receive a 200 status code, we will continue to retry up to 20 times over the course of the next 24 hours.</p>
+
+<p>If we receive a 200 status code, the task will be populated with a <code class="prettyprint">true</code> value for the <code class="prettyprint">callback_succeeded</code> parameter. Otherwise, if we do not recieve a 200 status code on all retries, the task will be populated with a <code class="prettyprint">false</code> value for the <code class="prettyprint">callback_succeeded</code> parameter.</p>
 
 <h3 id="getting-started">Getting Started</h3>
 
