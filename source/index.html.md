@@ -35,18 +35,14 @@ You can also join our [Slack channel here](https://chat.scaleapi.com/)!
 
 # Client Libraries / SDKs
 
-Currently we have a [Python](https://github.com/scaleapi/scaleapi-python-client) client library available.
-
-We're working hard to build official client libraries as quickly as possible! We intend on releasing SDKs soon for the following languages:
-
-* JavaScript
+Currently we have [Python](https://github.com/scaleapi/scaleapi-python-client) and [Node.js](https://github.com/scaleapi/scaleapi-node) client libraries available.
 
 We also have unnoficial SDKs in the following languages:
 
 * [Ruby](https://github.com/wikiti/scaleapi-ruby) (thanks to [wikiti](https://github.com/wikiti)!)
 * [Android SDK](https://github.com/vanshg/Scale) (thanks to [vanshg](https://github.com/vanshg)!)
 
-[Let us know](mailto:hello@scaleapi.com) if you want (or are interested in writing) a library for a language not represented here, or if you’re eagerly waiting for us to get our JavaScript/Python SDKs out the door!
+[Let us know](mailto:hello@scaleapi.com) if you want (or are interested in writing) a library for a language not represented here!
 
 # Authentication
 
@@ -65,23 +61,9 @@ client = scaleapi.ScaleClient('{{ApiKey}}')
 ```
 
 ```javascript
-var request = require("request");
-var SCALE_API_KEY = '{{ApiKey}}';
+var scaleapi = require('scaleapi');
 
-request.get('api_endpoint_here', {
-  'auth': {
-    'user': SCALE_API_KEY,
-    'pass': '',
-    'sendImmediately': true
-  }
-}, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log(body);
-  } else {
-    console.log(error);
-    console.log(response.statusCode);
-  }
-});
+var client = scaleapi.ScaleClient('{{ApiKey}}');
 ```
 
 > <span ng-if="!user.testApiKey">You must replace <code>{{ApiKey}}</code> with your personal API key. If you <a href="https://dashboard.scaleapi.com/signup">sign up</a> or <a href="https://dashboard.scaleapi.com/login">log in</a>, your API key will be automatically filled in the docs.</span>
@@ -193,31 +175,18 @@ client.create_categorization_task(
 ```
 
 ```javascript
-var request = require("request");
-var SCALE_API_KEY = '{{ApiKey}}';
+var scaleapi = require('scaleapi');
 
-var payload = {
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+client.createCategorizationTask({
   'callback_url': 'http://www.example.com/callback',
   'instruction': 'Is this company public or private?',
   'attachment_type': 'website',
   'attachment': 'http://www.google.com/',
   'categories': ['public', 'private']
-};
-
-request.post('https://api.scaleapi.com/v1/task/categorize', {
-  'auth': {
-    'user': SCALE_API_KEY,
-    'pass': '',
-    'sendImmediately': true
-  },
-  'form': payload
-}, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log(body);
-  } else {
-    console.log(error);
-    console.log(response.statusCode);
-  }
+}, (err, task) => {
+    // do something with task
 });
 ```
 
@@ -349,10 +318,11 @@ client.create_transcription_task(
 ```
 
 ```javascript
-var request = require("request");
-var SCALE_API_KEY = '{{ApiKey}}';
+var scaleapi = require('scaleapi');
 
-var payload = {
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+client.createTranscriptionTask({
   'callback_url': 'http://www.example.com/callback',
   'instruction': 'Transcribe the given fields.',
   'attachment_type': 'website',
@@ -361,22 +331,8 @@ var payload = {
     'title': 'Title of Webpage',
     'top_result': 'Title of the top result'
   }
-};
-
-request.post('https://api.scaleapi.com/v1/task/transcription', {
-  'auth': {
-    'user': SCALE_API_KEY,
-    'pass': '',
-    'sendImmediately': true
-  },
-  'form': payload
-}, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log(body);
-  } else {
-    console.log(error);
-    console.log(response.statusCode);
-  }
+}, (err, task) => {
+    // do something with task
 });
 ```
 
@@ -479,10 +435,11 @@ client.create_phonecall_task(
 ```
 
 ```javascript
-var request = require("request");
-var SCALE_API_KEY = '{{ApiKey}}';
+var scaleapi = require('scaleapi');
 
-var payload = {
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+client.createPhonecallTask({
   'callback_url': 'http://www.example.com/callback',
   'instruction': 'Call this person and follow the script provided, recording responses',
   'phone_number': '5055006865',
@@ -492,22 +449,8 @@ var payload = {
     'email': 'Email Address',
   },
   'choices': ['He is happy', 'He is not happy']
-};
-
-request.post('https://api.scaleapi.com/v1/task/phonecall', {
-  'auth': {
-    'user': SCALE_API_KEY,
-    'pass': '',
-    'sendImmediately': true
-  },
-  'form': payload
-}, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log(body);
-  } else {
-    console.log(error);
-    console.log(response.statusCode);
-  }
+}, (err, task) => {
+    // do something with task
 });
 ```
 
@@ -628,10 +571,11 @@ client.create_comparison_task(
 ```
 
 ```javascript
-var request = require("request");
-var SCALE_API_KEY = '{{ApiKey}}';
+var scaleapi = require('scaleapi');
 
-var payload = {
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+client.createComparisonTask({
   'callback_url': 'http://www.example.com/callback',
   'instruction': 'Do the objects in these images have the same pattern?',
   'attachment_type': 'image',
@@ -640,22 +584,8 @@ var payload = {
     'http://images.wisegeek.com/checkered-tablecloth.jpg'
   ],
   'choices': ['yes', 'no']
-};
-
-request.post('https://api.scaleapi.com/v1/task/comparison', {
-  'auth': {
-    'user': SCALE_API_KEY,
-    'pass': '',
-    'sendImmediately': true
-  },
-  'form': payload
-}, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log(body);
-  } else {
-    console.log(error);
-    console.log(response.statusCode);
-  }
+}, (err, task) => {
+    // do something with task
 });
 ```
 
@@ -768,10 +698,11 @@ client.create_annotation_task(
 ```
 
 ```javascript
-var request = require("request");
-var SCALE_API_KEY = '{{ApiKey}}';
+var scaleapi = require('scaleapi');
 
-var payload = {
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+client.createAnnotationTask({
   'callback_url': 'http://www.example.com/callback',
   'instruction': 'Draw a box around each **baby cow** and **big cow**',
   'attachment_type': 'image',
@@ -790,22 +721,8 @@ var payload = {
       'explanation': 'The boxes are neither accurate nor complete'
     }
   ]
-}
-
-request.post('https://api.scaleapi.com/v1/task/annotation', {
-  'auth': {
-    'user': SCALE_API_KEY,
-    'pass': '',
-    'sendImmediately': true
-  },
-  'form': payload
-}, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log(body);
-  } else {
-    console.log(error);
-    console.log(response.statusCode);
-  }
+}, (err, task) => {
+    // do something with task
 });
 ```
 
@@ -948,10 +865,11 @@ client.create_datacollection_task(
 ```
 
 ```javascript
-var request = require("request");
-var SCALE_API_KEY = '{{ApiKey}}';
+var scaleapi = require('scaleapi');
 
-var payload = {
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+client.createDatacollectionTask({
   'callback_url': 'http://www.example.com/callback',
   'instruction': 'Find the URL for the hiring page for the company with attached website.',
   'attachment_type': 'website',
@@ -959,22 +877,8 @@ var payload = {
   'fields': {
     'hiring_page': 'Hiring Page URL'
   }
-};
-
-request.post('https://api.scaleapi.com/v1/task/datacollection', {
-  'auth': {
-    'user': SCALE_API_KEY,
-    'pass': '',
-    'sendImmediately': true
-  },
-  'form': payload
-}, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log(body);
-  } else {
-    console.log(error);
-    console.log(response.statusCode);
-  }
+}, (err, task) => {
+    // do something with task
 });
 ```
 
@@ -1067,30 +971,17 @@ client.create_audiotranscription_task(
 ```
 
 ```javascript
-var request = require("request");
-var SCALE_API_KEY = '{{ApiKey}}';
+var scaleapi = require('scaleapi');
 
-var payload = {
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+client.createAudiotranscriptionTask({
   'callback_url': 'http://www.example.com/callback',
   'attachment_type': 'audio',
   'attachment': 'https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav',
   'verbatim': false
-};
-
-request.post('https://api.scaleapi.com/v1/task/audiotranscription', {
-  'auth': {
-    'user': SCALE_API_KEY,
-    'pass': '',
-    'sendImmediately': true
-  },
-  'form': payload
-}, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log(body);
-  } else {
-    console.log(error);
-    console.log(response.statusCode);
-  }
+}, (err, task) => {
+    // do something with task
 });
 ```
 
@@ -1257,24 +1148,14 @@ task = client.fetch_task(task_id)
 ```
 
 ```javascript
-var request = require("request");
-var SCALE_API_KEY = '{{ApiKey}}';
+var scaleapi = require('scaleapi');
+
+var client = scaleapi.ScaleClient('{{ApiKey}}');
 
 var task_id = 'YOUR_TASK_ID';
 
-request.get('https://api.scaleapi.com/v1/task/' + task_id + '/', {
-  'auth': {
-    'user': SCALE_API_KEY,
-    'pass': '',
-    'sendImmediately': true
-  }
-}, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log(body);
-  } else {
-    console.log(error);
-    console.log(response.statusCode);
-  }
+client.fetchTask(task_id, (err, task) => {
+    // do something with task
 });
 ```
 
@@ -1338,24 +1219,14 @@ task = client.cancel_task(task_id)
 ```
 
 ```javascript
-var request = require("request");
-var SCALE_API_KEY = '{{ApiKey}}';
+var scaleapi = require('scaleapi');
+
+var client = scaleapi.ScaleClient('{{ApiKey}}');
 
 var task_id = 'YOUR_TASK_ID';
 
-request.post('https://api.scaleapi.com/v1/task/' + task_id + '/cancel/', {
-  'auth': {
-    'user': SCALE_API_KEY,
-    'pass': '',
-    'sendImmediately': true
-  }
-}, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log(body);
-  } else {
-    console.log(error);
-    console.log(response.statusCode);
-  }
+client.cancelTask(task_id, (err, task) => {
+    // do something with task
 });
 ```
 
@@ -1413,26 +1284,19 @@ import scaleapi
 client = scaleapi.ScaleClient('{{ApiKey}}')
 task_id = 'YOUR_TASK_ID'
 
+# specify URL params as kwargs to tasks()
 tasklist = client.tasks()
 ```
 
 ```javascript
-var request = require("request");
-var SCALE_API_KEY = '{{ApiKey}}';
+var scaleapi = require('scaleapi');
 
-request.get('https://api.scaleapi.com/v1/tasks/', {
-  'auth': {
-    'user': SCALE_API_KEY,
-    'pass': '',
-    'sendImmediately': true
-  }
-}, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log(body);
-  } else {
-    console.log(error);
-    console.log(response.statusCode);
-  }
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+// specify URL parameters as properties in the params object
+var params = {};
+client.tasks(params, (err, tasklist) => {
+    // do something with tasklist
 });
 ```
 
