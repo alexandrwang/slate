@@ -763,7 +763,19 @@ client.create_annotation_task(
     attachment_type='image',
     attachment='http://i.imgur.com/v4cBreD.jpg',
     objects_to_annotate=['baby cow', 'big cow'],
-    with_labels=True
+    with_labels=True,
+    examples = [
+        {
+            'correct': False,
+            'image': 'http://i.imgur.com/lj6e98s.jpg',
+            'explanation': 'The boxes are tight and accurate'
+        },
+        {
+            'correct': True,
+            'image': 'http://i.imgur.com/HIrvIDq.jpg',
+            'explanation': 'The boxes are neither accurate nor complete'
+        }
+    ]
 )
 ```
 
