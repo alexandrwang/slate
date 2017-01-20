@@ -35,6 +35,16 @@ You can also join our [Slack channel here](https://chat.scaleapi.com/)!
 
 # Client Libraries / SDKs
 
+> To install the client library, use the following command:
+
+```python
+pip install scaleapi
+```
+
+```javascript
+npm install scaleapi --save
+```
+
 Currently we have [Python](https://github.com/scaleapi/scaleapi-python-client) and [Node.js](https://github.com/scaleapi/scaleapi-node) client libraries available.
 
 We also have unnoficial SDKs in the following languages:
