@@ -161,7 +161,7 @@ html, body {
     list-style: none;
     margin: 0;
     padding: 0;
-    line-height: 28px;
+    line-height: 3;
   }
 
   li {
@@ -173,7 +173,7 @@ html, body {
 
   // This is the currently selected ToC entry
   .tocify-focus {
-    box-shadow: 0px 1px 0px $nav-active-shadow;
+    // box-shadow: 0px 1px 0px $nav-active-shadow;
     background-color: $nav-active-bg;
     color: $nav-active-text;
   }
@@ -190,7 +190,7 @@ html, body {
     }
 
     // for embossed look:
-    @include embossed-bg;
+    // @include embossed-bg;
     &>li:last-child {
       box-shadow: none; // otherwise it'll overflow out of the subheader
     }
@@ -199,7 +199,7 @@ html, body {
   .toc-footer {
     padding: 1em 0;
     margin-top: 1em;
-    border-top: 1px dashed $nav-footer-border-color;
+    border-top: 1px solid $nav-footer-border-color;
 
     li,a {
       color: $nav-text;
@@ -211,8 +211,8 @@ html, body {
     }
 
     li {
-      font-size: 0.8em;
-      line-height: 1.7;
+      font-size: 13px;
+      line-height: 2;
       text-decoration: none;
     }
   }
@@ -356,12 +356,12 @@ html, body {
   h1 {
     @extend %header-font;
     font-size: 30px;
-    padding-top: 0.5em;
+    padding-top: 2em;
     padding-bottom: 0.5em;
     // border-bottom: 1px solid #ccc;
     margin-bottom: $h1-margin-bottom;
     margin-top: 2em;
-    // border-top: 1px solid #ddd;
+    border-top: 1px solid #f1f1f1;
     // background-image: linear-gradient(to bottom, #fff, #f9f9f9);
   }
 
@@ -446,7 +446,7 @@ html, body {
   }
 
   p, li, dt, dd {
-    line-height: 1.6;
+    line-height: 2;
     margin-top: 0;
   }
 
@@ -533,7 +533,7 @@ html, body {
     clear:right;
 
     box-sizing: border-box;
-    text-shadow: 0px 1px 2px rgba(0,0,0,0.4);
+    // text-shadow: 0px 1px 2px rgba(0,0,0,0.4);
 
     @extend %right-col;
 
@@ -556,8 +556,8 @@ html, body {
       border-radius: 5px;
       padding: $code-annotation-padding;
       color: #ccc;
-      border-top: 1px solid #000;
-      border-bottom: 1px solid #404040;
+      // border-top: 1px solid #000;
+      // border-bottom: 1px solid #404040;
     }
   }
 }
@@ -624,4 +624,19 @@ html, body {
 
 .highlight, .highlight .w {
   background-color: $code-bg;
+}
+
+.logo{
+  padding: 20px 15px;
+  background: rgba(0,0,0,.04)
+}
+
+.logo img{
+  height: 20px;
+}
+
+.content a {
+  color: #2773FF;
+  font-weight: bold;
+  text-decoration: none;
 }
