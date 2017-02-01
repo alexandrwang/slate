@@ -76,6 +76,8 @@ under the License.
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
+        <div class="intro"><%= image_tag "intro.svg" %></div>
+
         <%= yield %>
         <% current_page.data.includes && current_page.data.includes.each do |include| %>
           <%= partial "includes/#{include}" %>

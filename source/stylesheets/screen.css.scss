@@ -168,7 +168,7 @@ html, body {
     color: $nav-text;
     transition-property: background;
     transition-timing-function: linear;
-    transition-duration: 230ms;
+    transition-duration: 100ms;
   }
 
   // This is the currently selected ToC entry
@@ -183,7 +183,7 @@ html, body {
   .tocify-subheader {
     display: none; // tocify will override this when needed
     background-color: $nav-subitem-bg;
-    font-weight: 500;
+    font-weight: bold;
     .tocify-item>a {
       padding-left: $nav-padding + $nav-indent;
       font-size: 12px;
@@ -283,7 +283,7 @@ html, body {
   .lang-selector {
     position: fixed;
     z-index: 50;
-    border-bottom: 5px solid $lang-select-active-bg;
+    // border-bottom: 5px solid $lang-select-active-bg;
   }
 }
 
@@ -291,6 +291,7 @@ html, body {
   background-color: $lang-select-bg;
   width: 100%;
   font-weight: bold;
+  padding: 10px 20px;
   a {
     display: block;
     float:left;
@@ -299,6 +300,8 @@ html, body {
     padding: 0 10px;
     line-height: 30px;
     outline: 0;
+    border-radius: 8px;
+    margin-right: 10px;
 
     &:active, &:focus {
       background-color: $lang-select-pressed-bg;
@@ -365,9 +368,10 @@ html, body {
     // background-image: linear-gradient(to bottom, #fff, #f9f9f9);
   }
 
-  h1:first-child, div:first-child + h1 {
+  h1:first-child, div:nth-child(2) + h1 {
     border-top-width: 0;
     margin-top: 0;
+    padding-top: 0;
   }
 
   h2 {
@@ -455,7 +459,7 @@ html, body {
   }
 
   code {
-    background-color: rgba(0,0,0,0.05);
+    background-color: rgba(0,0,0,.08);
     padding: 3px;
     border-radius: 3px;
     @extend %break-words;
@@ -470,7 +474,7 @@ html, body {
   aside {
     padding-top: 1em;
     padding-bottom: 1em;
-    text-shadow: 0 1px 0 lighten($aside-notice-bg, 15%);
+    // text-shadow: 0 1px 0 lighten($aside-notice-bg, 15%);
     margin-top: 1.5em;
     margin-bottom: 1.5em;
     background: $aside-notice-bg;
@@ -478,12 +482,12 @@ html, body {
 
     &.warning {
       background-color: $aside-warning-bg;
-      text-shadow: 0 1px 0 lighten($aside-warning-bg, 15%);
+      // text-shadow: 0 1px 0 lighten($aside-warning-bg, 15%);
     }
 
     &.success {
       background-color: $aside-success-bg;
-      text-shadow: 0 1px 0 lighten($aside-success-bg, 15%);
+      // text-shadow: 0 1px 0 lighten($aside-success-bg, 15%);
     }
   }
 
@@ -510,7 +514,7 @@ html, body {
     margin: -2px;
     border-radius: 4px;
     border: 1px solid #F7E633;
-    text-shadow: 1px 1px 0 #666;
+    // text-shadow: 1px 1px 0 #666;
     background: linear-gradient(to top left, #F7E633 0%, #F1D32F 100%);
   }
 }
@@ -639,4 +643,37 @@ html, body {
   color: #2773FF;
   font-weight: bold;
   text-decoration: none;
+}
+
+.intro{
+  margin-right: $examples-width;
+  background: white;
+}
+
+.intro img{
+  width: 100%;
+}
+
+.highlight .kd{
+  color: #81DEFF;
+}
+
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1{
+  color: #A4F46C;
+}
+
+.highlight .nt{
+  color: #fff;
+}
+
+.highlight .kc{
+  color: #9B8CFF;
+}
+
+.highlight .nn{
+  color: #FFC22B;
+}
+
+.highlight .se{
+  color: #999;
 }

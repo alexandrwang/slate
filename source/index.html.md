@@ -8,7 +8,7 @@ language_tabs:
 
 toc_footers:
   - <a href='https://dashboard.scaleapi.com/signup'>Signup for Scale</a>
-  - <a href="https://chat.scaleapi.com/">Join the Scale Support Slack channel!</a>
+  - <a href="https://chat.scaleapi.com/">Join our Support Slack channel</a>
 
 includes:
   - errors
@@ -225,7 +225,7 @@ client.createCategorizationTask({
 
 This endpoint creates a `categorization` task. In this task, one of our workers will view the attachment and choose a category for it according to the instruction. You may allow multiple categories to be chosen by setting `allow_multiple` to `true`. Example use cases are spam detection, copyright detection, product categorization, etc.
 
-This task involves a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction` about how to make the categorization, an `attachment` of what you'd like to categorize, an `attachment_type`, and finally a list of `categories`. 
+This task involves a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction` about how to make the categorization, an `attachment` of what you'd like to categorize, an `attachment_type`, and finally a list of `categories`.
 
 There is an optional `category_ids` parameter, which you can use to impose an id system over the categories. The format of this parameter should be a dictionary, where the keys are the ids (as strings), and then the values are the category values provided in `categories`. An example is:
 
@@ -291,7 +291,7 @@ Parameter | Type | Description
 
 The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have a `category` field and potentially a `category_id` field.
 
-If `allow_multiple` is `false`, then the value will be a string equal to one of the original categories. 
+If `allow_multiple` is `false`, then the value will be a string equal to one of the original categories.
 
 If `allow_multiple` is `true`, the value will be an array of categories, each one being one of the original categories.
 
@@ -543,7 +543,7 @@ Parameter | Type | Description
 
 The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have an `outcome` field, and a `fields` field and/or `choice` field depending on the original request.
 
-The outcome will be a string equal to one of `no_pickup` (meaning nobody picked up), `hung_up` (meaning the recipient hung up before the task could be completed), or `success` (the call succeeded). 
+The outcome will be a string equal to one of `no_pickup` (meaning nobody picked up), `hung_up` (meaning the recipient hung up before the task could be completed), or `success` (the call succeeded).
 
 If your original API request provided `fields`, `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
 
@@ -629,7 +629,7 @@ This endpoint creates a `comparison` task. In this task, one of our workers view
 
 This task involves a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction`, an array of `attachments`, and an `attachment_type`.
 
-At least of the `fields` or `choices` parameters must specified for the data to be returned. `choices` is an array of strings from which the worker to choose, and `fields` is useful for free-text response. 
+At least of the `fields` or `choices` parameters must specified for the data to be returned. `choices` is an array of strings from which the worker to choose, and `fields` is useful for free-text response.
 
 `fields` is a dictionary where the keys are the keys you'd like the results to be returned under, and values are the descriptions you'd like to show the human worker.
 
@@ -790,7 +790,7 @@ The required parameters for this task are `callback_url`, `attachment`, and `obj
 
 `objects_to_annotate` is an array of strings describing the different types of objects you'd like annotated.
 
-You can optionally provide additional [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) instructions via the `instruction` parameter. 
+You can optionally provide additional [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) instructions via the `instruction` parameter.
 
 You can also optionally set `with_labels` to `true`, which will have Scalers provide labels for each box specifying what type of object it is. The labels will be strings in the `objects_to_annotate` list.
 
