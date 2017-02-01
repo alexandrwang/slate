@@ -171,7 +171,7 @@ html, body {
     color: $nav-text;
     transition-property: background;
     transition-timing-function: linear;
-    transition-duration: 100ms;
+    transition-duration: 0;
   }
 
   // This is the currently selected ToC entry
@@ -424,7 +424,6 @@ html, body {
     th {
       padding: 5px 10px;
       border-top: 1px solid #f1f1f1;
-
       border-bottom: 1px solid #f1f1f1;
       vertical-align: bottom;
       font-size: 13px;
@@ -689,4 +688,9 @@ html, body {
 .highlight .err{
   background: transparent;
   color: #666;
+}
+
+
+.notice:before{
+  display: none;
 }
