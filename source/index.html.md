@@ -2,9 +2,9 @@
 title: API Reference
 
 language_tabs:
+  - javascript: JavaScript
   - shell: cURL
   - python: Python
-  - javascript: JavaScript
 
 toc_footers:
   - <a href='https://dashboard.scaleapi.com/signup'>Signup for Scale</a>
@@ -307,7 +307,7 @@ Parameter | Type | Description
 `allow_multiple` (optional) | boolean | Default is `false`. Determines whether you allow multiple categories to be chosen for the attachment
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
-## Response on Callback
+### Response on Callback
 
 > If `allow_multiple` is `false`, the `response` will look like:
 
@@ -347,259 +347,6 @@ If `allow_multiple` is `false`, then the value will be a string equal to one of 
 If `allow_multiple` is `true`, the value will be an array of categories, each one being one of the original categories.
 
 If `category_ids` was provided, there will be another field `category_id` corresponding to the given id of the chosen category/categories. For example, it could look like:
-
-# Create Transcription Task
-
-```shell
-curl "https://api.scaleapi.com/v1/task/transcription" \
-  -u "{{ApiKey}}:" \
-  -d callback_url="http://www.example.com/callback" \
-  -d instruction="Transcribe the given fields." \
-  -d attachment_type=website \
-  -d attachment="http://news.ycombinator.com/" \
-  -d fields[title]="Title of Webpage" \
-  -d fields[top_result]="Title of the top result"
-```
-
-```python
-import scaleapi
-
-client = scaleapi.ScaleClient('{{ApiKey}}')
-
-client.create_transcription_task(
-    callback_url='http://www.example.com/callback',
-    instruction='Transcribe the given fields.',
-    attachment_type='website',
-    attachment='http://news.ycombinator.com/',
-    fields={
-        'title': 'Title of Webpage',
-        'top_result': 'Title of the top result'
-    }
-)
-```
-
-```javascript
-var scaleapi = require('scaleapi');
-
-var client = scaleapi.ScaleClient('{{ApiKey}}');
-
-client.createTranscriptionTask({
-  'callback_url': 'http://www.example.com/callback',
-  'instruction': 'Transcribe the given fields.',
-  'attachment_type': 'website',
-  'attachment': 'http://news.ycombinator.com/',
-  'fields': {
-    'title': 'Title of Webpage',
-    'top_result': 'Title of the top result'
-  }
-}, (err, task) => {
-    // do something with task
-});
-```
-
-> The above command returns an object structured like this:
-
-```json
-{
-  "task_id": "576de9dc1ea5f917d56fc2a0",
-  "created_at": "2016-06-25T02:18:04.248Z",
-  "callback_url": "http://www.example.com/callback",
-  "type": "transcription",
-  "status": "pending",
-  "instruction": "Transcribe the given fields.",
-  "urgency": "day",
-  "params": {
-    "fields": {
-      "title": "Title of Webpage",
-      "top_result": "Title of the top result"
-    },
-    "attachment": "http://news.ycombinator.com/",
-    "attachment_type": "website"
-  },
-  "metadata": {}
-}
-```
-
-This endpoint creates a `transcription` task. In this task, one of our workers will read an attachment and arbitrarily transcribe any information you'd like. Example use cases could be transcribing information from PDFs, manually scraping a web page for information, etc.
-
-This task involves a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction` about how to transcribe the attachment, an `attachment` of what you'd like to transcribe, an `attachment_type`, and `fields`. `fields` is a dictionary which describes items you'd like transcribed for the attachment. Examples are phone numbers, names, etc.
-
-`fields` is a dictionary where the keys are the keys you'd like the results to be returned under, and values are the descriptions you'd like to show the human Scaler.
-
-If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
-
-The parameters `attachment_type`, `attachment`, and `fields` will be stored in the `params` object of the constructed `task` object.
-
-### HTTP Request
-
-`POST https://api.scaleapi.com/v1/task/transcription`
-
-### Parameters
-
-Parameter | Type | Description
---------- | ---- | -------
-`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed.
-`instruction` | string | A markdown-enabled string explaining how to transcribe the attachment. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
-`attachment_type` | string | One of `image` or `pdf`. Describes what type of file the attachment is.
-`attachment` | string | The attachment to be transcribed. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
-`fields` | object | A dictionary corresponding to the fields to be transcribed. Keys are the keys you'd like the fields to be returned under, and values are descriptions to be shown to human workers.
-`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
-`metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
-
-## Response on Callback
-
-> Example response object
-
-```json
-{
-  "fields": {
-    "title": "Some Title",
-    "top_result": "The Top Result or Something"
-  }
-}
-```
-
-The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have a `fields` field.
-
-`fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
-
-# Create Phone Call Task
-
-```shell
-curl "https://api.scaleapi.com/v1/task/phonecall" \
-  -u "{{ApiKey}}:" \
-  -d callback_url="http://www.example.com/callback" \
-  -d instruction="Call this person and follow the script provided, recording responses" \
-  -d phone_number=5055006865 \
-  -d entity_name="Alexandr Wang" \
-  -d script="Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?" \
-  -d fields[email]="Email Address" \
-  -d choices="He is happy" \
-  -d choices="He is not happy"
-```
-```python
-import scaleapi
-
-client = scaleapi.ScaleClient('{{ApiKey}}')
-
-client.create_phonecall_task(
-    callback_url='http://www.example.com/callback',
-    instruction='Call this person and follow the script provided, recording responses',
-    phone_number='5055006865',
-    entity_name='Alexandr Wang',
-    script='Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?',
-    fields={
-        'email': 'Email Address',
-    },
-    choices=['He is happy', 'He is not happy']
-)
-```
-
-```javascript
-var scaleapi = require('scaleapi');
-
-var client = scaleapi.ScaleClient('{{ApiKey}}');
-
-client.createPhonecallTask({
-  'callback_url': 'http://www.example.com/callback',
-  'instruction': 'Call this person and follow the script provided, recording responses',
-  'phone_number': '5055006865',
-  'entity_name': 'Alexandr Wang',
-  'script': 'Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?',
-  'fields': {
-    'email': 'Email Address',
-  },
-  'choices': ['He is happy', 'He is not happy']
-}, (err, task) => {
-    // do something with task
-});
-```
-
-> The above command returns an object structured like this:
-
-```json
-{
-  "task_id": "5771bc6631b72659f0d3692b",
-  "created_at": "2016-06-27T23:53:10.367Z",
-  "callback_url": "http://www.example.com/callback",
-  "type": "phonecall",
-  "status": "pending",
-  "instruction": "Call this person and follow the script provided, recording responses",
-  "script": "Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?",
-  "urgency": "day",
-  "params": {
-    "fields": {
-      "email": "Email Address"
-    },
-    "choices": [
-      "He is happy",
-      "He is not happy"
-    ],
-    "entity_name": "Alexandr Wang",
-    "phone_number": "5055006865"
-  },
-  "metadata": {}
-}
-```
-
-This endpoint creates a `phonecall` task. In this task, one of our workers will call the specified phone number and follow the instructions. Potential use cases could be making reservations or appointments, confirming reservations, asking for contact numbers or emails, etc.
-
-The required parameters are a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction` about how to transcribe the attachment, a `script` for the Scaler to follow, a `phone_number` for the phone number to call, and an `entity_name` which describes the phone number.
-
-The optional parameters are `attachment_type` and `attachment` for an optional attachment, `fields`, and `choices`.
-
-There are two potential ways to record more information from the phonecall - the `field` and `choices` parameters. `choices` is an array of strings from which the worker to choose, and `fields` is useful for free-text response.
-
-If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
-
-The parameters `phone_number`, `entity_name`, `script`, `attachment_type`, `attachment`, and `fields` will be stored in the `params` object of the constructed `task` object.
-
-<aside class="notice">
-For low volume, we currently only support calling US numbers. For higher volume international calls, please <a href="mailto:hello@scaleapi.com">contact us</a>!
-</aside>
-
-### HTTP Request
-
-`POST https://api.scaleapi.com/v1/task/phonecall`
-
-### Parameters
-
-Parameter | Type | Description
---------- | ---- | -------
-`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed.
-`instruction` | string | A markdown-enabled string explaining how to complete the phone call. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
-`phone_number` | string | The phone number which will be called by our worker. Should include a country code (+1 for US numbers).
-`script` | string | A script to be shown the the worker as they make the phone call. Your script will greatly impact the quality of the results you receive.
-`entity_name` | name | The name of the entity which corresponds to the person or business of the phone number.
-`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
-`attachment_type` (optional) | string | One of `text`, `image`, `video`, `audio`, `website`, or `pdf`. Describes what type of file the attachment is.
-`attachment` (optional) | string | The optional attachment to be used for the phone call. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
-`fields` (optional) | dictionary | A dictionary corresponding to the fields to be recorded. Keys are the keys you'd like the fields to be returned under, and values are descriptions to be shown to human workers.
-`choices` (optional) | [string] | An array of strings for the choices to be given to the worker. They will choose one of these in accordance with your `instruction`.
-`metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
-
-## Response on Callback
-
-> Example `response` object:
-
-```json
-{
-  "outcome": "success",
-  "fields": {
-    "email": "hello@scaleapi.com"
-  },
-  "choice": "He is happy"
-}
-```
-
-The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have an `outcome` field, and a `fields` field and/or `choice` field depending on the original request.
-
-The outcome will be a string equal to one of `no_pickup` (meaning nobody picked up), `hung_up` (meaning the recipient hung up before the task could be completed), or `success` (the call succeeded).
-
-If your original API request provided `fields`, `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
-
-If your original API request provided `choices`, `choice` will be one of the original choices.
-
 
 # Create Comparison Task
 
@@ -705,7 +452,7 @@ Parameter | Type | Description
 `choices` (optional) | [string] | An array of strings for the choices to be given to the worker. One of `choices` or `fields` must be specified.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
-## Response on Callback
+### Response on Callback
 
 > Example `response` object:
 
@@ -724,7 +471,117 @@ If your original call provided `choices`, `choice` will be one of the original c
 
 If your original call provided `fields`, `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
 
-# Create Annotation Task (Bounding Box)
+# Create Data Collection Task
+
+```shell
+curl "https://api.scaleapi.com/v1/task/datacollection" \
+  -u "{{ApiKey}}:" \
+  -d callback_url="http://www.example.com/callback" \
+  -d instruction="Find the URL for the hiring page for the company with attached website." \
+  -d attachment_type=website \
+  -d attachment="https://www.scaleapi.com/" \
+  -d fields[hiring_page]="Hiring Page URL"
+```
+
+```python
+import scaleapi
+
+client = scaleapi.ScaleClient('{{ApiKey}}')
+
+client.create_datacollection_task(
+    callback_url='http://www.example.com/callback',
+    instruction='Find the URL for the hiring page for the company with attached website.',
+    attachment_type='website',
+    attachment='https://www.scaleapi.com',
+    fields={
+        'hiring_page': 'Hiring Page URL'
+    }
+)
+```
+
+```javascript
+var scaleapi = require('scaleapi');
+
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+client.createDatacollectionTask({
+  'callback_url': 'http://www.example.com/callback',
+  'instruction': 'Find the URL for the hiring page for the company with attached website.',
+  'attachment_type': 'website',
+  'attachment': 'https://www.scaleapi.com/',
+  'fields': {
+    'hiring_page': 'Hiring Page URL'
+  }
+}, (err, task) => {
+    // do something with task
+});
+```
+
+> The above command returns an object structured like this:
+
+```json
+{
+  "task_id": "576de9dc1ea5f917d56fc2a0",
+  "created_at": "2016-06-25T02:18:04.248Z",
+  "callback_url": "http://www.example.com/callback",
+  "type": "datacollection",
+  "status": "pending",
+  "instruction": "Find the URL for the hiring page for the company with attached website.",
+  "urgency": "day",
+  "params": {
+    "fields": {
+      "hiring_page": "Hiring Page URL"
+    },
+    "attachment": "http://www.scaleapi.com/",
+    "attachment_type": "website"
+  },
+  "metadata": {}
+}
+```
+
+This endpoint creates a `datacollection` task. In this task, one of our workers will try to find some information through the internet, following the instructions that you provide. Example use cases could be finding the product page of a particular product on Amazon, or trying to find the email of a particular person given their name and position.
+
+This task involves a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction` about how to find the information, an `attachment` detailing the particular data you'd like to collect, an `attachment_type`, and a `fields` parameter, which describes all of the different pieces of information you'd like captured.
+
+The `fields` parameter is a dictionary where the keys are the keys you'd like the results to be returned under, and values are the descriptions you'd like to show the human Scaler.
+
+If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
+
+The parameters `attachment_type`, `attachment`, and `fields` will be stored in the `params` object of the constructed `task` object.
+
+### HTTP Request
+
+`POST https://api.scaleapi.com/v1/task/datacollection`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ---- | -------
+`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed.
+`instruction` | string | A markdown-enabled string explaining how to collect the data. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
+`attachment_type` | string | One of `text`, `image`, or `website`. Describes what type of file the attachment is.
+`attachment` | string | The attachment detailing the data to be collected. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
+`fields` | dictionary | A dictionary corresponding to the fields of information to be collected. Keys are the keys you'd like the fields to be returned under, and values are descriptions to be shown to human workers.
+`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
+`metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
+
+### Response on Callback
+
+> Example response object
+
+```json
+{
+  "fields": {
+    "hiring_page": "Hiring Page URL"
+  }
+}
+```
+
+The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have a `fields` object.
+
+`fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
+
+# Create Image Recognition Task
 
 ```shell
 curl "https://api.scaleapi.com/v1/task/annotation" \
@@ -867,7 +724,7 @@ Parameter | Type | Description
 `attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the annotation endpoint.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
-## Response on Callback
+### Response on Callback
 
 > Example of what the response field of the task will look like after completion
 
@@ -902,23 +759,160 @@ The `response` field, which is part of the callback POST request and permanently
 
 The `annotations` field will contain an array of annotations. Each annotation will have the following values:
 
-
 * `left`: The distance, in pixels, between the left border of the bounding box and the left border of the image.
 * `top`: The distance, in pixels, between the top border of the bounding box and the top border of the image.
 * `width`: The width, in pixels, of the bounding box.
 * `height`: The height, in pixels, of the bounding box.
 * `label` (if specified `with_labels` as `true`): The label for the bounding box, which will be one of the specified `task.params.objects_to_annotate`.
 
-# Create Data Collection Task
+# Create Phone Call Task
 
 ```shell
-curl "https://api.scaleapi.com/v1/task/datacollection" \
+curl "https://api.scaleapi.com/v1/task/phonecall" \
   -u "{{ApiKey}}:" \
   -d callback_url="http://www.example.com/callback" \
-  -d instruction="Find the URL for the hiring page for the company with attached website." \
+  -d instruction="Call this person and follow the script provided, recording responses" \
+  -d phone_number=5055006865 \
+  -d entity_name="Alexandr Wang" \
+  -d script="Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?" \
+  -d fields[email]="Email Address" \
+  -d choices="He is happy" \
+  -d choices="He is not happy"
+```
+```python
+import scaleapi
+
+client = scaleapi.ScaleClient('{{ApiKey}}')
+
+client.create_phonecall_task(
+    callback_url='http://www.example.com/callback',
+    instruction='Call this person and follow the script provided, recording responses',
+    phone_number='5055006865',
+    entity_name='Alexandr Wang',
+    script='Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?',
+    fields={
+        'email': 'Email Address',
+    },
+    choices=['He is happy', 'He is not happy']
+)
+```
+
+```javascript
+var scaleapi = require('scaleapi');
+
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+client.createPhonecallTask({
+  'callback_url': 'http://www.example.com/callback',
+  'instruction': 'Call this person and follow the script provided, recording responses',
+  'phone_number': '5055006865',
+  'entity_name': 'Alexandr Wang',
+  'script': 'Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?',
+  'fields': {
+    'email': 'Email Address',
+  },
+  'choices': ['He is happy', 'He is not happy']
+}, (err, task) => {
+    // do something with task
+});
+```
+
+> The above command returns an object structured like this:
+
+```json
+{
+  "task_id": "5771bc6631b72659f0d3692b",
+  "created_at": "2016-06-27T23:53:10.367Z",
+  "callback_url": "http://www.example.com/callback",
+  "type": "phonecall",
+  "status": "pending",
+  "instruction": "Call this person and follow the script provided, recording responses",
+  "script": "Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?",
+  "urgency": "day",
+  "params": {
+    "fields": {
+      "email": "Email Address"
+    },
+    "choices": [
+      "He is happy",
+      "He is not happy"
+    ],
+    "entity_name": "Alexandr Wang",
+    "phone_number": "5055006865"
+  },
+  "metadata": {}
+}
+```
+
+This endpoint creates a `phonecall` task. In this task, one of our workers will call the specified phone number and follow the instructions. Potential use cases could be making reservations or appointments, confirming reservations, asking for contact numbers or emails, etc.
+
+The required parameters are a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction` about how to transcribe the attachment, a `script` for the Scaler to follow, a `phone_number` for the phone number to call, and an `entity_name` which describes the phone number.
+
+The optional parameters are `attachment_type` and `attachment` for an optional attachment, `fields`, and `choices`.
+
+There are two potential ways to record more information from the phonecall - the `field` and `choices` parameters. `choices` is an array of strings from which the worker to choose, and `fields` is useful for free-text response.
+
+If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
+
+The parameters `phone_number`, `entity_name`, `script`, `attachment_type`, `attachment`, and `fields` will be stored in the `params` object of the constructed `task` object.
+
+<aside class="notice">
+For low volume, we currently only support calling US numbers. For higher volume international calls, please <a href="mailto:hello@scaleapi.com">contact us</a>!
+</aside>
+
+### HTTP Request
+
+`POST https://api.scaleapi.com/v1/task/phonecall`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ---- | -------
+`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed.
+`instruction` | string | A markdown-enabled string explaining how to complete the phone call. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
+`phone_number` | string | The phone number which will be called by our worker. Should include a country code (+1 for US numbers).
+`script` | string | A script to be shown the the worker as they make the phone call. Your script will greatly impact the quality of the results you receive.
+`entity_name` | name | The name of the entity which corresponds to the person or business of the phone number.
+`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
+`attachment_type` (optional) | string | One of `text`, `image`, `video`, `audio`, `website`, or `pdf`. Describes what type of file the attachment is.
+`attachment` (optional) | string | The optional attachment to be used for the phone call. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
+`fields` (optional) | dictionary | A dictionary corresponding to the fields to be recorded. Keys are the keys you'd like the fields to be returned under, and values are descriptions to be shown to human workers.
+`choices` (optional) | [string] | An array of strings for the choices to be given to the worker. They will choose one of these in accordance with your `instruction`.
+`metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
+
+### Response on Callback
+
+> Example `response` object:
+
+```json
+{
+  "outcome": "success",
+  "fields": {
+    "email": "hello@scaleapi.com"
+  },
+  "choice": "He is happy"
+}
+```
+
+The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have an `outcome` field, and a `fields` field and/or `choice` field depending on the original request.
+
+The outcome will be a string equal to one of `no_pickup` (meaning nobody picked up), `hung_up` (meaning the recipient hung up before the task could be completed), or `success` (the call succeeded).
+
+If your original API request provided `fields`, `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
+
+If your original API request provided `choices`, `choice` will be one of the original choices.
+
+# Create Transcription Task
+
+```shell
+curl "https://api.scaleapi.com/v1/task/transcription" \
+  -u "{{ApiKey}}:" \
+  -d callback_url="http://www.example.com/callback" \
+  -d instruction="Transcribe the given fields." \
   -d attachment_type=website \
-  -d attachment="https://www.scaleapi.com/" \
-  -d fields[hiring_page]="Hiring Page URL"
+  -d attachment="http://news.ycombinator.com/" \
+  -d fields[title]="Title of Webpage" \
+  -d fields[top_result]="Title of the top result"
 ```
 
 ```python
@@ -926,13 +920,14 @@ import scaleapi
 
 client = scaleapi.ScaleClient('{{ApiKey}}')
 
-client.create_datacollection_task(
+client.create_transcription_task(
     callback_url='http://www.example.com/callback',
-    instruction='Find the URL for the hiring page for the company with attached website.',
+    instruction='Transcribe the given fields.',
     attachment_type='website',
-    attachment='https://www.scaleapi.com',
+    attachment='http://news.ycombinator.com/',
     fields={
-        'hiring_page': 'Hiring Page URL'
+        'title': 'Title of Webpage',
+        'top_result': 'Title of the top result'
     }
 )
 ```
@@ -942,13 +937,14 @@ var scaleapi = require('scaleapi');
 
 var client = scaleapi.ScaleClient('{{ApiKey}}');
 
-client.createDatacollectionTask({
+client.createTranscriptionTask({
   'callback_url': 'http://www.example.com/callback',
-  'instruction': 'Find the URL for the hiring page for the company with attached website.',
+  'instruction': 'Transcribe the given fields.',
   'attachment_type': 'website',
-  'attachment': 'https://www.scaleapi.com/',
+  'attachment': 'http://news.ycombinator.com/',
   'fields': {
-    'hiring_page': 'Hiring Page URL'
+    'title': 'Title of Webpage',
+    'top_result': 'Title of the top result'
   }
 }, (err, task) => {
     // do something with task
@@ -962,26 +958,27 @@ client.createDatacollectionTask({
   "task_id": "576de9dc1ea5f917d56fc2a0",
   "created_at": "2016-06-25T02:18:04.248Z",
   "callback_url": "http://www.example.com/callback",
-  "type": "datacollection",
+  "type": "transcription",
   "status": "pending",
-  "instruction": "Find the URL for the hiring page for the company with attached website.",
+  "instruction": "Transcribe the given fields.",
   "urgency": "day",
   "params": {
     "fields": {
-      "hiring_page": "Hiring Page URL"
+      "title": "Title of Webpage",
+      "top_result": "Title of the top result"
     },
-    "attachment": "http://www.scaleapi.com/",
+    "attachment": "http://news.ycombinator.com/",
     "attachment_type": "website"
   },
   "metadata": {}
 }
 ```
 
-This endpoint creates a `datacollection` task. In this task, one of our workers will try to find some information through the internet, following the instructions that you provide. Example use cases could be finding the product page of a particular product on Amazon, or trying to find the email of a particular person given their name and position.
+This endpoint creates a `transcription` task. In this task, one of our workers will read an attachment and arbitrarily transcribe any information you'd like. Example use cases could be transcribing information from PDFs, manually scraping a web page for information, etc.
 
-This task involves a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction` about how to find the information, an `attachment` detailing the particular data you'd like to collect, an `attachment_type`, and a `fields` parameter, which describes all of the different pieces of information you'd like captured.
+This task involves a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction` about how to transcribe the attachment, an `attachment` of what you'd like to transcribe, an `attachment_type`, and `fields`. `fields` is a dictionary which describes items you'd like transcribed for the attachment. Examples are phone numbers, names, etc.
 
-The `fields` parameter is a dictionary where the keys are the keys you'd like the results to be returned under, and values are the descriptions you'd like to show the human Scaler.
+`fields` is a dictionary where the keys are the keys you'd like the results to be returned under, and values are the descriptions you'd like to show the human Scaler.
 
 If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
 
@@ -989,37 +986,39 @@ The parameters `attachment_type`, `attachment`, and `fields` will be stored in t
 
 ### HTTP Request
 
-`POST https://api.scaleapi.com/v1/task/datacollection`
+`POST https://api.scaleapi.com/v1/task/transcription`
 
 ### Parameters
 
 Parameter | Type | Description
 --------- | ---- | -------
 `callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed.
-`instruction` | string | A markdown-enabled string explaining how to collect the data. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
-`attachment_type` | string | One of `text`, `image`, or `website`. Describes what type of file the attachment is.
-`attachment` | string | The attachment detailing the data to be collected. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
-`fields` | dictionary | A dictionary corresponding to the fields of information to be collected. Keys are the keys you'd like the fields to be returned under, and values are descriptions to be shown to human workers.
+`instruction` | string | A markdown-enabled string explaining how to transcribe the attachment. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
+`attachment_type` | string | One of `image` or `pdf`. Describes what type of file the attachment is.
+`attachment` | string | The attachment to be transcribed. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
+`fields` | object | A dictionary corresponding to the fields to be transcribed. Keys are the keys you'd like the fields to be returned under, and values are descriptions to be shown to human workers.
 `urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
-## Response on Callback
+### Response on Callback
 
 > Example response object
 
 ```json
 {
   "fields": {
-    "hiring_page": "Hiring Page URL"
+    "title": "Some Title",
+    "top_result": "The Top Result or Something"
   }
 }
 ```
 
-The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have a `fields` object.
+The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have a `fields` field.
 
 `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
 
-# Create Audio Transcription Task
+
+## Create Audio Transcription Task
 
 ```shell
 curl "https://api.scaleapi.com/v1/task/audiotranscription" \
@@ -1111,7 +1110,7 @@ Parameter | Type | Description
 `urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
-## Response on Callback
+### Response on Callback
 
 > Example response object on success
 
@@ -1135,6 +1134,7 @@ The `response` object, which is part of the callback POST request and permanentl
 If the transcription was completed successfully, the transcript will be stored in plaintext under the `transcript` field. It will also contain a `duration` field, which stores the duration of the audio file in seconds.
 
 If there was an error or issue during transcription, the error will be detailed in the `error` field, and a partial transcript (if applicable) will be stored in the `transcript` field.
+
 
 # Callbacks
 

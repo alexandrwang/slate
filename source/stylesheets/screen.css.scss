@@ -302,7 +302,7 @@ html, body {
     color: $lang-select-text;
     text-decoration: none;
     padding: 0 10px;
-    line-height: 30px;
+    line-height: 2;
     outline: 0;
     border-radius: 8px;
     margin-right: 10px;
@@ -419,7 +419,7 @@ html, body {
     th,td {
       text-align: left;
       vertical-align: top;
-      line-height: 1.6;
+      line-height: 2;
     }
 
     th {
@@ -485,7 +485,7 @@ html, body {
     margin-top: 1.5em;
     margin-bottom: 1.5em;
     background: $aside-notice-bg;
-    line-height: 1.6;
+    line-height: 2;
 
     &.warning {
       background-color: $aside-warning-bg;
@@ -521,14 +521,22 @@ html, body {
     margin: -2px;
     border-radius: 4px;
     border: 1px solid #F7E633;
-    // text-shadow: 1px 1px 0 #666;
     background: linear-gradient(to top left, #F7E633 0%, #F1D32F 100%);
+  }
+
+  .intro{
+    margin-right: $examples-width;
+    background: white;
+    @extend %left-col;
+  }
+
+  .intro img{
+    width: 100%;
   }
 
   h3,h4,h5{
     font-weight: bold;
   }
-
 
   .our-products{
     text-align: center;
@@ -557,7 +565,7 @@ html, body {
   }
 
   .products-second{
-    margin-top: 60px;
+    margin-top: 40px;
     margin-bottom: 40px;
   }
 
@@ -710,15 +718,7 @@ html, body {
   text-decoration: none;
 }
 
-.intro{
-  margin-right: $examples-width;
-  background: white;
-  @extend %left-col;
-}
 
-.intro img{
-  width: 100%;
-}
 
 .highlight .kd{
   color: #81DEFF;
