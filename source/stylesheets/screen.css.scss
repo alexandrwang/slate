@@ -216,7 +216,7 @@ html, body {
 
     li {
       font-size: 13px;
-      line-height: 2;
+      line-height: 2.4;
       text-decoration: none;
     }
   }
@@ -357,7 +357,7 @@ html, body {
 
   // the div is the tocify hidden div for placeholding stuff
   &>h1, &>h2, &>div {
-    clear:both;
+    // clear:both;
   }
 
   h1 {
@@ -524,6 +524,62 @@ html, body {
     // text-shadow: 1px 1px 0 #666;
     background: linear-gradient(to top left, #F7E633 0%, #F1D32F 100%);
   }
+
+  h3,h4,h5{
+    font-weight: bold;
+  }
+
+
+  .our-products{
+    text-align: center;
+    margin-bottom: 0;
+    text-transform: uppercase;
+    font-size: 13px;
+  }
+
+  .products-box{
+    margin-right: $examples-width;
+    @extend %left-col;
+  }
+
+  .products{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    // padding: 0 4%;
+  }
+
+  .products.products-first{
+    margin-top: 40px;
+  }
+
+  .products-second{
+    margin-top: 60px;
+    margin-bottom: 40px;
+  }
+
+  .products li{
+    border-radius: 8px;
+    text-align: center;
+    width: (100%/3);
+  }
+
+  .products li:last-child{
+    margin-right: 0;
+  }
+
+  .products svg{
+    width: 80px;
+  }
+
+  .products span{
+    display: block;
+    font-size: 14px;
+    color: black;
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -638,9 +694,10 @@ html, body {
 }
 
 .logo{
-  padding: 20px 15px;
+  padding: 18px 0;
   display: block;
-  background: rgba(0,0,0,.04)
+  background: rgba(0,0,0,.04);
+  text-align: center;
 }
 
 .logo img{
@@ -656,6 +713,7 @@ html, body {
 .intro{
   margin-right: $examples-width;
   background: white;
+  @extend %left-col;
 }
 
 .intro img{
@@ -694,10 +752,4 @@ html, body {
 
 .notice:before{
   display: none;
-}
-
-.content{
-  h3,h4,h5{
-    font-weight: bold;
-  }
 }
