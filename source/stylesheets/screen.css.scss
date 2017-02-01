@@ -33,6 +33,9 @@ html, body {
   background-color: $main-bg;
   height: 100%;
   -webkit-text-size-adjust: none; /* Never autoresize text */
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  font-weight: normal;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -186,7 +189,7 @@ html, body {
     font-weight: bold;
     .tocify-item>a {
       padding-left: $nav-padding + $nav-indent;
-      font-size: 12px;
+      // font-size: 12px;
     }
 
     // for embossed look:
@@ -342,7 +345,7 @@ html, body {
     padding: 0 $main-padding;
     box-sizing: border-box;
     display: block;
-    text-shadow: $main-embossed-text-shadow;
+    // text-shadow: $main-embossed-text-shadow;
 
     @extend %left-col;
   }
@@ -379,10 +382,10 @@ html, body {
     font-size: 20px;
     margin-top: 4em;
     margin-bottom: 0;
-    border-top: 1px solid #ccc;
+    // border-top: 1px solid #eee;
     padding-top: 1.2em;
     padding-bottom: 1.2em;
-    background-image: linear-gradient(to bottom, rgba(#fff, 0.4), rgba(#fff, 0));
+    // background-image: linear-gradient(to bottom, rgba(#fff, 0.4), rgba(#fff, 0));
   }
 
   // h2s right after h1s should bump right up
@@ -420,24 +423,28 @@ html, body {
 
     th {
       padding: 5px 10px;
-      border-bottom: 1px solid #ccc;
+      border-top: 1px solid #f1f1f1;
+
+      border-bottom: 1px solid #f1f1f1;
       vertical-align: bottom;
+      font-size: 13px;
     }
 
     td {
       padding: 10px;
+      border-bottom: 1px solid #eee;
     }
 
     tr:last-child {
-      border-bottom: 1px solid #ccc;
+      // border-bottom: 1px solid #ccc;
     }
 
     tr:nth-child(odd)>td {
-      background-color: lighten($main-bg,4.2%);
+      // background-color: #f1f1f1
     }
 
     tr:nth-child(even)>td {
-      background-color: lighten($main-bg,2.4%);
+      // background-color: #f9f9f9
     }
   }
 
@@ -459,7 +466,7 @@ html, body {
   }
 
   code {
-    background-color: rgba(0,0,0,.08);
+    background-color: rgba(0,0,0,.06);
     padding: 3px;
     border-radius: 3px;
     @extend %break-words;
@@ -632,6 +639,7 @@ html, body {
 
 .logo{
   padding: 20px 15px;
+  display: block;
   background: rgba(0,0,0,.04)
 }
 
@@ -667,7 +675,7 @@ html, body {
 }
 
 .highlight .kc{
-  color: #9B8CFF;
+  color: lighten(#9B8CFF, 5%);
 }
 
 .highlight .nn{
@@ -676,4 +684,9 @@ html, body {
 
 .highlight .se{
   color: #999;
+}
+
+.highlight .err{
+  background: transparent;
+  color: #666;
 }
