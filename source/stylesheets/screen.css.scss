@@ -357,7 +357,7 @@ html, body {
 
   // the div is the tocify hidden div for placeholding stuff
   &>h1, &>h2, &>div {
-    // clear:both;
+    clear:both;
   }
 
   h1 {
@@ -545,11 +545,6 @@ html, body {
     font-size: 13px;
   }
 
-  .products-box{
-    margin-right: $examples-width;
-    @extend %left-col;
-  }
-
   .products{
     list-style: none;
     margin: 0;
@@ -557,7 +552,8 @@ html, body {
     display: flex;
     align-items: center;
     text-align: center;
-    // padding: 0 4%;
+    margin-right: $examples-width;
+    @extend %left-col;
   }
 
   .products.products-first{

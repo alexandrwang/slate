@@ -1,5 +1,5 @@
 ---
-title: API Reference
+title: Documentation
 
 language_tabs:
   - javascript: JavaScript
@@ -27,7 +27,6 @@ https://api.scaleapi.com/v1/
 Welcome to the Scale API! You can use our API to access Scale API endpoints, which can create, access, and cancel human tasks.
 
 
-<div class="products-box">
 
 <ul class="products products-first">
   <li>
@@ -75,7 +74,6 @@ Welcome to the Scale API! You can use our API to access Scale API endpoints, whi
     </a>
   </li>
 </ul>
-</div>
 
 Anyone can use our API! [Sign up here](https://dashboard.scaleapi.com/signup) to get started using Scale. You can also [contact us](mailto:hello@scaleapi.com) for volume pricing or any inquiries.
 
