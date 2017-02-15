@@ -208,7 +208,7 @@ Metadata is useful for storing additional, structured information on an object. 
 # Create Categorization Task
 
 ```shell
-curl "https://api.scaleapi.com/v1/task/categorize" \
+curl "https://api.scaleapi.com/v1/task/categorization" \
   -u "{{ApiKey}}:" \
   -d callback_url="http://www.example.com/callback" \
   -d instruction="Is this company public or private?" \
@@ -289,7 +289,7 @@ The parameters `attachment_type`, `attachment`, `categories`, and `category_ids`
 
 ### HTTP Request
 
-`POST https://api.scaleapi.com/v1/task/categorize`
+`POST https://api.scaleapi.com/v1/task/categorization`
 
 ### Parameters
 
