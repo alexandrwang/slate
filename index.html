@@ -355,7 +355,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <p>Metadata is useful for storing additional, structured information on an object. As an example, you could store a video&rsquo;s unique identifier in your system on its content moderation <code class="prettyprint">categorization</code> task. You can also use it to denote the end use case for the task, as &ldquo;content moderation&rdquo; or &ldquo;data categorization&rdquo; for example. Metadata is not used by Scale (e.g., to affect how the task is done).</p>
 
 <h1 id="create-categorization-task">Create Categorization Task</h1>
-<pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/categorize"</span> <span class="se">\</span>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/categorization"</span> <span class="se">\</span>
   -u <span class="s2">"{{ApiKey}}:"</span> <span class="se">\</span>
   -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
   -d <span class="nv">instruction</span><span class="o">=</span><span class="s2">"Is this company public or private?"</span> <span class="se">\</span>
@@ -428,7 +428,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://api.scaleapi.com/v1/task/categorize</code></p>
+<p><code class="prettyprint">POST https://api.scaleapi.com/v1/task/categorization</code></p>
 
 <h3 id="parameters">Parameters</h3>
 
