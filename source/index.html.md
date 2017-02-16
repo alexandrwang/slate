@@ -125,6 +125,13 @@ var scaleapi = require('scaleapi');
 var client = scaleapi.ScaleClient('{{ApiKey}}');
 ```
 
+```ruby
+require 'scale'
+
+scale = Scale.new(api_key: '{{ApiKey}}')
+=> #<Scale:0x007fcc1292fe88 @api_key="{{ApiKey}}", @callback_auth_key=nil, @default_request_params={:callback_url=>nil}, @logging=false>
+```
+
 > <span ng-if="!user.testApiKey">You must replace <code>{{ApiKey}}</code> with your personal API key. If you <a href="https://dashboard.scaleapi.com/signup">sign up</a> or <a href="https://dashboard.scaleapi.com/login">log in</a>, your API key will be automatically filled in the docs.</span>
 > <span ng-if="user.testApiKey">Your test API key <code>{{ApiKey}}</code> is included in all the examples on this page, so you can test any example right away. Only you can see this value.</span>
 
@@ -247,6 +254,20 @@ client.createCategorizationTask({
 }, (err, task) => {
     // do something with task
 });
+```
+
+```ruby
+require 'scale'
+scale = Scale.new(api_key: '{{ApiKey}}')
+
+scale.create_categorization_task({
+  callback_url: 'http://www.example.com/callback', 
+  instruction: 'Is this company public or private?', 
+  attachment_type: 'website', 
+  attachment: 'https://www.google.com', 
+  categories: ['public', 'private']
+})
+=> #<Scale::Api::Tasks::Categorization:0x007fcc11819bf8 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"allow_multiple"=>false, "categories"=>["public", "private"], "attachment"=>"https://www.google.com", "attachment_type"=>"website"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
 ```
 
 > The above command returns an object structured like this:
@@ -395,6 +416,23 @@ client.createComparisonTask({
 });
 ```
 
+```ruby
+require 'scale'
+scale = Scale.new(api_key: '{{ApiKey}}')
+
+scale.create_comparison_task({
+  callback_url: 'http://www.example.com/callback', 
+  instruction: 'Do the objects in these images have the same pattern?', 
+  attachments: [
+    'http://i.ebayimg.com/00/$T2eC16dHJGwFFZKjy5ZjBRfNyMC4Ig~~_32.JPG',
+    'http://images.wisegeek.com/checkered-tablecloth.jpg'
+  ],
+  attachment_type: 'image',
+  choices: ['yes', 'no']
+})
+=> #<Scale::Api::Tasks::Comparison:0x007fcc109636e0 @task_id="58a6378aaa9d139b20a42532", @type="comparison", @instruction="Do the objects in these images have the same pattern?", @params={"choices"=>["yes", "no"], "attachment_type"=>"image", "attachments"=>["http://i.ebayimg.com/00/$T2eC16dHJGwFFZKjy5ZjBRfNyMC4Ig~~_32.JPG", "http://images.wisegeek.com/checkered-tablecloth.jpg"]}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:42 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
+```
+
 > The above command returns an object structured like this:
 
 ```json
@@ -513,6 +551,22 @@ client.createDatacollectionTask({
 }, (err, task) => {
     // do something with task
 });
+```
+
+```ruby
+require 'scale'
+scale = Scale.new(api_key: '{{ApiKey}}')
+
+scale.create_datacollection_task({
+  callback_url: 'http://www.example.com/callback', 
+  instruction: 'Find the URL for the hiring page for the company with attached website.',
+  attachment: 'https://www.scaleapi.com/',
+  attachment_type: 'website',
+  fields: {
+    hiring_page: 'Hiring Page URL'
+  }
+})
+=> #<Scale::Api::Tasks::Datacollection:0x007fcc109b7a38 @task_id="58a63649aa9d139b20a42531", @type="datacollection", @instruction="Find the URL for the hiring page for the company with attached website.", @params={"fields"=>{"hiring_page"=>"Hiring Page URL"}, "attachment"=>"https://www.scaleapi.com/", "attachment_type"=>"website"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:21 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
 ```
 
 > The above command returns an object structured like this:
@@ -652,6 +706,33 @@ client.createAnnotationTask({
 }, (err, task) => {
     // do something with task
 });
+```
+
+```ruby
+require 'scale'
+scale = Scale.new(api_key: '{{ApiKey}}')
+
+scale.create_annotation_task({
+  callback_url: 'http://www.example.com/callback',
+  instruction: 'Draw a box around each **baby cow** and **big cow**',
+  attachment_type: 'image',
+  attachment: 'http://i.imgur.com/v4cBreD.jpg',
+  objects_to_annotate: ['baby cow', 'big cow'],
+  with_labels: true,
+  examples: [
+    {
+      correct: false,
+      image: 'http://i.imgur.com/lj6e98s.jpg',
+      explanation: 'The boxes are tight and accurate'
+    },
+    {
+      correct: true,
+      image: 'http://i.imgur.com/HIrvIDq.jpg',
+      explanation: 'The boxes are neither accurate nor complete'
+    }
+  ]
+})
+=> #<Scale::Api::Tasks::ImageRecognition:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="annotation", @instruction="Draw a box around each **baby cow** and **big cow**", @params={"examples"=>[{"explanation"=>"The boxes are tight and accurate", "image"=>"http://i.imgur.com/lj6e98s.jpg", "correct"=>false}, {"explanation"=>"The boxes are neither accurate nor complete", "image"=>"http://i.imgur.com/HIrvIDq.jpg", "correct"=>true}], "with_labels"=>true, "objects_to_annotate"=>["baby cow", "big cow"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/v4cBreD.jpg"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
 ```
 
 > The above command returns an object structured like this:
@@ -815,6 +896,24 @@ client.createPhonecallTask({
 });
 ```
 
+```ruby
+require 'scale'
+scale = Scale.new(api_key: '{{ApiKey}}')
+
+scale.create_phone_call_task({
+  callback_url: 'http://www.example.com/callback',
+  instruction: 'Call this person and follow the script provided, recording responses',
+  phone_number: '5055006865',
+  entity_name: 'Alexandr Wang',
+  script: 'Hello ! Are you happy today? (pause) One more thing - what is your email address?',
+  fields: {
+    email: 'Email Address',
+  },
+  choices: ['He is happy', 'He is not happy']
+})
+=> #<Scale::Api::Tasks::PhoneCall:0x007fcc1293dc68 @task_id="58a6362eaa9d139b20a4252e", @type="phonecall", @instruction="Call this person and follow the script provided, recording responses", @params={"choices"=>["He is happy", "He is not happy"], "fields"=>{"email"=>"Email Address"}, "attachment_type"=>nil, "attachment"=>nil, "script"=>"Hello ! Are you happy today? (pause) One more thing - what is your email address?", "entity_name"=>"Alexandr Wang", "phone_number"=>"5055006865"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:30:54 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
+```
+
 > The above command returns an object structured like this:
 
 ```json
@@ -949,6 +1048,24 @@ client.createTranscriptionTask({
 });
 ```
 
+```ruby
+require 'scale'
+scale = Scale.new(api_key: '{{ApiKey}}')
+
+scale.create_transcription_task({
+  callback_url: 'http://www.example.com/callback',
+  instruction: 'Transcribe the given fields.',
+  attachment_type: 'website',
+  attachment: 'http://news.ycombinator.com/',
+  fields: {
+    title: 'Title of Webpage',
+    top_result: 'Title of the top result'
+  }
+})
+
+=> #<Scale::Api::Tasks::Transcription:0x007fcc1098d828 @task_id="58a6361eaa9d139b20a4252d", @type="transcription", @instruction="Transcribe the given fields.", @params={"fields"=>{"top_result"=>"Title of the top result", "title"=>"Title of Webpage"}, "attachment"=>"http://news.ycombinator.com/", "attachment_type"=>"website"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:30:38 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
+```
+
 > The above command returns an object structured like this:
 
 ```json
@@ -1053,6 +1170,20 @@ client.createAudiotranscriptionTask({
 }, (err, task) => {
     // do something with task
 });
+```
+
+```ruby
+require 'scale'
+scale = Scale.new(api_key: '{{ApiKey}}')
+
+scale.create_audiotranscription_task({
+  callback_url: 'http://www.example.com/callback',
+  attachment_type: 'audio',
+  attachment: 'https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav',
+  verbatim: false
+})
+
+=> #<Scale::Api::Tasks::AudioTranscription:0x007fcc109b7d58 @task_id="58a6341eaa9d139b20a4252b", @type="audiotranscription", @instruction="Please transcribe the attached audio file.", @params={"verbatim"=>false, "attachment_type"=>"audio", "attachment"=>"https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:22:06 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
 ```
 
 > The above command returns an object structured like this:
@@ -1230,6 +1361,14 @@ client.fetchTask(task_id, (err, task) => {
 });
 ```
 
+```ruby
+require 'scale'
+scale = Scale.new(api_key: '{{ApiKey}}')
+
+scale.tasks.find("58a63795aa9d139b20a42535")
+=> #<Scale::Api::Tasks::Categorization:0x007fcc10978ab8 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"attachment_type"=>"website", "attachment"=>"https://www.google.com", "categories"=>["public", "private"], "allow_multiple"=>false}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}, @client=#<struct Scale::Api api_key="live_358440e50ba277654e847a079eda9614", callback_auth_key=nil, default_request_params={:callback_url=>nil}, logging=false>>
+```
+
 > The above command returns an object structured like this:
 
 ```json
@@ -1301,6 +1440,17 @@ client.cancelTask(task_id, (err, task) => {
 });
 ```
 
+```ruby
+require 'scale'
+scale = Scale.new(api_key: '{{ApiKey}}')
+
+canceled_task = scale.tasks.cancel("YOUR_TASK_ID") # Returns the appropriate Task object with status set to canceled
+=> #<Scale::Api::Tasks::Categorization:0x007fcc1108b288 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"attachment_type"=>"website", "attachment"=>"https://www.google.com", "categories"=>["public", "private"], "allow_multiple"=>false}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="canceled", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}, @client=#<struct Scale::Api api_key="live_358440e50ba277654e847a079eda9614", callback_auth_key=nil, default_request_params={:callback_url=>nil}, logging=false>>
+
+canceled_task.cancelled?
+=> true
+```
+
 > The above command returns an object structured like this:
 
 ```json
@@ -1370,6 +1520,17 @@ client.tasks(params, (err, tasklist) => {
     // do something with tasklist
 });
 ```
+
+```ruby
+require 'scale'
+scale = Scale.new(api_key: 'SCALE_API_KEY')
+
+# You can pass params like start_time or end_time as keys to filter results
+scale.tasks.where
+=> #<Scale::Api::TaskList:0x007fcc11822a28 @client=#<struct Scale::Api api_key="live_358440e50ba277654e847a079eda9614", callback_auth_key=nil, default_request_params={:callback_url=>nil}, logging=false>, @docs=[#<Scale::Api::Tasks::Categorization:0x007fcc118227f8 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"attachment_type"=>"website", "attachment"=>"https://www.google.com", "categories"=>["public", "private"], "allow_multiple"=>false}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}, @client=#<struct Scale::Api api_key="live_358440e50ba277654e847a079eda9614", callback_auth_key=nil, default_request_params={:callback_url=>nil}, logging=false>>], @limit=1, @offset=0, @has_more=true, @params={:start_time=>nil, :end_time=>nil, :limit=>1, :offset=>0, :status=>nil, :type=>nil}>
+# Scale::Api::TaskList implements Enumerable, so it is Array-like.
+```
+
 
 > The above command returns an object structured like this:
 
