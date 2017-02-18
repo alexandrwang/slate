@@ -2,9 +2,10 @@
 title: Documentation
 
 language_tabs:
-  - javascript: JavaScript
   - shell: cURL
+  - javascript: JavaScript
   - python: Python
+  - ruby: Ruby
 
 toc_footers:
   - <a href='https://dashboard.scaleapi.com/signup'>Signup for Scale</a>
@@ -94,11 +95,18 @@ pip install scaleapi
 npm install scaleapi --save
 ```
 
-Currently we have [Python](https://github.com/scaleapi/scaleapi-python-client) and [Node.js](https://github.com/scaleapi/scaleapi-node) client libraries available.
+```ruby
+gem install scaleapi
+```
+
+Currently we have client libraries available for the following languages:
+
+* [Python](https://github.com/scaleapi/scaleapi-python-client)
+* [Node.js](https://github.com/scaleapi/scaleapi-node)
+* [Ruby](https://github.com/scaleapi/scaleapi-ruby)
 
 We also have unnoficial SDKs in the following languages:
 
-* [Ruby](https://github.com/wikiti/scaleapi-ruby) (thanks to [wikiti](https://github.com/wikiti)!)
 * [Android SDK](https://github.com/vanshg/Scale) (thanks to [vanshg](https://github.com/vanshg)!)
 
 [Let us know](mailto:hello@scaleapi.com) if you want (or are interested in writing) a library for a language not represented here!
