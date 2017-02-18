@@ -94,7 +94,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;javascript&quot;,&quot;shell&quot;,&quot;python&quot;]" ng-controller="docsController" ng-cloak>
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;javascript&quot;,&quot;python&quot;,&quot;ruby&quot;]" ng-controller="docsController" ng-cloak>
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -104,9 +104,10 @@
     <div class="tocify-wrapper">
       <a href="https://scaleapi.com" class="logo"><img src="images/logo.svg" alt="Logo" /></a>
         <div class="lang-selector">
-              <a href="#" data-language-name="javascript">JavaScript</a>
               <a href="#" data-language-name="shell">cURL</a>
+              <a href="#" data-language-name="javascript">JavaScript</a>
               <a href="#" data-language-name="python">Python</a>
+              <a href="#" data-language-name="ruby">Ruby</a>
         </div>
         <div class="search" style="display: none;">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -194,13 +195,19 @@
 </blockquote>
 <pre class="highlight python"><code><span class="n">pip</span> <span class="n">install</span> <span class="n">scaleapi</span>
 </code></pre><pre class="highlight javascript"><code><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">scaleapi</span> <span class="o">--</span><span class="nx">save</span>
+</code></pre><pre class="highlight ruby"><code><span class="n">gem</span> <span class="n">install</span> <span class="n">scaleapi</span>
 </code></pre>
-<p>Currently we have <a href="https://github.com/scaleapi/scaleapi-python-client">Python</a> and <a href="https://github.com/scaleapi/scaleapi-node">Node.js</a> client libraries available.</p>
+<p>Currently we have client libraries available for the following languages:</p>
+
+<ul>
+<li><a href="https://github.com/scaleapi/scaleapi-python-client">Python</a></li>
+<li><a href="https://github.com/scaleapi/scaleapi-node">Node.js</a></li>
+<li><a href="https://github.com/scaleapi/scaleapi-ruby">Ruby</a></li>
+</ul>
 
 <p>We also have unnoficial SDKs in the following languages:</p>
 
 <ul>
-<li><a href="https://github.com/wikiti/scaleapi-ruby">Ruby</a> (thanks to <a href="https://github.com/wikiti">wikiti</a>!)</li>
 <li><a href="https://github.com/vanshg/Scale">Android SDK</a> (thanks to <a href="https://github.com/vanshg">vanshg</a>!)</li>
 </ul>
 
@@ -220,6 +227,10 @@ curl <span class="s2">"api_endpoint_here"</span> <span class="se">\</span>
 </code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">scaleapi</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'scaleapi'</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">scaleapi</span><span class="p">.</span><span class="nx">ScaleClient</span><span class="p">(</span><span class="s1">'{{ApiKey}}'</span><span class="p">);</span>
+</code></pre><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'scale'</span>
+
+<span class="n">scale</span> <span class="o">=</span> <span class="no">Scale</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">api_key: </span><span class="s1">'{{ApiKey}}'</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Scale:0x007fcc1292fe88 @api_key="{{ApiKey}}", @callback_auth_key=nil, @default_request_params={:callback_url=&gt;nil}, @logging=false&gt;</span>
 </code></pre>
 <blockquote>
 <p><span ng-if="!user.testApiKey">You must replace <code>{{ApiKey}}</code> with your personal API key. If you <a href="https://dashboard.scaleapi.com/signup">sign up</a> or <a href="https://dashboard.scaleapi.com/login">log in</a>, your API key will be automatically filled in the docs.</span>
@@ -388,6 +399,17 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">task</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="c1">// do something with task</span>
 <span class="p">});</span>
+</code></pre><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'scale'</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="no">Scale</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">api_key: </span><span class="s1">'{{ApiKey}}'</span><span class="p">)</span>
+
+<span class="n">scale</span><span class="p">.</span><span class="nf">create_categorization_task</span><span class="p">({</span>
+  <span class="ss">callback_url: </span><span class="s1">'http://www.example.com/callback'</span><span class="p">,</span> 
+  <span class="ss">instruction: </span><span class="s1">'Is this company public or private?'</span><span class="p">,</span> 
+  <span class="ss">attachment_type: </span><span class="s1">'website'</span><span class="p">,</span> 
+  <span class="ss">attachment: </span><span class="s1">'https://www.google.com'</span><span class="p">,</span> 
+  <span class="ss">categories: </span><span class="p">[</span><span class="s1">'public'</span><span class="p">,</span> <span class="s1">'private'</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Scale::Api::Tasks::Categorization:0x007fcc11819bf8 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"allow_multiple"=&gt;false, "categories"=&gt;["public", "private"], "attachment"=&gt;"https://www.google.com", "attachment_type"=&gt;"website"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}&gt;</span>
 </code></pre>
 <blockquote>
 <p>The above command returns an object structured like this:</p>
@@ -566,6 +588,20 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">task</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="c1">// do something with task</span>
 <span class="p">});</span>
+</code></pre><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'scale'</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="no">Scale</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">api_key: </span><span class="s1">'{{ApiKey}}'</span><span class="p">)</span>
+
+<span class="n">scale</span><span class="p">.</span><span class="nf">create_comparison_task</span><span class="p">({</span>
+  <span class="ss">callback_url: </span><span class="s1">'http://www.example.com/callback'</span><span class="p">,</span> 
+  <span class="ss">instruction: </span><span class="s1">'Do the objects in these images have the same pattern?'</span><span class="p">,</span> 
+  <span class="ss">attachments: </span><span class="p">[</span>
+    <span class="s1">'http://i.ebayimg.com/00/$T2eC16dHJGwFFZKjy5ZjBRfNyMC4Ig~~_32.JPG'</span><span class="p">,</span>
+    <span class="s1">'http://images.wisegeek.com/checkered-tablecloth.jpg'</span>
+  <span class="p">],</span>
+  <span class="ss">attachment_type: </span><span class="s1">'image'</span><span class="p">,</span>
+  <span class="ss">choices: </span><span class="p">[</span><span class="s1">'yes'</span><span class="p">,</span> <span class="s1">'no'</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Scale::Api::Tasks::Comparison:0x007fcc109636e0 @task_id="58a6378aaa9d139b20a42532", @type="comparison", @instruction="Do the objects in these images have the same pattern?", @params={"choices"=&gt;["yes", "no"], "attachment_type"=&gt;"image", "attachments"=&gt;["http://i.ebayimg.com/00/$T2eC16dHJGwFFZKjy5ZjBRfNyMC4Ig~~_32.JPG", "http://images.wisegeek.com/checkered-tablecloth.jpg"]}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:42 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}&gt;</span>
 </code></pre>
 <blockquote>
 <p>The above command returns an object structured like this:</p>
@@ -713,6 +749,19 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">task</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="c1">// do something with task</span>
 <span class="p">});</span>
+</code></pre><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'scale'</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="no">Scale</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">api_key: </span><span class="s1">'{{ApiKey}}'</span><span class="p">)</span>
+
+<span class="n">scale</span><span class="p">.</span><span class="nf">create_datacollection_task</span><span class="p">({</span>
+  <span class="ss">callback_url: </span><span class="s1">'http://www.example.com/callback'</span><span class="p">,</span> 
+  <span class="ss">instruction: </span><span class="s1">'Find the URL for the hiring page for the company with attached website.'</span><span class="p">,</span>
+  <span class="ss">attachment: </span><span class="s1">'https://www.scaleapi.com/'</span><span class="p">,</span>
+  <span class="ss">attachment_type: </span><span class="s1">'website'</span><span class="p">,</span>
+  <span class="ss">fields: </span><span class="p">{</span>
+    <span class="ss">hiring_page: </span><span class="s1">'Hiring Page URL'</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Scale::Api::Tasks::Datacollection:0x007fcc109b7a38 @task_id="58a63649aa9d139b20a42531", @type="datacollection", @instruction="Find the URL for the hiring page for the company with attached website.", @params={"fields"=&gt;{"hiring_page"=&gt;"Hiring Page URL"}, "attachment"=&gt;"https://www.scaleapi.com/", "attachment_type"=&gt;"website"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:21 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}&gt;</span>
 </code></pre>
 <blockquote>
 <p>The above command returns an object structured like this:</p>
@@ -876,6 +925,30 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">task</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="c1">// do something with task</span>
 <span class="p">});</span>
+</code></pre><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'scale'</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="no">Scale</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">api_key: </span><span class="s1">'{{ApiKey}}'</span><span class="p">)</span>
+
+<span class="n">scale</span><span class="p">.</span><span class="nf">create_annotation_task</span><span class="p">({</span>
+  <span class="ss">callback_url: </span><span class="s1">'http://www.example.com/callback'</span><span class="p">,</span>
+  <span class="ss">instruction: </span><span class="s1">'Draw a box around each **baby cow** and **big cow**'</span><span class="p">,</span>
+  <span class="ss">attachment_type: </span><span class="s1">'image'</span><span class="p">,</span>
+  <span class="ss">attachment: </span><span class="s1">'http://i.imgur.com/v4cBreD.jpg'</span><span class="p">,</span>
+  <span class="ss">objects_to_annotate: </span><span class="p">[</span><span class="s1">'baby cow'</span><span class="p">,</span> <span class="s1">'big cow'</span><span class="p">],</span>
+  <span class="ss">with_labels: </span><span class="kp">true</span><span class="p">,</span>
+  <span class="ss">examples: </span><span class="p">[</span>
+    <span class="p">{</span>
+      <span class="ss">correct: </span><span class="kp">false</span><span class="p">,</span>
+      <span class="ss">image: </span><span class="s1">'http://i.imgur.com/lj6e98s.jpg'</span><span class="p">,</span>
+      <span class="ss">explanation: </span><span class="s1">'The boxes are tight and accurate'</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="ss">correct: </span><span class="kp">true</span><span class="p">,</span>
+      <span class="ss">image: </span><span class="s1">'http://i.imgur.com/HIrvIDq.jpg'</span><span class="p">,</span>
+      <span class="ss">explanation: </span><span class="s1">'The boxes are neither accurate nor complete'</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">})</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Scale::Api::Tasks::ImageRecognition:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="annotation", @instruction="Draw a box around each **baby cow** and **big cow**", @params={"examples"=&gt;[{"explanation"=&gt;"The boxes are tight and accurate", "image"=&gt;"http://i.imgur.com/lj6e98s.jpg", "correct"=&gt;false}, {"explanation"=&gt;"The boxes are neither accurate nor complete", "image"=&gt;"http://i.imgur.com/HIrvIDq.jpg", "correct"=&gt;true}], "with_labels"=&gt;true, "objects_to_annotate"=&gt;["baby cow", "big cow"], "attachment_type"=&gt;"image", "attachment"=&gt;"http://i.imgur.com/v4cBreD.jpg"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}&gt;</span>
 </code></pre>
 <blockquote>
 <p>The above command returns an object structured like this:</p>
@@ -1071,6 +1144,21 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">task</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="c1">// do something with task</span>
 <span class="p">});</span>
+</code></pre><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'scale'</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="no">Scale</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">api_key: </span><span class="s1">'{{ApiKey}}'</span><span class="p">)</span>
+
+<span class="n">scale</span><span class="p">.</span><span class="nf">create_phone_call_task</span><span class="p">({</span>
+  <span class="ss">callback_url: </span><span class="s1">'http://www.example.com/callback'</span><span class="p">,</span>
+  <span class="ss">instruction: </span><span class="s1">'Call this person and follow the script provided, recording responses'</span><span class="p">,</span>
+  <span class="ss">phone_number: </span><span class="s1">'5055006865'</span><span class="p">,</span>
+  <span class="ss">entity_name: </span><span class="s1">'Alexandr Wang'</span><span class="p">,</span>
+  <span class="ss">script: </span><span class="s1">'Hello ! Are you happy today? (pause) One more thing - what is your email address?'</span><span class="p">,</span>
+  <span class="ss">fields: </span><span class="p">{</span>
+    <span class="ss">email: </span><span class="s1">'Email Address'</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="ss">choices: </span><span class="p">[</span><span class="s1">'He is happy'</span><span class="p">,</span> <span class="s1">'He is not happy'</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Scale::Api::Tasks::PhoneCall:0x007fcc1293dc68 @task_id="58a6362eaa9d139b20a4252e", @type="phonecall", @instruction="Call this person and follow the script provided, recording responses", @params={"choices"=&gt;["He is happy", "He is not happy"], "fields"=&gt;{"email"=&gt;"Email Address"}, "attachment_type"=&gt;nil, "attachment"=&gt;nil, "script"=&gt;"Hello ! Are you happy today? (pause) One more thing - what is your email address?", "entity_name"=&gt;"Alexandr Wang", "phone_number"=&gt;"5055006865"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:30:54 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}&gt;</span>
 </code></pre>
 <blockquote>
 <p>The above command returns an object structured like this:</p>
@@ -1244,6 +1332,21 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">task</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="c1">// do something with task</span>
 <span class="p">});</span>
+</code></pre><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'scale'</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="no">Scale</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">api_key: </span><span class="s1">'{{ApiKey}}'</span><span class="p">)</span>
+
+<span class="n">scale</span><span class="p">.</span><span class="nf">create_transcription_task</span><span class="p">({</span>
+  <span class="ss">callback_url: </span><span class="s1">'http://www.example.com/callback'</span><span class="p">,</span>
+  <span class="ss">instruction: </span><span class="s1">'Transcribe the given fields.'</span><span class="p">,</span>
+  <span class="ss">attachment_type: </span><span class="s1">'website'</span><span class="p">,</span>
+  <span class="ss">attachment: </span><span class="s1">'http://news.ycombinator.com/'</span><span class="p">,</span>
+  <span class="ss">fields: </span><span class="p">{</span>
+    <span class="ss">title: </span><span class="s1">'Title of Webpage'</span><span class="p">,</span>
+    <span class="ss">top_result: </span><span class="s1">'Title of the top result'</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="o">=&gt;</span> <span class="c1">#&lt;Scale::Api::Tasks::Transcription:0x007fcc1098d828 @task_id="58a6361eaa9d139b20a4252d", @type="transcription", @instruction="Transcribe the given fields.", @params={"fields"=&gt;{"top_result"=&gt;"Title of the top result", "title"=&gt;"Title of Webpage"}, "attachment"=&gt;"http://news.ycombinator.com/", "attachment_type"=&gt;"website"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:30:38 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}&gt;</span>
 </code></pre>
 <blockquote>
 <p>The above command returns an object structured like this:</p>
@@ -1372,6 +1475,17 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">task</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="c1">// do something with task</span>
 <span class="p">});</span>
+</code></pre><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'scale'</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="no">Scale</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">api_key: </span><span class="s1">'{{ApiKey}}'</span><span class="p">)</span>
+
+<span class="n">scale</span><span class="p">.</span><span class="nf">create_audiotranscription_task</span><span class="p">({</span>
+  <span class="ss">callback_url: </span><span class="s1">'http://www.example.com/callback'</span><span class="p">,</span>
+  <span class="ss">attachment_type: </span><span class="s1">'audio'</span><span class="p">,</span>
+  <span class="ss">attachment: </span><span class="s1">'https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav'</span><span class="p">,</span>
+  <span class="ss">verbatim: </span><span class="kp">false</span>
+<span class="p">})</span>
+
+<span class="o">=&gt;</span> <span class="c1">#&lt;Scale::Api::Tasks::AudioTranscription:0x007fcc109b7d58 @task_id="58a6341eaa9d139b20a4252b", @type="audiotranscription", @instruction="Please transcribe the attached audio file.", @params={"verbatim"=&gt;false, "attachment_type"=&gt;"audio", "attachment"=&gt;"https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:22:06 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}&gt;</span>
 </code></pre>
 <blockquote>
 <p>The above command returns an object structured like this:</p>
@@ -1586,6 +1700,11 @@ you can set a default callback URL in your profile, which will be used for tasks
 <span class="nx">client</span><span class="p">.</span><span class="nx">fetchTask</span><span class="p">(</span><span class="nx">task_id</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">task</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="c1">// do something with task</span>
 <span class="p">});</span>
+</code></pre><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'scale'</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="no">Scale</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">api_key: </span><span class="s1">'{{ApiKey}}'</span><span class="p">)</span>
+
+<span class="n">scale</span><span class="p">.</span><span class="nf">tasks</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="s2">"58a63795aa9d139b20a42535"</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Scale::Api::Tasks::Categorization:0x007fcc10978ab8 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"attachment_type"=&gt;"website", "attachment"=&gt;"https://www.google.com", "categories"=&gt;["public", "private"], "allow_multiple"=&gt;false}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}, @client=#&lt;struct Scale::Api api_key="live_358440e50ba277654e847a079eda9614", callback_auth_key=nil, default_request_params={:callback_url=&gt;nil}, logging=false&gt;&gt;</span>
 </code></pre>
 <blockquote>
 <p>The above command returns an object structured like this:</p>
@@ -1655,6 +1774,14 @@ you can set a default callback URL in your profile, which will be used for tasks
 <span class="nx">client</span><span class="p">.</span><span class="nx">cancelTask</span><span class="p">(</span><span class="nx">task_id</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">task</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="c1">// do something with task</span>
 <span class="p">});</span>
+</code></pre><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'scale'</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="no">Scale</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">api_key: </span><span class="s1">'{{ApiKey}}'</span><span class="p">)</span>
+
+<span class="n">canceled_task</span> <span class="o">=</span> <span class="n">scale</span><span class="p">.</span><span class="nf">tasks</span><span class="p">.</span><span class="nf">cancel</span><span class="p">(</span><span class="s2">"YOUR_TASK_ID"</span><span class="p">)</span> <span class="c1"># Returns the appropriate Task object with status set to canceled</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Scale::Api::Tasks::Categorization:0x007fcc1108b288 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"attachment_type"=&gt;"website", "attachment"=&gt;"https://www.google.com", "categories"=&gt;["public", "private"], "allow_multiple"=&gt;false}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="canceled", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}, @client=#&lt;struct Scale::Api api_key="live_358440e50ba277654e847a079eda9614", callback_auth_key=nil, default_request_params={:callback_url=&gt;nil}, logging=false&gt;&gt;</span>
+
+<span class="n">canceled_task</span><span class="p">.</span><span class="nf">cancelled?</span>
+<span class="o">=&gt;</span> <span class="kp">true</span>
 </code></pre>
 <blockquote>
 <p>The above command returns an object structured like this:</p>
@@ -1723,6 +1850,13 @@ you can set a default callback URL in your profile, which will be used for tasks
 <span class="nx">client</span><span class="p">.</span><span class="nx">tasks</span><span class="p">(</span><span class="nx">params</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">tasklist</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="c1">// do something with tasklist</span>
 <span class="p">});</span>
+</code></pre><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'scale'</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="no">Scale</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">api_key: </span><span class="s1">'SCALE_API_KEY'</span><span class="p">)</span>
+
+<span class="c1"># You can pass params like start_time or end_time as keys to filter results</span>
+<span class="n">scale</span><span class="p">.</span><span class="nf">tasks</span><span class="p">.</span><span class="nf">where</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Scale::Api::TaskList:0x007fcc11822a28 @client=#&lt;struct Scale::Api api_key="live_358440e50ba277654e847a079eda9614", callback_auth_key=nil, default_request_params={:callback_url=&gt;nil}, logging=false&gt;, @docs=[#&lt;Scale::Api::Tasks::Categorization:0x007fcc118227f8 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"attachment_type"=&gt;"website", "attachment"=&gt;"https://www.google.com", "categories"=&gt;["public", "private"], "allow_multiple"=&gt;false}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}, @client=#&lt;struct Scale::Api api_key="live_358440e50ba277654e847a079eda9614", callback_auth_key=nil, default_request_params={:callback_url=&gt;nil}, logging=false&gt;&gt;], @limit=1, @offset=0, @has_more=true, @params={:start_time=&gt;nil, :end_time=&gt;nil, :limit=&gt;1, :offset=&gt;0, :status=&gt;nil, :type=&gt;nil}&gt;</span>
+<span class="c1"># Scale::Api::TaskList implements Enumerable, so it is Array-like.</span>
 </code></pre>
 <blockquote>
 <p>The above command returns an object structured like this:</p>
@@ -1877,9 +2011,10 @@ you can set a default callback URL in your profile, which will be used for tasks
       </div>
       <div class="dark-box">
           <div class="lang-selector">
-                <a href="#" data-language-name="javascript">JavaScript</a>
                 <a href="#" data-language-name="shell">cURL</a>
+                <a href="#" data-language-name="javascript">JavaScript</a>
                 <a href="#" data-language-name="python">Python</a>
+                <a href="#" data-language-name="ruby">Ruby</a>
           </div>
       </div>
     </div>
