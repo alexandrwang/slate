@@ -469,7 +469,7 @@ html, body {
     background-color: rgba(0,0,0,.06);
     padding: 3px;
     border-radius: 3px;
-    @extend %break-words;
+    // @extend %break-words;
     @extend %code-font;
   }
 
