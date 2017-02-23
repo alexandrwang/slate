@@ -1448,7 +1448,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 
 <p><code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.</p>
 
-<h2 id="create-audio-transcription-task">Create Audio Transcription Task</h2>
+<h1 id="create-audio-transcription-task">Create Audio Transcription Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/audiotranscription"</span> <span class="se">\</span>
   -u <span class="s2">"{{ApiKey}}:"</span> <span class="se">\</span>
   -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
@@ -1517,6 +1517,8 @@ For low volume, we currently only support calling US numbers. For higher volume 
 
 <p>You may optionally specify <code class="prettyprint">verbatim</code> to <code class="prettyprint">true</code> or <code class="prettyprint">false</code>, determining whether non-words such as &ldquo;um&rdquo; and &ldquo;hm&rdquo; will be included in the transcript. The default is <code class="prettyprint">false</code>.</p>
 
+<p>You may also optionally specify <code class="prettyprint">phrases</code>, a list of strings containing words and phrases &ldquo;hints&rdquo; so that the audio transcription is more likely to recognize them. This can be used to improve the accuracy for specific words and phrases, or to add additional words to the vocabulary for the transcription.</p>
+
 <p>If successful, Scale will immediately return the generated task object, of which you should at least store the <code class="prettyprint">task_id</code>.</p>
 
 <p>The parameters <code class="prettyprint">attachment_type</code>, <code class="prettyprint">attachment</code>, and <code class="prettyprint">verbatim</code> will be stored in the <code class="prettyprint">params</code> object of the constructed <code class="prettyprint">task</code> object.</p>
@@ -1562,6 +1564,11 @@ The maximum length of an audio file to be transcribed is 30 minutes, and we will
 <td><code class="prettyprint">verbatim</code> (optional, default <code class="prettyprint">false</code>)</td>
 <td>boolean</td>
 <td>Specifies whether or not to include non-words (ex: &ldquo;um&rdquo;, &ldquo;hm&rdquo;) in the transcript.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">phrases</code> (optional)</td>
+<td>[string]</td>
+<td>A list of strings containing words and phrases &ldquo;hints&rdquo; so that the audio transcription is more likely to recognize them. This can be used to improve the accuracy for specific words and phrases, or to add additional words to the vocabulary for the transcription.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">urgency</code> (optional, default <code class="prettyprint">day</code>)</td>
