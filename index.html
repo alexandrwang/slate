@@ -1108,7 +1108,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
   -u <span class="s2">"{{ApiKey}}:"</span> <span class="se">\</span>
   -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"http://www.example.com/callback"</span> <span class="se">\</span>
   -d <span class="nv">instruction</span><span class="o">=</span><span class="s2">"Call this person and follow the script provided, recording responses"</span> <span class="se">\</span>
-  -d <span class="nv">phone_number</span><span class="o">=</span>5055006865 <span class="se">\</span>
+  -d <span class="nv">phone_number</span><span class="o">=</span><span class="s2">"+15055006865"</span> <span class="se">\</span>
   -d <span class="nv">entity_name</span><span class="o">=</span><span class="s2">"Alexandr Wang"</span> <span class="se">\</span>
   -d <span class="nv">script</span><span class="o">=</span><span class="s2">"Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?"</span> <span class="se">\</span>
   -d fields[email]<span class="o">=</span><span class="s2">"Email Address"</span> <span class="se">\</span>
@@ -1121,7 +1121,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <span class="n">client</span><span class="o">.</span><span class="n">create_phonecall_task</span><span class="p">(</span>
     <span class="n">callback_url</span><span class="o">=</span><span class="s">'http://www.example.com/callback'</span><span class="p">,</span>
     <span class="n">instruction</span><span class="o">=</span><span class="s">'Call this person and follow the script provided, recording responses'</span><span class="p">,</span>
-    <span class="n">phone_number</span><span class="o">=</span><span class="s">'5055006865'</span><span class="p">,</span>
+    <span class="n">phone_number</span><span class="o">=</span><span class="s">'+15055006865'</span><span class="p">,</span>
     <span class="n">entity_name</span><span class="o">=</span><span class="s">'Alexandr Wang'</span><span class="p">,</span>
     <span class="n">script</span><span class="o">=</span><span class="s">'Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?'</span><span class="p">,</span>
     <span class="n">fields</span><span class="o">=</span><span class="p">{</span>
@@ -1136,7 +1136,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <span class="nx">client</span><span class="p">.</span><span class="nx">createPhonecallTask</span><span class="p">({</span>
   <span class="s1">'callback_url'</span><span class="p">:</span> <span class="s1">'http://www.example.com/callback'</span><span class="p">,</span>
   <span class="s1">'instruction'</span><span class="p">:</span> <span class="s1">'Call this person and follow the script provided, recording responses'</span><span class="p">,</span>
-  <span class="s1">'phone_number'</span><span class="p">:</span> <span class="s1">'5055006865'</span><span class="p">,</span>
+  <span class="s1">'phone_number'</span><span class="p">:</span> <span class="s1">'+15055006865'</span><span class="p">,</span>
   <span class="s1">'entity_name'</span><span class="p">:</span> <span class="s1">'Alexandr Wang'</span><span class="p">,</span>
   <span class="s1">'script'</span><span class="p">:</span> <span class="s1">'Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?'</span><span class="p">,</span>
   <span class="s1">'fields'</span><span class="p">:</span> <span class="p">{</span>
@@ -1152,7 +1152,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <span class="n">scale</span><span class="p">.</span><span class="nf">create_phone_call_task</span><span class="p">({</span>
   <span class="ss">callback_url: </span><span class="s1">'http://www.example.com/callback'</span><span class="p">,</span>
   <span class="ss">instruction: </span><span class="s1">'Call this person and follow the script provided, recording responses'</span><span class="p">,</span>
-  <span class="ss">phone_number: </span><span class="s1">'5055006865'</span><span class="p">,</span>
+  <span class="ss">phone_number: </span><span class="s1">'+15055006865'</span><span class="p">,</span>
   <span class="ss">entity_name: </span><span class="s1">'Alexandr Wang'</span><span class="p">,</span>
   <span class="ss">script: </span><span class="s1">'Hello ! Are you happy today? (pause) One more thing - what is your email address?'</span><span class="p">,</span>
   <span class="ss">fields: </span><span class="p">{</span>
@@ -1183,7 +1183,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
       </span><span class="s2">"He is not happy"</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="nt">"entity_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Alexandr Wang"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5055006865"</span><span class="w">
+    </span><span class="nt">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+15055006865"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
