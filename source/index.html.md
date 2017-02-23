@@ -1141,7 +1141,7 @@ The `response` object, which is part of the callback POST request and permanentl
 `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
 
 
-## Create Audio Transcription Task
+# Create Audio Transcription Task
 
 ```shell
 curl "https://api.scaleapi.com/v1/task/audiotranscription" \
@@ -1223,6 +1223,8 @@ If you have more specific instructions about how to transcribe the audio file, y
 
 You may optionally specify `verbatim` to `true` or `false`, determining whether non-words such as "um" and "hm" will be included in the transcript. The default is `false`.
 
+You may also optionally specify `phrases`, a list of strings containing words and phrases "hints" so that the audio transcription is more likely to recognize them. This can be used to improve the accuracy for specific words and phrases, or to add additional words to the vocabulary for the transcription.
+
 If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
 
 The parameters `attachment_type`, `attachment`, and `verbatim` will be stored in the `params` object of the constructed `task` object.
@@ -1244,6 +1246,7 @@ Parameter | Type | Description
 `attachment` | string | A URL pointing to the audio file attachment.
 `attachment_type` (optional, default `audio`) | string | Describes what type of file the attachment is. Only accepts `audio`.
 `verbatim` (optional, default `false`) | boolean | Specifies whether or not to include non-words (ex: "um", "hm") in the transcript.
+`phrases` (optional) | [string] | A list of strings containing words and phrases "hints" so that the audio transcription is more likely to recognize them. This can be used to improve the accuracy for specific words and phrases, or to add additional words to the vocabulary for the transcription.
 `urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
