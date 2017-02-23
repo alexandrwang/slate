@@ -859,7 +859,7 @@ curl "https://api.scaleapi.com/v1/task/phonecall" \
   -u "{{ApiKey}}:" \
   -d callback_url="http://www.example.com/callback" \
   -d instruction="Call this person and follow the script provided, recording responses" \
-  -d phone_number=5055006865 \
+  -d phone_number="+15055006865" \
   -d entity_name="Alexandr Wang" \
   -d script="Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?" \
   -d fields[email]="Email Address" \
@@ -874,7 +874,7 @@ client = scaleapi.ScaleClient('{{ApiKey}}')
 client.create_phonecall_task(
     callback_url='http://www.example.com/callback',
     instruction='Call this person and follow the script provided, recording responses',
-    phone_number='5055006865',
+    phone_number='+15055006865',
     entity_name='Alexandr Wang',
     script='Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?',
     fields={
@@ -892,7 +892,7 @@ var client = scaleapi.ScaleClient('{{ApiKey}}');
 client.createPhonecallTask({
   'callback_url': 'http://www.example.com/callback',
   'instruction': 'Call this person and follow the script provided, recording responses',
-  'phone_number': '5055006865',
+  'phone_number': '+15055006865',
   'entity_name': 'Alexandr Wang',
   'script': 'Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?',
   'fields': {
@@ -911,7 +911,7 @@ scale = Scale.new(api_key: '{{ApiKey}}')
 scale.create_phone_call_task({
   callback_url: 'http://www.example.com/callback',
   instruction: 'Call this person and follow the script provided, recording responses',
-  phone_number: '5055006865',
+  phone_number: '+15055006865',
   entity_name: 'Alexandr Wang',
   script: 'Hello ! Are you happy today? (pause) One more thing - what is your email address?',
   fields: {
@@ -943,7 +943,7 @@ scale.create_phone_call_task({
       "He is not happy"
     ],
     "entity_name": "Alexandr Wang",
-    "phone_number": "5055006865"
+    "phone_number": "+15055006865"
   },
   "metadata": {}
 }
