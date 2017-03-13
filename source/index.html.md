@@ -1001,7 +1001,13 @@ Parameter | Type | Description
 
 The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have an `outcome` field, and a `fields` field and/or `choice` field depending on the original request.
 
-The outcome will be a string equal to one of `no_pickup` (meaning nobody picked up), `hung_up` (meaning the recipient hung up before the task could be completed), or `success` (the call succeeded).
+The outcome will be a string equal to one of the following outcomes with the following meanings:
+
+* `no_pickup`: Nobody picked up.
+* `hung_up`: Hung up before could successfully complete task.
+* `success`: Successfully completed task.
+* `wrong_number`: This was the wrong number for the entity.
+* `invalid_number`: The phone number was out of service.
 
 If your original API request provided `fields`, `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
 
