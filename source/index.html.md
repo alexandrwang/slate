@@ -324,7 +324,7 @@ The parameters `attachment_type`, `attachment`, `categories`, and `category_ids`
 
 Parameter | Type | Description
 --------- | ---- | -------
-`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed.
+`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed. See the [Callback section](#callbacks) for more details about callbacks.
 `instruction` | string | A markdown-enabled string explaining how to categorize the item. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` | string | One of `text`, `image`, `video`, `audio`, `website`, or `pdf`. Describes what type of file the attachment is.
 `attachment` | string | The attachment to be categorized. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
@@ -404,7 +404,9 @@ If `allow_multiple` is `true`, the value will be an array of categories, each on
 
 If `category_ids` was provided, there will be another field `category_id` corresponding to the given id of the chosen category/categories.
 
-See the [Callback section](#callbacks) for more details about callbacks.
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
 
 # Create Comparison Task
 
@@ -518,7 +520,7 @@ The parameters `attachment_type`, `attachments`, `choices`, and `fields` will be
 
 Parameter | Type | Description
 --------- | ---- | -------
-`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed.
+`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed. See the [Callback section](#callbacks) for more details about callbacks.
 `instruction` | string | A markdown-enabled string explaining how to compare the attachments. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` | string | One of `text`, `image`, `video`, `audio`, `website`, or `pdf`. Describes what type of file the attachments are.
 `attachments` | array | An array of attachments to compare. If `attachment_type` is `text`, then each attachment should be plaintext. Otherwise, they should be URLs pointing to the attachments.
@@ -553,7 +555,9 @@ If your original call provided `choices`, `choice` will be one of the original c
 
 If your original call provided `fields`, `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
 
-See the [Callback section](#callbacks) for more details about callbacks.
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
 
 # Create Data Collection Task
 
@@ -657,7 +661,7 @@ The parameters `attachment_type`, `attachment`, and `fields` will be stored in t
 
 Parameter | Type | Description
 --------- | ---- | -------
-`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed.
+`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed. See the [Callback section](#callbacks) for more details about callbacks.
 `instruction` | string | A markdown-enabled string explaining how to collect the data. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` | string | One of `text`, `image`, or `website`. Describes what type of file the attachment is.
 `attachment` | string | The attachment detailing the data to be collected. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
@@ -688,7 +692,9 @@ The `response` object, which is part of the callback POST request and permanentl
 
 `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
 
-See the [Callback section](#callbacks) for more details about callbacks.
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
 
 # Create Image Recognition Task
 
@@ -850,7 +856,7 @@ If successful, Scale will immediately return the generated task object, of which
 
 Parameter | Type | Description
 --------- | ---- | -------
-`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed.
+`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed. See the [Callback section](#callbacks) for more details about callbacks.
 `objects_to_annotate` | [string] | An array of strings describing which objects you'd like bounding boxes to be drawn around. Each string should be singular and self-descriptive (ex: "cat", "street sign", "potato"). You may include at most 6 objects.
 `attachment` | string | A URL to the image you'd like to be annotated with bounding boxes.
 `with_labels` (optional, default `false`) | boolean | Specifies whether you'd like labels for each bounding box in the response. Each label will be a member of the `objects_to_annotate` array.
@@ -904,7 +910,9 @@ The `annotations` field will contain an array of annotations. Each annotation wi
 * `height`: The height, in pixels, of the bounding box.
 * `label` (if specified `with_labels` as `true`): The label for the bounding box, which will be one of the specified `task.params.objects_to_annotate`.
 
-See the [Callback section](#callbacks) for more details about callbacks.
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
 
 # Create Phone Call Task
 
@@ -1027,7 +1035,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 
 Parameter | Type | Description
 --------- | ---- | -------
-`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed.
+`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed. See the [Callback section](#callbacks) for more details about callbacks.
 `instruction` | string | A markdown-enabled string explaining how to complete the phone call. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `phone_number` | string | The phone number which will be called by our worker. Should include a country code (+1 for US numbers).
 `script` | string | A script to be shown the the worker as they make the phone call. Your script will greatly impact the quality of the results you receive.
@@ -1074,7 +1082,9 @@ If your original API request provided `fields`, `fields` will have keys correspo
 
 If your original API request provided `choices`, `choice` will be one of the original choices.
 
-See the [Callback section](#callbacks) for more details about callbacks.
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
 
 # Create Transcription Task
 
@@ -1184,7 +1194,7 @@ The parameters `attachment_type`, `attachment`, and `fields` will be stored in t
 
 Parameter | Type | Description
 --------- | ---- | -------
-`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed.
+`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed. See the [Callback section](#callbacks) for more details about callbacks.
 `instruction` | string | A markdown-enabled string explaining how to transcribe the attachment. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` | string | One of `image` or `pdf`. Describes what type of file the attachment is.
 `attachment` | string | The attachment to be transcribed. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
@@ -1216,8 +1226,9 @@ The `response` object, which is part of the callback POST request and permanentl
 
 `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
 
-See the [Callback section](#callbacks) for more details about callbacks.
-
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
 
 # Create Audio Transcription Task
 
@@ -1319,7 +1330,7 @@ The maximum length of an audio file to be transcribed is 30 minutes, and we will
 
 Parameter | Type | Description
 --------- | ---- | -------
-`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed.
+`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed. See the [Callback section](#callbacks) for more details about callbacks.
 `instruction` (optional) | string | An markdown-enabled string specifying any special instructions for the audio transcription. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show examples, give structure to your instructions, and more.
 `attachment` | string | A URL pointing to the audio file attachment.
 `attachment_type` (optional, default `audio`) | string | Describes what type of file the attachment is. Only accepts `audio`.
@@ -1367,8 +1378,9 @@ If the transcription was completed successfully, the transcript will be stored i
 
 If there was an error or issue during transcription, the error will be detailed in the `error` field, and a partial transcript (if applicable) will be stored in the `transcript` field.
 
-See the [Callback section](#callbacks) for more details about callbacks.
-
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
 
 # Callbacks
 
