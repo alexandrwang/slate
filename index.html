@@ -332,7 +332,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <tr>
 <td><code class="prettyprint">callback_url</code></td>
 <td>string</td>
-<td>A string of the URL that should be POSTed once the task is completed for the response data. See the Callback section for more details.</td>
+<td>A string of the URL that should be POSTed once the task is completed for the response data. See the <a href="#callbacks">Callback section</a> for more details.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">status</code></td>
@@ -510,36 +510,65 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 </tr>
 </tbody></table>
 
-<h3 id="response-on-callback">Response on Callback</h3>
+<h2 id="callback-format">Callback Format</h2>
 
 <blockquote>
-<p>If <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">false</code>, the <code class="prettyprint">response</code> will look like:</p>
+<p>If <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">false</code>, the callback body will look like:</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"one_of_the_categories"</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"one_of_the_categories"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576ba74eec471ff9b01557cc"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">populated</span><span class="w"> </span><span class="err">task</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">convenience</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <blockquote>
-<p>If <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">true</code>, the <code class="prettyprint">response</code> will look like:</p>
+<p>If <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">true</code>, the callback body will look like:</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"some_of"</span><span class="p">,</span><span class="w"> </span><span class="s2">"the_categories"</span><span class="p">]</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"some_of"</span><span class="p">,</span><span class="w"> </span><span class="s2">"the_categories"</span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576ba74eec471ff9b01557cc"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">populated</span><span class="w"> </span><span class="err">task</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">convenience</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <blockquote>
 <p>Example if <code class="prettyprint">category_ids</code> is provided and <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">false</code></p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Blue Cross"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"category_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123"</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Blue Cross"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"category_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576ba74eec471ff9b01557cc"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">populated</span><span class="w"> </span><span class="err">task</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">convenience</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <blockquote>
 <p>Example if <code class="prettyprint">category_ids</code> is provided and <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">true</code></p>
 </blockquote>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Blue Cross"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Red Cross"</span><span class="p">],</span><span class="w">
-  </span><span class="nt">"category_id"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"123"</span><span class="p">,</span><span class="w"> </span><span class="s2">"124"</span><span class="p">]</span><span class="w">
+<pre class="highlight json"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Blue Cross"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Red Cross"</span><span class="p">],</span><span class="w">
+    </span><span class="nt">"category_id"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"123"</span><span class="p">,</span><span class="w"> </span><span class="s2">"124"</span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576ba74eec471ff9b01557cc"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">populated</span><span class="w"> </span><span class="err">task</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">convenience</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have a <code class="prettyprint">category</code> field and potentially a <code class="prettyprint">category_id</code> field.</p>
@@ -548,7 +577,9 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 
 <p>If <code class="prettyprint">allow_multiple</code> is <code class="prettyprint">true</code>, the value will be an array of categories, each one being one of the original categories.</p>
 
-<p>If <code class="prettyprint">category_ids</code> was provided, there will be another field <code class="prettyprint">category_id</code> corresponding to the given id of the chosen category/categories. For example, it could look like:</p>
+<p>If <code class="prettyprint">category_ids</code> was provided, there will be another field <code class="prettyprint">category_id</code> corresponding to the given id of the chosen category/categories.</p>
+
+<p>See the <a href="#callbacks">Callback section</a> for more details about callbacks.</p>
 
 <h1 id="create-comparison-task">Create Comparison Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/comparison"</span> <span class="se">\</span>
@@ -697,15 +728,22 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 </tr>
 </tbody></table>
 
-<h3 id="response-on-callback">Response on Callback</h3>
+<h2 id="callback-format">Callback Format</h2>
 
 <blockquote>
-<p>Example <code class="prettyprint">response</code> object:</p>
+<p>Example callback body:</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"choice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yes"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"difference"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The patterns are identical."</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"choice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yes"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"difference"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The patterns are identical."</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576ba74eec471ff9b01557cc"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">populated</span><span class="w"> </span><span class="err">task</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">convenience</span><span class="w">
+    </span><span class="err">...</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -714,6 +752,8 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <p>If your original call provided <code class="prettyprint">choices</code>, <code class="prettyprint">choice</code> will be one of the original choices.</p>
 
 <p>If your original call provided <code class="prettyprint">fields</code>, <code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.</p>
+
+<p>See the <a href="#callbacks">Callback section</a> for more details about callbacks.</p>
 
 <h1 id="create-data-collection-task">Create Data Collection Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/datacollection"</span> <span class="se">\</span>
@@ -846,20 +886,29 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 </tr>
 </tbody></table>
 
-<h3 id="response-on-callback">Response on Callback</h3>
+<h2 id="callback-format">Callback Format</h2>
 
 <blockquote>
-<p>Example response object</p>
+<p>Example callback body</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"hiring_page"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hiring Page URL"</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"hiring_page"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hiring Page URL"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"576ba74eec471ff9b01557cc"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">populated</span><span class="w"> </span><span class="err">task</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">convenience</span><span class="w">
+    </span><span class="err">...</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have a <code class="prettyprint">fields</code> object.</p>
 
 <p><code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.</p>
+
+<p>See the <a href="#callbacks">Callback section</a> for more details about callbacks.</p>
 
 <h1 id="create-image-recognition-task">Create Image Recognition Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/annotation"</span> <span class="se">\</span>
@@ -1061,10 +1110,10 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 </tr>
 </tbody></table>
 
-<h3 id="response-on-callback">Response on Callback</h3>
+<h2 id="callback-format">Callback Format</h2>
 
 <blockquote>
-<p>Example of what the response field of the task will look like after completion</p>
+<p>Example callback body sent on completion</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -1088,7 +1137,10 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
     </span><span class="p">]</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5774cc78b01249ab09f089dd"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">populated</span><span class="w"> </span><span class="err">task</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">convenience</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>The <code class="prettyprint">response</code> field, which is part of the callback POST request and permanently stored as part of the <code class="prettyprint">task</code> object, will contain only an <code class="prettyprint">annotations</code> field.</p>
@@ -1102,6 +1154,8 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <li><code class="prettyprint">height</code>: The height, in pixels, of the bounding box.</li>
 <li><code class="prettyprint">label</code> (if specified <code class="prettyprint">with_labels</code> as <code class="prettyprint">true</code>): The label for the bounding box, which will be one of the specified <code class="prettyprint">task.params.objects_to_annotate</code>.</li>
 </ul>
+
+<p>See the <a href="#callbacks">Callback section</a> for more details about callbacks.</p>
 
 <h1 id="create-phone-call-task">Create Phone Call Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/phonecall"</span> <span class="se">\</span>
@@ -1274,17 +1328,24 @@ For low volume, we currently only support calling US numbers. For higher volume 
 </tr>
 </tbody></table>
 
-<h3 id="response-on-callback">Response on Callback</h3>
+<h2 id="callback-format">Callback Format</h2>
 
 <blockquote>
-<p>Example <code class="prettyprint">response</code> object:</p>
+<p>Example callback body sent on completion:</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello@scaleapi.com"</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello@scaleapi.com"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"choice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"He is happy"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"choice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"He is happy"</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5774cc78b01249ab09f089dd"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">populated</span><span class="w"> </span><span class="err">task</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">convenience</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have an <code class="prettyprint">outcome</code> field, and a <code class="prettyprint">fields</code> field and/or <code class="prettyprint">choice</code> field depending on the original request.</p>
@@ -1302,6 +1363,8 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <p>If your original API request provided <code class="prettyprint">fields</code>, <code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.</p>
 
 <p>If your original API request provided <code class="prettyprint">choices</code>, <code class="prettyprint">choice</code> will be one of the original choices.</p>
+
+<p>See the <a href="#callbacks">Callback section</a> for more details about callbacks.</p>
 
 <h1 id="create-transcription-task">Create Transcription Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/transcription"</span> <span class="se">\</span>
@@ -1440,21 +1503,30 @@ For low volume, we currently only support calling US numbers. For higher volume 
 </tr>
 </tbody></table>
 
-<h3 id="response-on-callback">Response on Callback</h3>
+<h2 id="callback-format">Callback Format</h2>
 
 <blockquote>
-<p>Example response object</p>
+<p>Example callback response sent on completion</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Some Title"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"top_result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The Top Result or Something"</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Some Title"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"top_result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The Top Result or Something"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5774cc78b01249ab09f089dd"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">populated</span><span class="w"> </span><span class="err">task</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">convenience</span><span class="w">
+    </span><span class="err">...</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have a <code class="prettyprint">fields</code> field.</p>
 
 <p><code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.</p>
+
+<p>See the <a href="#callbacks">Callback section</a> for more details about callbacks.</p>
 
 <h1 id="create-audio-transcription-task">Create Audio Transcription Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/audiotranscription"</span> <span class="se">\</span>
@@ -1590,21 +1662,35 @@ The maximum length of an audio file to be transcribed is 30 minutes, and we will
 </tr>
 </tbody></table>
 
-<h3 id="response-on-callback">Response on Callback</h3>
+<h2 id="callback-format">Callback Format</h2>
 
 <blockquote>
-<p>Example response object on success</p>
+<p>Example callback sent on completion</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"transcript"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The avocado is a pear-shaped fruit with leathery skin, smooth edible flesh, and a large stone."</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">5.106188</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"transcript"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The avocado is a pear-shaped fruit with leathery skin, smooth edible flesh, and a large stone."</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">5.106188</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5774cc78b01249ab09f089dd"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">populated</span><span class="w"> </span><span class="err">task</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">convenience</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <blockquote>
-<p>Example response object on error or issue</p>
+<p>Example callback body on error or issue</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The audio file cannot be loaded."</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The audio file cannot be loaded."</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5774cc78b01249ab09f089dd"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">populated</span><span class="w"> </span><span class="err">task</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">convenience</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have either an <code class="prettyprint">error</code> field or a <code class="prettyprint">transcript</code> and <code class="prettyprint">duration</code> field.</p>
@@ -1612,6 +1698,8 @@ The maximum length of an audio file to be transcribed is 30 minutes, and we will
 <p>If the transcription was completed successfully, the transcript will be stored in plaintext under the <code class="prettyprint">transcript</code> field. It will also contain a <code class="prettyprint">duration</code> field, which stores the duration of the audio file in seconds.</p>
 
 <p>If there was an error or issue during transcription, the error will be detailed in the <code class="prettyprint">error</code> field, and a partial transcript (if applicable) will be stored in the <code class="prettyprint">transcript</code> field.</p>
+
+<p>See the <a href="#callbacks">Callback section</a> for more details about callbacks.</p>
 
 <h1 id="callbacks">Callbacks</h1>
 
