@@ -207,7 +207,7 @@ Attribute | Type | Description
 `params` | object | An object with the parameters of the task based on the type. For `categorization`, for example, this will include `attachment_type`, `attachment`, and `categories`.
 `urgency` | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
 `response` | object | An object corresponding to the response once the task is completed. For `categorization`, it will have the attribute `category`, corresponding to the chosen category.
-`callback_url` | string | A string of the URL that should be POSTed once the task is completed for the response data. See the Callback section for more details.
+`callback_url` | string | A string of the URL that should be POSTed once the task is completed for the response data. See the [Callback section](#callbacks) for more details.
 `status` | string | The status of the task, one of `pending`, `completed`, or `canceled`.
 `created_at` | timestamp | A string of the UTC timestamp of when the task was created.
 `completed_at` | timestamp | A string of the UTC timestamp of when the task was completed. This will only be filled in after it is completed.
@@ -334,36 +334,65 @@ Parameter | Type | Description
 `allow_multiple` (optional) | boolean | Default is `false`. Determines whether you allow multiple categories to be chosen for the attachment
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
-### Response on Callback
+## Callback Format
 
-> If `allow_multiple` is `false`, the `response` will look like:
+> If `allow_multiple` is `false`, the callback body will look like:
 
 ```json
 {
-  "category": "one_of_the_categories"
+  "response": {
+    "category": "one_of_the_categories"
+  },
+  "task_id": "576ba74eec471ff9b01557cc",
+  "task": {
+    // populated task for convenience
+    ...
+  }
 }
 ```
-> If `allow_multiple` is `true`, the `response` will look like:
+> If `allow_multiple` is `true`, the callback body will look like:
 
 ```json
 {
-  "category": ["some_of", "the_categories"]
+  "response": {
+    "category": ["some_of", "the_categories"]
+  },
+  "task_id": "576ba74eec471ff9b01557cc",
+  "task": {
+    // populated task for convenience
+    ...
+  }
 }
 ```
 > Example if `category_ids` is provided and `allow_multiple` is `false`
 
 ```json
 {
-  "category": "Blue Cross",
-  "category_id": "123"
+  "response": {
+    "category": "Blue Cross",
+    "category_id": "123"
+  },
+  "task_id": "576ba74eec471ff9b01557cc",
+  "task": {
+    // populated task for convenience
+    ...
+  }
 }
 ```
 > Example if `category_ids` is provided and `allow_multiple` is `true`
 
 ```json
+
 {
-  "category": ["Blue Cross", "Red Cross"],
-  "category_id": ["123", "124"]
+  "response": {
+    "category": ["Blue Cross", "Red Cross"],
+    "category_id": ["123", "124"]
+  },
+  "task_id": "576ba74eec471ff9b01557cc",
+  "task": {
+    // populated task for convenience
+    ...
+  }
 }
 ```
 
@@ -373,7 +402,9 @@ If `allow_multiple` is `false`, then the value will be a string equal to one of 
 
 If `allow_multiple` is `true`, the value will be an array of categories, each one being one of the original categories.
 
-If `category_ids` was provided, there will be another field `category_id` corresponding to the given id of the chosen category/categories. For example, it could look like:
+If `category_ids` was provided, there will be another field `category_id` corresponding to the given id of the chosen category/categories.
+
+See the [Callback section](#callbacks) for more details about callbacks.
 
 # Create Comparison Task
 
@@ -496,15 +527,22 @@ Parameter | Type | Description
 `choices` (optional) | [string] | An array of strings for the choices to be given to the worker. One of `choices` or `fields` must be specified.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
-### Response on Callback
+## Callback Format
 
-> Example `response` object:
+> Example callback body:
 
 ```json
 {
-  "choice": "yes",
-  "fields": {
-    "difference": "The patterns are identical."
+  "response": {
+    "choice": "yes",
+    "fields": {
+      "difference": "The patterns are identical."
+    }
+  },
+  "task_id": "576ba74eec471ff9b01557cc",
+  "task": {
+    // populated task for convenience
+    ...
   }
 }
 ```
@@ -514,6 +552,8 @@ The `response` object, which is part of the callback POST request and permanentl
 If your original call provided `choices`, `choice` will be one of the original choices.
 
 If your original call provided `fields`, `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
+
+See the [Callback section](#callbacks) for more details about callbacks.
 
 # Create Data Collection Task
 
@@ -625,14 +665,21 @@ Parameter | Type | Description
 `urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
-### Response on Callback
+## Callback Format
 
-> Example response object
+> Example callback body
 
 ```json
 {
-  "fields": {
-    "hiring_page": "Hiring Page URL"
+  "response": {
+    "fields": {
+      "hiring_page": "Hiring Page URL"
+    }
+  },
+  "task_id": "576ba74eec471ff9b01557cc",
+  "task": {
+    // populated task for convenience
+    ...
   }
 }
 ```
@@ -640,6 +687,8 @@ Parameter | Type | Description
 The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have a `fields` object.
 
 `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
+
+See the [Callback section](#callbacks) for more details about callbacks.
 
 # Create Image Recognition Task
 
@@ -811,9 +860,9 @@ Parameter | Type | Description
 `attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the annotation endpoint.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
-### Response on Callback
+## Callback Format
 
-> Example of what the response field of the task will look like after completion
+> Example callback body sent on completion
 
 ```json
 {
@@ -838,7 +887,10 @@ Parameter | Type | Description
     ]
   },
   "task_id": "5774cc78b01249ab09f089dd",
-  "task": { ... }
+  "task": {
+    // populated task for convenience
+    ...
+  }
 }
 ```
 
@@ -851,6 +903,8 @@ The `annotations` field will contain an array of annotations. Each annotation wi
 * `width`: The width, in pixels, of the bounding box.
 * `height`: The height, in pixels, of the bounding box.
 * `label` (if specified `with_labels` as `true`): The label for the bounding box, which will be one of the specified `task.params.objects_to_annotate`.
+
+See the [Callback section](#callbacks) for more details about callbacks.
 
 # Create Phone Call Task
 
@@ -985,17 +1039,24 @@ Parameter | Type | Description
 `choices` (optional) | [string] | An array of strings for the choices to be given to the worker. They will choose one of these in accordance with your `instruction`.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
-### Response on Callback
+## Callback Format
 
-> Example `response` object:
+> Example callback body sent on completion:
 
 ```json
 {
-  "outcome": "success",
-  "fields": {
-    "email": "hello@scaleapi.com"
+  "response": {
+    "outcome": "success",
+    "fields": {
+      "email": "hello@scaleapi.com"
+    },
+    "choice": "He is happy"
   },
-  "choice": "He is happy"
+  "task_id": "5774cc78b01249ab09f089dd",
+  "task": {
+    // populated task for convenience
+    ...
+  }
 }
 ```
 
@@ -1012,6 +1073,8 @@ The outcome will be a string equal to one of the following outcomes with the fol
 If your original API request provided `fields`, `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
 
 If your original API request provided `choices`, `choice` will be one of the original choices.
+
+See the [Callback section](#callbacks) for more details about callbacks.
 
 # Create Transcription Task
 
@@ -1129,15 +1192,22 @@ Parameter | Type | Description
 `urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
-### Response on Callback
+## Callback Format
 
-> Example response object
+> Example callback response sent on completion
 
 ```json
 {
-  "fields": {
-    "title": "Some Title",
-    "top_result": "The Top Result or Something"
+  "response": {
+    "fields": {
+      "title": "Some Title",
+      "top_result": "The Top Result or Something"
+    }
+  },
+  "task_id": "5774cc78b01249ab09f089dd",
+  "task": {
+    // populated task for convenience
+    ...
   }
 }
 ```
@@ -1145,6 +1215,8 @@ Parameter | Type | Description
 The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have a `fields` field.
 
 `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
+
+See the [Callback section](#callbacks) for more details about callbacks.
 
 
 # Create Audio Transcription Task
@@ -1256,22 +1328,36 @@ Parameter | Type | Description
 `urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
-### Response on Callback
+## Callback Format
 
-> Example response object on success
+> Example callback sent on completion
 
 ```json
 {
-  "transcript": "The avocado is a pear-shaped fruit with leathery skin, smooth edible flesh, and a large stone.",
-  "duration": 5.106188
+  "response": {
+    "transcript": "The avocado is a pear-shaped fruit with leathery skin, smooth edible flesh, and a large stone.",
+    "duration": 5.106188
+  },
+  "task_id": "5774cc78b01249ab09f089dd",
+  "task": {
+    // populated task for convenience
+    ...
+  }
 }
 ```
 
-> Example response object on error or issue
+> Example callback body on error or issue
 
 ```json
 {
-  "error": "The audio file cannot be loaded."
+  "response": {
+    "error": "The audio file cannot be loaded."
+  },
+  "task_id": "5774cc78b01249ab09f089dd",
+  "task": {
+    // populated task for convenience
+    ...
+  }
 }
 ```
 
@@ -1280,6 +1366,8 @@ The `response` object, which is part of the callback POST request and permanentl
 If the transcription was completed successfully, the transcript will be stored in plaintext under the `transcript` field. It will also contain a `duration` field, which stores the duration of the audio file in seconds.
 
 If there was an error or issue during transcription, the error will be detailed in the `error` field, and a partial transcript (if applicable) will be stored in the `transcript` field.
+
+See the [Callback section](#callbacks) for more details about callbacks.
 
 
 # Callbacks
