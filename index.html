@@ -466,7 +466,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <tr>
 <td><code class="prettyprint">callback_url</code></td>
 <td>string</td>
-<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed.</td>
+<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed. See the <a href="#callbacks">Callback section</a> for more details about callbacks.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">instruction</code></td>
@@ -579,7 +579,9 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 
 <p>If <code class="prettyprint">category_ids</code> was provided, there will be another field <code class="prettyprint">category_id</code> corresponding to the given id of the chosen category/categories.</p>
 
-<p>See the <a href="#callbacks">Callback section</a> for more details about callbacks.</p>
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
 
 <h1 id="create-comparison-task">Create Comparison Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/comparison"</span> <span class="se">\</span>
@@ -689,7 +691,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <tr>
 <td><code class="prettyprint">callback_url</code></td>
 <td>string</td>
-<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed.</td>
+<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed. See the <a href="#callbacks">Callback section</a> for more details about callbacks.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">instruction</code></td>
@@ -753,7 +755,9 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 
 <p>If your original call provided <code class="prettyprint">fields</code>, <code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.</p>
 
-<p>See the <a href="#callbacks">Callback section</a> for more details about callbacks.</p>
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
 
 <h1 id="create-data-collection-task">Create Data Collection Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/datacollection"</span> <span class="se">\</span>
@@ -852,7 +856,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <tr>
 <td><code class="prettyprint">callback_url</code></td>
 <td>string</td>
-<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed.</td>
+<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed. See the <a href="#callbacks">Callback section</a> for more details about callbacks.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">instruction</code></td>
@@ -908,7 +912,9 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 
 <p><code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.</p>
 
-<p>See the <a href="#callbacks">Callback section</a> for more details about callbacks.</p>
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
 
 <h1 id="create-image-recognition-task">Create Image Recognition Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/annotation"</span> <span class="se">\</span>
@@ -1066,7 +1072,7 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <tr>
 <td><code class="prettyprint">callback_url</code></td>
 <td>string</td>
-<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed.</td>
+<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed. See the <a href="#callbacks">Callback section</a> for more details about callbacks.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">objects_to_annotate</code></td>
@@ -1155,7 +1161,9 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 <li><code class="prettyprint">label</code> (if specified <code class="prettyprint">with_labels</code> as <code class="prettyprint">true</code>): The label for the bounding box, which will be one of the specified <code class="prettyprint">task.params.objects_to_annotate</code>.</li>
 </ul>
 
-<p>See the <a href="#callbacks">Callback section</a> for more details about callbacks.</p>
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
 
 <h1 id="create-phone-call-task">Create Phone Call Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/phonecall"</span> <span class="se">\</span>
@@ -1274,7 +1282,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <tr>
 <td><code class="prettyprint">callback_url</code></td>
 <td>string</td>
-<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed.</td>
+<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed. See the <a href="#callbacks">Callback section</a> for more details about callbacks.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">instruction</code></td>
@@ -1364,7 +1372,9 @@ For low volume, we currently only support calling US numbers. For higher volume 
 
 <p>If your original API request provided <code class="prettyprint">choices</code>, <code class="prettyprint">choice</code> will be one of the original choices.</p>
 
-<p>See the <a href="#callbacks">Callback section</a> for more details about callbacks.</p>
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
 
 <h1 id="create-transcription-task">Create Transcription Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/transcription"</span> <span class="se">\</span>
@@ -1469,7 +1479,7 @@ For low volume, we currently only support calling US numbers. For higher volume 
 <tr>
 <td><code class="prettyprint">callback_url</code></td>
 <td>string</td>
-<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed.</td>
+<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed. See the <a href="#callbacks">Callback section</a> for more details about callbacks.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">instruction</code></td>
@@ -1526,7 +1536,9 @@ For low volume, we currently only support calling US numbers. For higher volume 
 
 <p><code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.</p>
 
-<p>See the <a href="#callbacks">Callback section</a> for more details about callbacks.</p>
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
 
 <h1 id="create-audio-transcription-task">Create Audio Transcription Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/audiotranscription"</span> <span class="se">\</span>
@@ -1623,7 +1635,7 @@ The maximum length of an audio file to be transcribed is 30 minutes, and we will
 <tr>
 <td><code class="prettyprint">callback_url</code></td>
 <td>string</td>
-<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed.</td>
+<td>The full url (including the scheme <code class="prettyprint">http://</code> or <code class="prettyprint">https://</code>) of the callback when the task is completed. See the <a href="#callbacks">Callback section</a> for more details about callbacks.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">instruction</code> (optional)</td>
@@ -1699,7 +1711,9 @@ The maximum length of an audio file to be transcribed is 30 minutes, and we will
 
 <p>If there was an error or issue during transcription, the error will be detailed in the <code class="prettyprint">error</code> field, and a partial transcript (if applicable) will be stored in the <code class="prettyprint">transcript</code> field.</p>
 
-<p>See the <a href="#callbacks">Callback section</a> for more details about callbacks.</p>
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
 
 <h1 id="callbacks">Callbacks</h1>
 
