@@ -708,6 +708,8 @@ curl "https://api.scaleapi.com/v1/task/annotation" \
   -d objects_to_annotate="baby cow" \
   -d objects_to_annotate="big cow" \
   -d with_labels=true \
+  -d min_width="30" \
+  -d min_height="30" \
   -d examples[0][correct]=true \
   -d examples[0][image]="http://i.imgur.com/lj6e98s.jpg" \
   -d examples[0][explanation]="The boxes are tight and accurate" \
@@ -727,6 +729,8 @@ client.create_annotation_task(
     attachment='http://i.imgur.com/v4cBreD.jpg',
     objects_to_annotate=['baby cow', 'big cow'],
     with_labels=True,
+    min_width='30',
+    min_height='30',
     examples = [
         {
             'correct': False,
@@ -754,6 +758,8 @@ client.createAnnotationTask({
   'attachment': 'http://i.imgur.com/v4cBreD.jpg',
   'objects_to_annotate': ['baby cow', 'big cow'],
   'with_labels': true,
+  'min_width': '30',
+  'min_height': '30',
   'examples': [
     {
       'correct': false,
@@ -782,6 +788,8 @@ scale.create_annotation_task({
   attachment: 'http://i.imgur.com/v4cBreD.jpg',
   objects_to_annotate: ['baby cow', 'big cow'],
   with_labels: true,
+  min_width: '30',
+  min_height: '30',
   examples: [
     {
       correct: false,
@@ -823,6 +831,8 @@ scale.create_annotation_task({
       }
     ],
     "with_labels": true,
+    "min_width": 30,
+    "min_height": 30,
     "objects_to_annotate": [
       "baby cow",
       "big cow"
@@ -845,6 +855,8 @@ You can optionally provide additional [markdown-enabled](https://github.com/adam
 You can also optionally set `with_labels` to `true`, which will have Scalers provide labels for each box specifying what type of object it is. The labels will be strings in the `objects_to_annotate` list.
 
 It is recommended, but not required, for you to provide a list of examples, each of which detail either a correct or incorrect example of an annotation.
+
+You may also provide `min_width` and `min_height` parameters, which will tell Scalers to only annotate objects whose bounding boxes are of dimension at least `min_width` x `min_height`.
 
 If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
 
