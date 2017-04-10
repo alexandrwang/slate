@@ -1,9 +1,9 @@
 var app = angular.module('scale', ['ngResource']);
 
 function getJWTCookie() {
-  let name = 'jwt';
-  let value = '; ' + document.cookie;
-  let parts = value.split('; ' + name + '=');
+  var name = 'jwt';
+  var value = '; ' + document.cookie;
+  var parts = value.split('; ' + name + '=');
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
