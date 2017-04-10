@@ -873,6 +873,8 @@ Parameter | Type | Description
 `attachment` | string | A URL to the image you'd like to be annotated with bounding boxes.
 `with_labels` (optional, default `false`) | boolean | Specifies whether you'd like labels for each bounding box in the response. Each label will be a member of the `objects_to_annotate` array.
 `examples` (optional) | [object] | A list of examples. Each example requires a `correct` boolean indicating whether it is a correct or incorrect example and an `image` URL to the example image. Optionally, provide an `explanation` for the example explaining why it is correct or incorrect.
+`min_height` (optional) | integer, default 0 | The minimum height in pixels of the bounding boxes you'd like to be made.
+`min_width` (optional) | integer, default 0 | The minimum width in pixels of the bounding boxes you'd like to be made.
 `urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
 `instruction` (optional) | string | A markdown-enabled string explaining how to draw the bounding boxes. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the annotation endpoint.
