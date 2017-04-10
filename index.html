@@ -926,6 +926,8 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
   -d <span class="nv">objects_to_annotate</span><span class="o">=</span><span class="s2">"baby cow"</span> <span class="se">\</span>
   -d <span class="nv">objects_to_annotate</span><span class="o">=</span><span class="s2">"big cow"</span> <span class="se">\</span>
   -d <span class="nv">with_labels</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+  -d <span class="nv">min_width</span><span class="o">=</span><span class="s2">"30"</span> <span class="se">\</span>
+  -d <span class="nv">min_height</span><span class="o">=</span><span class="s2">"30"</span> <span class="se">\</span>
   -d examples[0][correct]<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
   -d examples[0][image]<span class="o">=</span><span class="s2">"http://i.imgur.com/lj6e98s.jpg"</span> <span class="se">\</span>
   -d examples[0][explanation]<span class="o">=</span><span class="s2">"The boxes are tight and accurate"</span> <span class="se">\</span>
@@ -943,6 +945,8 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
     <span class="n">attachment</span><span class="o">=</span><span class="s">'http://i.imgur.com/v4cBreD.jpg'</span><span class="p">,</span>
     <span class="n">objects_to_annotate</span><span class="o">=</span><span class="p">[</span><span class="s">'baby cow'</span><span class="p">,</span> <span class="s">'big cow'</span><span class="p">],</span>
     <span class="n">with_labels</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">min_width</span><span class="o">=</span><span class="s">'30'</span><span class="p">,</span>
+    <span class="n">min_height</span><span class="o">=</span><span class="s">'30'</span><span class="p">,</span>
     <span class="n">examples</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">{</span>
             <span class="s">'correct'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
@@ -967,6 +971,8 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
   <span class="s1">'attachment'</span><span class="p">:</span> <span class="s1">'http://i.imgur.com/v4cBreD.jpg'</span><span class="p">,</span>
   <span class="s1">'objects_to_annotate'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'baby cow'</span><span class="p">,</span> <span class="s1">'big cow'</span><span class="p">],</span>
   <span class="s1">'with_labels'</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="s1">'min_width'</span><span class="p">:</span> <span class="s1">'30'</span><span class="p">,</span>
+  <span class="s1">'min_height'</span><span class="p">:</span> <span class="s1">'30'</span><span class="p">,</span>
   <span class="s1">'examples'</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
       <span class="s1">'correct'</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
@@ -992,6 +998,8 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
   <span class="ss">attachment: </span><span class="s1">'http://i.imgur.com/v4cBreD.jpg'</span><span class="p">,</span>
   <span class="ss">objects_to_annotate: </span><span class="p">[</span><span class="s1">'baby cow'</span><span class="p">,</span> <span class="s1">'big cow'</span><span class="p">],</span>
   <span class="ss">with_labels: </span><span class="kp">true</span><span class="p">,</span>
+  <span class="ss">min_width: </span><span class="s1">'30'</span><span class="p">,</span>
+  <span class="ss">min_height: </span><span class="s1">'30'</span><span class="p">,</span>
   <span class="ss">examples: </span><span class="p">[</span>
     <span class="p">{</span>
       <span class="ss">correct: </span><span class="kp">false</span><span class="p">,</span>
@@ -1032,6 +1040,8 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
       </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="nt">"with_labels"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"min_width"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"min_height"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
     </span><span class="nt">"objects_to_annotate"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="s2">"baby cow"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"big cow"</span><span class="w">
@@ -1053,6 +1063,8 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
 <p>You can also optionally set <code class="prettyprint">with_labels</code> to <code class="prettyprint">true</code>, which will have Scalers provide labels for each box specifying what type of object it is. The labels will be strings in the <code class="prettyprint">objects_to_annotate</code> list.</p>
 
 <p>It is recommended, but not required, for you to provide a list of examples, each of which detail either a correct or incorrect example of an annotation.</p>
+
+<p>You may also provide <code class="prettyprint">min_width</code> and <code class="prettyprint">min_height</code> parameters, which will tell Scalers to only annotate objects whose bounding boxes are of dimension at least <code class="prettyprint">min_width</code> x <code class="prettyprint">min_height</code>.</p>
 
 <p>If successful, Scale will immediately return the generated task object, of which you should at least store the <code class="prettyprint">task_id</code>.</p>
 
@@ -1093,6 +1105,16 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
 <td><code class="prettyprint">examples</code> (optional)</td>
 <td>[object]</td>
 <td>A list of examples. Each example requires a <code class="prettyprint">correct</code> boolean indicating whether it is a correct or incorrect example and an <code class="prettyprint">image</code> URL to the example image. Optionally, provide an <code class="prettyprint">explanation</code> for the example explaining why it is correct or incorrect.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">min_height</code> (optional)</td>
+<td>integer, default 0</td>
+<td>The minimum height in pixels of the bounding boxes you&rsquo;d like to be made.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">min_width</code> (optional)</td>
+<td>integer, default 0</td>
+<td>The minimum width in pixels of the bounding boxes you&rsquo;d like to be made.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">urgency</code> (optional, default <code class="prettyprint">day</code>)</td>
