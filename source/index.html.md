@@ -914,15 +914,17 @@ Parameter | Type | Description
 }
 ```
 
-The `response` field, which is part of the callback POST request and permanently stored as part of the `task` object, will contain only an `annotations` field.
+The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have either an `error` field or an `annotations` field.
 
-The `annotations` field will contain an array of annotations. Each annotation will have the following values:
+If the annotation was completed successfully, the `annotations` field will contain an array of annotations. Each annotation will have the following values:
 
 * `left`: The distance, in pixels, between the left border of the bounding box and the left border of the image.
 * `top`: The distance, in pixels, between the top border of the bounding box and the top border of the image.
 * `width`: The width, in pixels, of the bounding box.
 * `height`: The height, in pixels, of the bounding box.
 * `label` (if specified `with_labels` as `true`): The label for the bounding box, which will be one of the specified `task.params.objects_to_annotate`.
+
+If there was an error or issue during annotation, the error will be detailed in the `error` field.
 
 <aside class="notice">
 See the <a href="#callbacks">Callback section</a> for more details about callbacks.
