@@ -62,13 +62,6 @@ Welcome to the Scale API! You can use our API to access Scale API endpoints, whi
   </li>
 
   <li>
-    <a href="#create-phone-call-task">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 75"><g fill="none"><ellipse cx="38.04" cy="37.5" fill="#943CFF" rx="37.47" ry="37.5"/><path fill="#000000" d="M29.83 13.75a2.5 2.5 0 0 0-2.34 1.63L26.88 17a58.26 58.26 0 0 0 0 41.02l.61 1.63a2.5 2.5 0 0 0 2.34 1.63h16.5a2.5 2.5 0 0 0 2.5-2.5V44.4a2.5 2.5 0 0 0-2.5-2.5h-7.39c-.31-2.9-.31-5.84 0-8.75h7.33a2.5 2.5 0 0 0 2.5-2.5V16.27a2.5 2.5 0 0 0-2.5-2.5l-16.44-.02z"/><path fill="#FFFFFF" d="M45.03 17.5h-14.4l-.3.81a54.5 54.5 0 0 0 0 38.38l.3.81h14.4V45.62H35.7a45.2 45.2 0 0 1 0-16.24h9.33V17.5z"/><path fill="#FFFFFF" d="M31.5 18.75a53.26 53.26 0 0 0 0 37.5h12.28v-9.38h-9.12a46.68 46.68 0 0 1 0-18.74h9.12v-9.38H31.5z"/><path fill="#943CFF" d="M34.66 28.13h5.76c.74-3.25 1.87-6.4 3.37-9.38h-6.25a47.27 47.27 0 0 0-2.88 9.38zm0 18.75h5.76c.74 3.24 1.87 6.4 3.37 9.37h-6.25a47.27 47.27 0 0 1-2.88-9.38z" opacity=".5"/><path fill="#943CFF" d="M37.6 56.25a47.32 47.32 0 0 1 0-37.5h-6.06a52.92 52.92 0 0 0 0 37.5h6.05z"/></g></svg>
-      <span>Phone Calls</span>
-    </a>
-  </li>
-
-  <li>
     <a href="#create-data-collection-task">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 75"><g fill="none"><ellipse cx="37.96" cy="37.5" fill="#4A7AFA" rx="37.47" ry="37.5"/><path fill="#000000" d="M55.8 50.94l-8.83-7.29c5.01-6.53 4.1-15.83-2.09-21.26a15.6 15.6 0 0 0-21.33.7 15.63 15.63 0 0 0-.7 21.35 15.6 15.6 0 0 0 21.24 2.1l7.28 8.82a3.13 3.13 0 1 0 4.42-4.41v-.01z"/><ellipse cx="34.6" cy="34.13" fill="#FFFFFF" transform="rotate(-45 34.602 34.128)" rx="11.86" ry="11.88"/><path fill="#4A7AFA" d="M44.73 31.05L31.48 44.31a10.61 10.61 0 0 0 13.25-13.26z"/><path fill="#4A7AFA" d="M27.1 41.65a10.56 10.56 0 0 0 4.41 2.65l13.22-13.25c-.5-1.67-1.42-3.2-2.65-4.43l-.46-.42-14.99 15c.17.15.31.25.46.45z" opacity=".5"/></g></svg>
       <span>Data Collection</span>
@@ -202,7 +195,7 @@ The task object represents a single task that you create with Scale and is compl
 Attribute | Type | Description
 --------- | ------- | -----------
 `task_id` | string | The `task_id` is the unique identifier for the task.
-`type` | string | The type of the task. Currently, we support `categorization`, `transcription`, `phonecall`, `comparison`, `annotation`, and `datacollection`.
+`type` | string | The type of the task. Currently, we support `categorization`, `transcription`, `audiotranscription`, `comparison`, `annotation`, and `datacollection`.
 `instruction` | string | A markdown-enabled string explaining the instructions for the task. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `params` | object | An object with the parameters of the task based on the type. For `categorization`, for example, this will include `attachment_type`, `attachment`, and `categories`.
 `urgency` | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
@@ -928,178 +921,6 @@ The `annotations` field will contain an array of annotations. Each annotation wi
 See the <a href="#callbacks">Callback section</a> for more details about callbacks.
 </aside>
 
-# Create Phone Call Task
-
-```shell
-curl "https://api.scaleapi.com/v1/task/phonecall" \
-  -u "{{ApiKey}}:" \
-  -d callback_url="http://www.example.com/callback" \
-  -d instruction="Call this person and follow the script provided, recording responses" \
-  -d phone_number="+15055006865" \
-  -d entity_name="Alexandr Wang" \
-  -d script="Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?" \
-  -d fields[email]="Email Address" \
-  -d choices="He is happy" \
-  -d choices="He is not happy"
-```
-```python
-import scaleapi
-
-client = scaleapi.ScaleClient('{{ApiKey}}')
-
-client.create_phonecall_task(
-    callback_url='http://www.example.com/callback',
-    instruction='Call this person and follow the script provided, recording responses',
-    phone_number='+15055006865',
-    entity_name='Alexandr Wang',
-    script='Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?',
-    fields={
-        'email': 'Email Address',
-    },
-    choices=['He is happy', 'He is not happy']
-)
-```
-
-```javascript
-var scaleapi = require('scaleapi');
-
-var client = scaleapi.ScaleClient('{{ApiKey}}');
-
-client.createPhonecallTask({
-  'callback_url': 'http://www.example.com/callback',
-  'instruction': 'Call this person and follow the script provided, recording responses',
-  'phone_number': '+15055006865',
-  'entity_name': 'Alexandr Wang',
-  'script': 'Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?',
-  'fields': {
-    'email': 'Email Address',
-  },
-  'choices': ['He is happy', 'He is not happy']
-}, (err, task) => {
-    // do something with task
-});
-```
-
-```ruby
-require 'scale'
-scale = Scale.new(api_key: '{{ApiKey}}')
-
-scale.create_phone_call_task({
-  callback_url: 'http://www.example.com/callback',
-  instruction: 'Call this person and follow the script provided, recording responses',
-  phone_number: '+15055006865',
-  entity_name: 'Alexandr Wang',
-  script: 'Hello ! Are you happy today? (pause) One more thing - what is your email address?',
-  fields: {
-    email: 'Email Address',
-  },
-  choices: ['He is happy', 'He is not happy']
-})
-=> #<Scale::Api::Tasks::PhoneCall:0x007fcc1293dc68 @task_id="58a6362eaa9d139b20a4252e", @type="phonecall", @instruction="Call this person and follow the script provided, recording responses", @params={"choices"=>["He is happy", "He is not happy"], "fields"=>{"email"=>"Email Address"}, "attachment_type"=>nil, "attachment"=>nil, "script"=>"Hello ! Are you happy today? (pause) One more thing - what is your email address?", "entity_name"=>"Alexandr Wang", "phone_number"=>"5055006865"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:30:54 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
-```
-
-> The above command returns an object structured like this:
-
-```json
-{
-  "task_id": "5771bc6631b72659f0d3692b",
-  "created_at": "2016-06-27T23:53:10.367Z",
-  "callback_url": "http://www.example.com/callback",
-  "type": "phonecall",
-  "status": "pending",
-  "instruction": "Call this person and follow the script provided, recording responses",
-  "script": "Hello {{name}}! Are you happy today? (pause) One more thing - what is your email address?",
-  "urgency": "day",
-  "params": {
-    "fields": {
-      "email": "Email Address"
-    },
-    "choices": [
-      "He is happy",
-      "He is not happy"
-    ],
-    "entity_name": "Alexandr Wang",
-    "phone_number": "+15055006865"
-  },
-  "metadata": {}
-}
-```
-
-This endpoint creates a `phonecall` task. In this task, one of our workers will call the specified phone number and follow the instructions. Potential use cases could be making reservations or appointments, confirming reservations, asking for contact numbers or emails, etc.
-
-The required parameters are a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction` about how to transcribe the attachment, a `script` for the Scaler to follow, a `phone_number` for the phone number to call, and an `entity_name` which describes the phone number.
-
-The optional parameters are `attachment_type` and `attachment` for an optional attachment, `fields`, and `choices`.
-
-There are two potential ways to record more information from the phonecall - the `field` and `choices` parameters. `choices` is an array of strings from which the worker to choose, and `fields` is useful for free-text response.
-
-If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
-
-The parameters `phone_number`, `entity_name`, `script`, `attachment_type`, `attachment`, and `fields` will be stored in the `params` object of the constructed `task` object.
-
-<aside class="notice">
-For low volume, we currently only support calling US numbers. For higher volume international calls, please <a href="mailto:hello@scaleapi.com">contact us</a>!
-</aside>
-
-### HTTP Request
-
-`POST https://api.scaleapi.com/v1/task/phonecall`
-
-### Parameters
-
-Parameter | Type | Description
---------- | ---- | -------
-`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed. See the [Callback section](#callbacks) for more details about callbacks.
-`instruction` | string | A markdown-enabled string explaining how to complete the phone call. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
-`phone_number` | string | The phone number which will be called by our worker. Should include a country code (+1 for US numbers).
-`script` | string | A script to be shown the the worker as they make the phone call. Your script will greatly impact the quality of the results you receive.
-`entity_name` | name | The name of the entity which corresponds to the person or business of the phone number.
-`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
-`attachment_type` (optional) | string | One of `text`, `image`, `video`, `audio`, `website`, or `pdf`. Describes what type of file the attachment is.
-`attachment` (optional) | string | The optional attachment to be used for the phone call. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
-`fields` (optional) | dictionary | A dictionary corresponding to the fields to be recorded. Keys are the keys you'd like the fields to be returned under, and values are descriptions to be shown to human workers.
-`choices` (optional) | [string] | An array of strings for the choices to be given to the worker. They will choose one of these in accordance with your `instruction`.
-`metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
-
-## Callback Format
-
-> Example callback body sent on completion:
-
-```json
-{
-  "response": {
-    "outcome": "success",
-    "fields": {
-      "email": "hello@scaleapi.com"
-    },
-    "choice": "He is happy"
-  },
-  "task_id": "5774cc78b01249ab09f089dd",
-  "task": {
-    // populated task for convenience
-    ...
-  }
-}
-```
-
-The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have an `outcome` field, and a `fields` field and/or `choice` field depending on the original request.
-
-The outcome will be a string equal to one of the following outcomes with the following meanings:
-
-* `no_pickup`: Nobody picked up.
-* `hung_up`: Hung up before could successfully complete task.
-* `success`: Successfully completed task.
-* `wrong_number`: This was the wrong number for the entity.
-* `invalid_number`: The phone number was out of service.
-
-If your original API request provided `fields`, `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
-
-If your original API request provided `choices`, `choice` will be one of the original choices.
-
-<aside class="notice">
-See the <a href="#callbacks">Callback section</a> for more details about callbacks.
-</aside>
-
 # Create Transcription Task
 
 ```shell
@@ -1733,7 +1554,7 @@ Parameter | Type | Description | Required
 `start_time` | ISO 8601 Date | The minimum value of `created_at` for tasks to be returned | optional
 `end_time`   | ISO 8601 Date | The maximum value of `created_at` for tasks to be returned | optional
 `status`     | string | The status of the task - can be: `completed`, `pending`, or `canceled` | optional
-`type`       | string | The type of the task - can be: `transcription`, `categorization`, `phonecall`, `comparison`, `annotation`, `datacollection`, or any other task type. | optional
+`type`       | string | The type of the task - can be: `transcription`, `categorization`, `comparison`, `annotation`, `datacollection`, `audiotranscription`, or any other task type. | optional
 `limit`      | integer | A number between 1 and 100, the maximum number of results to display per page | optional, default 100
 `offset`     | integer | The number of results to skip, for showing the next page | optional, default 0
 
