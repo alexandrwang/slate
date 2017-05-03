@@ -81,7 +81,7 @@ You can also join our [Slack channel here](https://chat.scaleapi.com/)!
 > To install the client library, use the following command:
 
 ```python
-pip install scaleapi
+pip install --upgrade scaleapi
 ```
 
 ```javascript
@@ -94,7 +94,7 @@ gem install scaleapi
 
 Currently we have client libraries available for the following languages:
 
-* [Python](https://github.com/scaleapi/scaleapi-python-client)
+* [Python](https://github.com/scaleapi/scaleapi-python-client) (suggested Python version > 2.7.9)
 * [Node.js](https://github.com/scaleapi/scaleapi-node)
 * [Ruby](https://github.com/scaleapi/scaleapi-ruby)
 
