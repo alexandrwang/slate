@@ -935,7 +935,7 @@ The `annotations` field will contain an array of annotations. Each annotation wi
 See the <a href="#callbacks">Callback section</a> for more details about callbacks.
 </aside>
 
-# Create ORC Transcription Task
+# Create OCR Transcription Task
 
 ```shell
 curl "https://api.scaleapi.com/v1/task/transcription" \
