@@ -1161,7 +1161,7 @@ If you have more specific instructions about how to transcribe the audio file, y
 
 You may optionally specify `verbatim` to `true` or `false`, determining whether non-words such as "um" and "hm" will be included in the transcript. The default is `false`.
 
-You may also optionally specify `phrases`, a list of strings containing words and phrases "hints" so that the audio transcription is more likely to recognize them. This can be used to improve the accuracy for specific words and phrases, or to add additional words to the vocabulary for the transcription.
+You may also optionally specify `phrases`, a list of strings containing words and phrases as "hints" so that the audio transcription is more likely to recognize them. This can be used to improve the accuracy for specific words and phrases, or to add additional words to the vocabulary for the transcription.
 
 If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
 
@@ -1196,7 +1196,25 @@ Parameter | Type | Description
 {
   "response": {
     "transcript": "The avocado is a pear-shaped fruit with leathery skin, smooth edible flesh, and a large stone.",
-    "duration": 5.106188
+    "duration": 5.106188,
+    "alignment": [ { word: "The", start: 0.3, end: 0.37 },
+      { word: "avocado", start: 0.37, end: 0.79 },
+      { word: "is", start: 0.79, end: 0.94 },
+      { word: "a", start: 0.94, end: 1 },
+      { word: "pear" },
+      { word: "shaped" },
+      { word: "fruit", start: 1.59, end: 1.8 },
+      { word: "with", start: 1.81, end: 2.01 },
+      { word: "leathery", start: 2.01, end: 2.37 },
+      { word: "skin", start: 2.37, end: 2.82 },
+      { word: "smooth", start: 2.85, end: 3.11 },
+      { word: "edible", start: 3.19, end: 3.53 },
+      { word: "flesh", start: 3.53, end: 3.88 },
+      { word: "and", start: 3.88, end: 4.02 },
+      { word: "a", start: 4.02, end: 4.06 },
+      { word: "large", start: 4.06, end: 4.37 },
+      { word: "stone", start: 4.37, end: 4.84 } ]
+    },
   },
   "task_id": "5774cc78b01249ab09f089dd",
   "task": {
@@ -1221,9 +1239,16 @@ Parameter | Type | Description
 }
 ```
 
-The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have either an `error` field or a `transcript` and `duration` field.
+The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have either an `error` field or a `transcript`, `duration`, and `alignment` field.
 
 If the transcription was completed successfully, the transcript will be stored in plaintext under the `transcript` field. It will also contain a `duration` field, which stores the duration of the audio file in seconds.
+
+Successful transcriptions will also include an `alignment` field, which will contain an array of aligned words (in the same order as the transcript), where each entry in the array has the following values:
+
+* `word`: The word in question
+* `start` : timestamp in the audio file at which this word begins
+* `end` : timestamp in the audio file at which this word ends
+* `confidence` : The confidence for this word's alignment. Currently confidences are always one of two values (1.0 or 0.3).
 
 If there was an error or issue during transcription, the error will be detailed in the `error` field, and a partial transcript (if applicable) will be stored in the `transcript` field.
 
