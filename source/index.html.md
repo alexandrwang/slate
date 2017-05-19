@@ -227,6 +227,12 @@ Tasks objects have a metadata parameter. You can use this parameter to attach ke
 
 Metadata is useful for storing additional, structured information on an object. As an example, you could store a video's unique identifier in your system on its content moderation `categorization` task. You can also use it to denote the end use case for the task, as "content moderation" or "data categorization" for example. Metadata is not used by Scale (e.g., to affect how the task is done).
 
+## Attachments
+
+Tasks often require a file associated with them that Scale API calls an attachment. For example, an annotation task requires an image file to show to a Scaler. These attachments are not limited to images and may also be audio, video, or pdf files, or a website, or even plain text. For all attachment types except plain text, the attachment must be specified via a URL. See the specific task documentation below for some examples.
+
+Scale API will fetch the attachment via the URL you provide. If we cannot fetch your attachment URL, or the attachment is invalid (for instance, not a valid image for an image attachment), we will send your `callback_url` an error detailing the issue.
+
 # Create Categorization Task
 
 ```shell
@@ -921,15 +927,17 @@ Parameter | Type | Description
 }
 ```
 
-The `response` field, which is part of the callback POST request and permanently stored as part of the `task` object, will contain only an `annotations` field.
+The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have either an `error` field or an `annotations` field.
 
-The `annotations` field will contain an array of annotations. Each annotation will have the following values:
+If the annotation was completed successfully, the `annotations` field will contain an array of annotations. Each annotation will have the following values:
 
 * `left`: The distance, in pixels, between the left border of the bounding box and the left border of the image.
 * `top`: The distance, in pixels, between the top border of the bounding box and the top border of the image.
 * `width`: The width, in pixels, of the bounding box.
 * `height`: The height, in pixels, of the bounding box.
 * `label` (if specified `with_labels` as `true`): The label for the bounding box, which will be one of the specified `task.params.objects_to_annotate`.
+
+If the attachment was invalid, the error will be detailed in the `error` field.
 
 <aside class="notice">
 See the <a href="#callbacks">Callback section</a> for more details about callbacks.
@@ -1045,7 +1053,7 @@ Parameter | Type | Description
 --------- | ---- | -------
 `callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed. See the [Callback section](#callbacks) for more details about callbacks.
 `instruction` | string | A markdown-enabled string explaining how to transcribe the attachment. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
-`attachment_type` | string | One of `image` or `pdf`. Describes what type of file the attachment is.
+`attachment_type` | string | One of `image`, `pdf`, or `website`. Describes what type of file the attachment is.
 `attachment` | string | The attachment to be transcribed. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
 `fields` | object | A dictionary corresponding to the fields to be transcribed. Keys are the keys you'd like the fields to be returned under, and values are descriptions to be shown to human workers.
 `urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
