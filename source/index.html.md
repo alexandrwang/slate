@@ -1203,24 +1203,25 @@ Parameter | Type | Description
   "response": {
     "transcript": "The avocado is a pear-shaped fruit with leathery skin, smooth edible flesh, and a large stone.",
     "duration": 5.106188,
-    "alignment": [ { "word": "The", "start": 0.3, "end": 0.37 },
-      { "word": "avocado", "start": 0.37, "end": 0.79 },
-      { "word": "is", "start": 0.79, "end": 0.94 },
-      { "word": "a", "start": 0.94, "end": 1 },
-      { "word": "pear" },
-      { "word": "shaped" },
-      { "word": "fruit", "start": 1.59, "end": 1.8 },
-      { "word": "with", "start": 1.81, "end": 2.01 },
-      { "word": "leathery", "start": 2.01, "end": 2.37 },
-      { "word": "skin", "start": 2.37, "end": 2.82 },
-      { "word": "smooth", "start": 2.85, "end": 3.11 },
-      { "word": "edible", "start": 3.19, "end": 3.53 },
-      { "word": "flesh", "start": 3.53, "end": 3.88 },
-      { "word": "and", "start": 3.88, "end": 4.02 },
-      { "word": "a", "start": 4.02, "end": 4.06 },
-      { "word": "large", "start": 4.06, "end": 4.37 },
-      { "word": "stone", "start": 4.37, "end": 4.84 } ]
-    }
+    "alignment": [
+      { "word": "The", "start": 0.3, "end": 0.37, "confidence": 0.9 },
+      { "word": "avocado", "start": 0.37, "end": 0.79, "confidence": 0.9 },
+      { "word": "is", "start": 0.79, "end": 0.94, "confidence": 0.9 },
+      { "word": "a", "start": 0.94, "end": 1, "confidence": 0.9 },
+      { "word": "pear", "start": 1, "end": 1.3, "confidence": 0.3 },
+      { "word": "shaped", "start": 1.3, "end": 1.59, "confidence": 0.3 },
+      { "word": "fruit", "start": 1.59, "end": 1.8, "confidence": 0.9 },
+      { "word": "with", "start": 1.81, "end": 2.01, "confidence": 0.9 },
+      { "word": "leathery", "start": 2.01, "end": 2.37, "confidence": 0.9 },
+      { "word": "skin", "start": 2.37, "end": 2.82, "confidence": 0.9 },
+      { "word": "smooth", "start": 2.85, "end": 3.11, "confidence": 0.9 },
+      { "word": "edible", "start": 3.19, "end": 3.53, "confidence": 0.9 },
+      { "word": "flesh", "start": 3.53, "end": 3.88, "confidence": 0.9 },
+      { "word": "and", "start": 3.88, "end": 4.02, "confidence": 0.9 },
+      { "word": "a", "start": 4.02, "end": 4.06, "confidence": 0.9 },
+      { "word": "large", "start": 4.06, "end": 4.37, "confidence": 0.9 },
+      { "word": "stone", "start": 4.37, "end": 4.84, "confidence": 0.9 }
+    ]
   },
   "task_id": "5774cc78b01249ab09f089dd",
   "task": {
