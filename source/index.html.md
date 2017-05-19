@@ -1087,7 +1087,9 @@ curl "https://api.scaleapi.com/v1/task/audiotranscription" \
   -d callback_url="http://www.example.com/callback" \
   -d attachment_type=audio \
   -d attachment="https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav" \
-  -d verbatim=false
+  -d verbatim=false \
+  -d phrases=avocado \
+  -d phrases=stone
 ```
 
 ```python
@@ -1099,7 +1101,8 @@ client.create_audiotranscription_task(
     callback_url='http://www.example.com/callback',
     attachment_type='audio',
     attachment='https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav',
-    verbatim=False
+    verbatim=False,
+    phrases=['avocado', 'stone']
 )
 ```
 
@@ -1112,7 +1115,8 @@ client.createAudiotranscriptionTask({
   'callback_url': 'http://www.example.com/callback',
   'attachment_type': 'audio',
   'attachment': 'https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav',
-  'verbatim': false
+  'verbatim': false,
+  'phrases': ['avocado', 'stone']
 }, (err, task) => {
     // do something with task
 });
@@ -1126,7 +1130,8 @@ scale.create_audiotranscription_task({
   callback_url: 'http://www.example.com/callback',
   attachment_type: 'audio',
   attachment: 'https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav',
-  verbatim: false
+  verbatim: false,
+  phrases: ['avocado', 'stone']
 })
 
 => #<Scale::Api::Tasks::AudioTranscription:0x007fcc109b7d58 @task_id="58a6341eaa9d139b20a4252b", @type="audiotranscription", @instruction="Please transcribe the attached audio file.", @params={"verbatim"=>false, "attachment_type"=>"audio", "attachment"=>"https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:22:06 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
@@ -1146,7 +1151,8 @@ scale.create_audiotranscription_task({
   "params": {
     "verbatim": false,
     "attachment_type": "audio",
-    "attachment": "https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav"
+    "attachment": "https://storage.googleapis.com/deepmind-media/pixie/knowing-what-to-say/second-list/speaker-3.wav",
+    "phrases": ["avocado", "stone"]
   },
   "is_test": true,
   "metadata": {}
@@ -1165,7 +1171,7 @@ You may also optionally specify `phrases`, a list of strings containing words an
 
 If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
 
-The parameters `attachment_type`, `attachment`, and `verbatim` will be stored in the `params` object of the constructed `task` object.
+The parameters `attachment_type`, `attachment`, `verbatim`, and `phrases` will be stored in the `params` object of the constructed `task` object.
 
 <aside class="notice">
 The maximum length of an audio file to be transcribed is 30 minutes, and we will only transcribe in English. Any audio file longer than that will return an error.
@@ -1248,7 +1254,7 @@ Successful transcriptions will also include an `alignment` field, which will con
 * `word`: The word in question
 * `start` : timestamp in the audio file at which this word begins
 * `end` : timestamp in the audio file at which this word ends
-* `confidence` : The confidence for this word's alignment. Currently confidences are always one of two values (1.0 or 0.3).
+* `confidence` : The confidence for this word's alignment. Currently confidences are always one of two values (0.9 or 0.3).
 
 If there was an error or issue during transcription, the error will be detailed in the `error` field, and a partial transcript (if applicable) will be stored in the `transcript` field.
 
