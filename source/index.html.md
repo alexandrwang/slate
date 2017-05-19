@@ -227,6 +227,12 @@ Tasks objects have a metadata parameter. You can use this parameter to attach ke
 
 Metadata is useful for storing additional, structured information on an object. As an example, you could store a video's unique identifier in your system on its content moderation `categorization` task. You can also use it to denote the end use case for the task, as "content moderation" or "data categorization" for example. Metadata is not used by Scale (e.g., to affect how the task is done).
 
+## Attachments
+
+Tasks often require a file associated with them that Scale API calls an attachment. For example, an annotation task requires an image file to show to a Scaler. These attachments are not limited to images and may also be audio, video, or pdf files, or a website, or even plain text. For all attachment types except plain text, the attachment must be specified via a URL. See the specific task documentation below for some examples.
+
+Scale API will fetch the attachment via the URL you provide. If the URL does not return a 200, we will retry up to five times. If we still have not received a successful 200 response, the task will automatically be marked as completed and we will call your `callback_url` with an error message detailing the HTTP statusCodes and the attachment URL(s) that failed.
+
 # Create Categorization Task
 
 ```shell
