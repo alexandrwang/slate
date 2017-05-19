@@ -373,6 +373,12 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 
 <p>Metadata is useful for storing additional, structured information on an object. As an example, you could store a video&rsquo;s unique identifier in your system on its content moderation <code class="prettyprint">categorization</code> task. You can also use it to denote the end use case for the task, as &ldquo;content moderation&rdquo; or &ldquo;data categorization&rdquo; for example. Metadata is not used by Scale (e.g., to affect how the task is done).</p>
 
+<h2 id="attachments">Attachments</h2>
+
+<p>Tasks often require a file associated with them that Scale API calls an attachment. For example, an annotation task requires an image file to show to a Scaler. These attachments are not limited to images and may also be audio, video, or pdf files, or a website, or even plain text. For all attachment types except plain text, the attachment must be specified via a URL. See the specific task documentation below for some examples.</p>
+
+<p>Scale API will fetch the attachment via the URL you provide. If we cannot fetch your attachment URL, or the attachment is invalid (for instance, not a valid image for an image attachment), we will send your <code class="prettyprint">callback_url</code> an error detailing the issue.</p>
+
 <h1 id="create-categorization-task">Create Categorization Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/categorization"</span> <span class="se">\</span>
   -u <span class="s2">"{{ApiKey}}:"</span> <span class="se">\</span>
@@ -1177,9 +1183,9 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>The <code class="prettyprint">response</code> field, which is part of the callback POST request and permanently stored as part of the <code class="prettyprint">task</code> object, will contain only an <code class="prettyprint">annotations</code> field.</p>
+<p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have either an <code class="prettyprint">error</code> field or an <code class="prettyprint">annotations</code> field.</p>
 
-<p>The <code class="prettyprint">annotations</code> field will contain an array of annotations. Each annotation will have the following values:</p>
+<p>If the annotation was completed successfully, the <code class="prettyprint">annotations</code> field will contain an array of annotations. Each annotation will have the following values:</p>
 
 <ul>
 <li><code class="prettyprint">left</code>: The distance, in pixels, between the left border of the bounding box and the left border of the image.</li>
@@ -1188,6 +1194,8 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
 <li><code class="prettyprint">height</code>: The height, in pixels, of the bounding box.</li>
 <li><code class="prettyprint">label</code> (if specified <code class="prettyprint">with_labels</code> as <code class="prettyprint">true</code>): The label for the bounding box, which will be one of the specified <code class="prettyprint">task.params.objects_to_annotate</code>.</li>
 </ul>
+
+<p>If the attachment was invalid, the error will be detailed in the <code class="prettyprint">error</code> field.</p>
 
 <aside class="notice">
 See the <a href="#callbacks">Callback section</a> for more details about callbacks.
@@ -1306,7 +1314,7 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
 <tr>
 <td><code class="prettyprint">attachment_type</code></td>
 <td>string</td>
-<td>One of <code class="prettyprint">image</code> or <code class="prettyprint">pdf</code>. Describes what type of file the attachment is.</td>
+<td>One of <code class="prettyprint">image</code>, <code class="prettyprint">pdf</code>, or <code class="prettyprint">website</code>. Describes what type of file the attachment is.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">attachment</code></td>
