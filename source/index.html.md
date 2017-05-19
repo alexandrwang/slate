@@ -231,7 +231,7 @@ Metadata is useful for storing additional, structured information on an object. 
 
 Tasks often require a file associated with them that Scale API calls an attachment. For example, an annotation task requires an image file to show to a Scaler. These attachments are not limited to images and may also be audio, video, or pdf files, or a website, or even plain text. For all attachment types except plain text, the attachment must be specified via a URL. See the specific task documentation below for some examples.
 
-Scale API will fetch the attachment via the URL you provide. If the URL does not return a 200, we will retry up to five times. If we still have not received a successful 200 response, the task will automatically be marked as completed and we will call your `callback_url` with an error message detailing the HTTP statusCodes and the attachment URL(s) that failed.
+Scale API will fetch the attachment via the URL you provide. If we cannot fetch your attachment URL, or the attachment is invalid (for instance, not a valid image for an image attachment), we will send your `callback_url` an error detailing the issue.
 
 # Create Categorization Task
 
@@ -937,7 +937,7 @@ If the annotation was completed successfully, the `annotations` field will conta
 * `height`: The height, in pixels, of the bounding box.
 * `label` (if specified `with_labels` as `true`): The label for the bounding box, which will be one of the specified `task.params.objects_to_annotate`.
 
-If there was an error or issue during annotation, the error will be detailed in the `error` field.
+If the attachment was invalid, the error will be detailed in the `error` field.
 
 <aside class="notice">
 See the <a href="#callbacks">Callback section</a> for more details about callbacks.
