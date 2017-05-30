@@ -377,8 +377,25 @@ Your test API key <code>{{ApiKey}}</code> is included in all the examples on thi
 
 <p>Tasks often require a file associated with them that Scale API calls an attachment. For example, an annotation task requires an image file to show to a Scaler. These attachments are not limited to images and may also be audio, video, or pdf files, or a website, or even plain text. For all attachment types except plain text, the attachment must be specified via a URL. See the specific task documentation below for some examples.</p>
 
-<p>Scale API will fetch the attachment via the URL you provide. If we cannot fetch your attachment URL, or the attachment is invalid (for instance, not a valid image for an image attachment), we will send your <code class="prettyprint">callback_url</code> an error detailing the issue.</p>
+<p>Scale API will attempt to fetch the attachment via the URL you provide. If we do not receive an HTTP 200 response when attempting to fetch your attachment(s), we will send your <code class="prettyprint">callback_url</code> an error with the bad HTTP codes we received.</p>
 
+<blockquote>
+<p>Callback example for bad attachment URL:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One or more attachments could not be downloaded."</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"attachments"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://your-s3-bucket.s3.amazonaws.com/attachment-1.png"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://your-s3-bucket.s3.amazonaws.com/attachment-2.png"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <h1 id="create-categorization-task">Create Categorization Task</h1>
 <pre class="highlight shell"><code>curl <span class="s2">"https://api.scaleapi.com/v1/task/categorization"</span> <span class="se">\</span>
   -u <span class="s2">"{{ApiKey}}:"</span> <span class="se">\</span>
