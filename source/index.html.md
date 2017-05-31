@@ -447,7 +447,7 @@ curl "https://api.scaleapi.com/v1/task/comparison" \
   -d callback_url="http://www.example.com/callback" \
   -d instruction="Do the objects in these images have the same pattern?" \
   -d attachment_type=image \
-  -d attachments="http://i.ebayimg.com/00/$T2eC16dHJGwFFZKjy5ZjBRfNyMC4Ig~~_32.JPG" \
+  -d attachments="http://i.ebayimg.com/00/\$T2eC16dHJGwFFZKjy5ZjBRfNyMC4Ig~~_32.JPG" \
   -d attachments="http://images.wisegeek.com/checkered-tablecloth.jpg" \
   -d choices="yes" \
   -d choices="no"
