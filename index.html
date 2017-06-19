@@ -1297,13 +1297,15 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
 </span></code></pre>
 <p>This endpoint creates a <code class="prettyprint">transcription</code> task. In this task, one of our workers will read an attachment and arbitrarily transcribe any information you&rsquo;d like. Example use cases could be transcribing information from PDFs, manually scraping a web page for information, etc.</p>
 
-<p>This task involves a <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown-enabled</a> <code class="prettyprint">instruction</code> about how to transcribe the attachment, an <code class="prettyprint">attachment</code> of what you&rsquo;d like to transcribe, an <code class="prettyprint">attachment_type</code>, and <code class="prettyprint">fields</code>. <code class="prettyprint">fields</code> is a dictionary which describes items you&rsquo;d like transcribed for the attachment. Examples are phone numbers, names, etc.</p>
+<p>This task involves a <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown-enabled</a> <code class="prettyprint">instruction</code> about how to transcribe the attachment, an <code class="prettyprint">attachment</code> of what you&rsquo;d like to transcribe, an <code class="prettyprint">attachment_type</code>, <code class="prettyprint">fields</code>, and <code class="prettyprint">repeatable_fields</code>.</p>
 
-<p><code class="prettyprint">fields</code> is a dictionary where the keys are the keys you&rsquo;d like the results to be returned under, and values are the descriptions you&rsquo;d like to show the human Scaler.</p>
+<p><code class="prettyprint">fields</code> is a dictionary which describes items you&rsquo;d like transcribed for the attachment. Examples are phone numbers, names, etc. <code class="prettyprint">repeatable_fields</code> is a dictionary which describes items which you&rsquo;d like transcribed for the attachment which appear in the attachment multiple times. Examples are the row-by-row items of an invoice or purchase order.</p>
+
+<p>At least one of <code class="prettyprint">fields</code> or <code class="prettyprint">repeatable_fields</code> is required. Both <code class="prettyprint">fields</code> and <code class="prettyprint">repeatable_fields</code> are dictionaries where the keys are the identifiers you&rsquo;d like the results to be returned using, and values are plaintext descriptions you&rsquo;d like to show the Scaler as they complete the task.</p>
 
 <p>If successful, Scale will immediately return the generated task object, of which you should at least store the <code class="prettyprint">task_id</code>.</p>
 
-<p>The parameters <code class="prettyprint">attachment_type</code>, <code class="prettyprint">attachment</code>, and <code class="prettyprint">fields</code> will be stored in the <code class="prettyprint">params</code> object of the constructed <code class="prettyprint">task</code> object.</p>
+<p>The parameters <code class="prettyprint">attachment_type</code>, <code class="prettyprint">attachment</code>, <code class="prettyprint">fields</code>, and <code class="prettyprint">repeatable_fields</code> will be stored in the <code class="prettyprint">params</code> object of the constructed <code class="prettyprint">task</code> object.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -1339,9 +1341,14 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
 <td>The attachment to be transcribed. If <code class="prettyprint">attachment_type</code> is <code class="prettyprint">text</code>, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.</td>
 </tr>
 <tr>
-<td><code class="prettyprint">fields</code></td>
+<td><code class="prettyprint">fields</code> (optional if using <code class="prettyprint">repeatable_fields</code>)</td>
 <td>object</td>
-<td>A dictionary corresponding to the fields to be transcribed. Keys are the keys you&rsquo;d like the fields to be returned under, and values are descriptions to be shown to human workers.</td>
+<td>A dictionary corresponding to the fields to be transcribed. Keys are the identifiers you&rsquo;d like the fields to be returned using, and values are descriptions to be shown to the Scalers as they complete the task.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">repeatable_fields</code> (optional if using <code class="prettyprint">fields</code>)</td>
+<td>object</td>
+<td>If your task requires a transcription of items which might be repeated within the attachment, such as rows of an invoice, then this dictionary describes those fields. The format is the same as <code class="prettyprint">fields</code>.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">urgency</code> (optional, default <code class="prettyprint">day</code>)</td>
@@ -1358,7 +1365,7 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
 <h2 id="callback-format">Callback Format</h2>
 
 <blockquote>
-<p>Example callback response sent on completion</p>
+<p>Example callback response sent on completion with <code class="prettyprint">fields</code></p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -1374,9 +1381,34 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+<blockquote>
+<p>Example callback response sent on completion with <code class="prettyprint">repeatable_fields</code></p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"repeatable_fields"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Espresso"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.00"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ice Cream"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9.99"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5774cc78b01249ab09f089dd"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">populated</span><span class="w"> </span><span class="err">task</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">convenience</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have a <code class="prettyprint">fields</code> field.</p>
 
-<p><code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.</p>
+<p><code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values equal to the transcribed value.</p>
+
+<p>If you requested <code class="prettyprint">repeatable_fields</code>, <code class="prettyprint">repeatable_fields</code> in the <code class="prettyprint">response</code> will be an array of such dictionaries, with keys corresponding to the keys you provided in the <code class="prettyprint">repeatable_fields</code> parameter, and values corresponding to the transcribed value. Each element of the array will correspond to one transcribed value in the attachment.</p>
 
 <aside class="notice">
 See the <a href="#callbacks">Callback section</a> for more details about callbacks.
