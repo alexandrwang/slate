@@ -1053,13 +1053,15 @@ scale.create_transcription_task({
 
 This endpoint creates a `transcription` task. In this task, one of our workers will read an attachment and arbitrarily transcribe any information you'd like. Example use cases could be transcribing information from PDFs, manually scraping a web page for information, etc.
 
-This task involves a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction` about how to transcribe the attachment, an `attachment` of what you'd like to transcribe, an `attachment_type`, and `fields`. `fields` is a dictionary which describes items you'd like transcribed for the attachment. Examples are phone numbers, names, etc.
+This task involves a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction` about how to transcribe the attachment, an `attachment` of what you'd like to transcribe, an `attachment_type`, `fields`, and `repeatable_fields`.
 
-`fields` is a dictionary where the keys are the keys you'd like the results to be returned under, and values are the descriptions you'd like to show the human Scaler.
+`fields` is a dictionary which describes items you'd like transcribed for the attachment. Examples are phone numbers, names, etc. `repeatable_fields` is a dictionary which describes items which you'd like transcribed for the attachment which appear in the attachment multiple times. Examples are the row-by-row items of an invoice or purchase order.
+
+At least one of `fields` or `repeatable_fields` is required. Both `fields` and `repeatable_fields` are dictionaries where the keys are the identifiers you'd like the results to be returned using, and values are plaintext descriptions you'd like to show the Scaler as they complete the task.
 
 If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
 
-The parameters `attachment_type`, `attachment`, and `fields` will be stored in the `params` object of the constructed `task` object.
+The parameters `attachment_type`, `attachment`, `fields`, and `repeatable_fields` will be stored in the `params` object of the constructed `task` object.
 
 ### HTTP Request
 
@@ -1073,13 +1075,14 @@ Parameter | Type | Description
 `instruction` | string | A markdown-enabled string explaining how to transcribe the attachment. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` | string | One of `image`, `pdf`, or `website`. Describes what type of file the attachment is.
 `attachment` | string | The attachment to be transcribed. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
-`fields` | object | A dictionary corresponding to the fields to be transcribed. Keys are the keys you'd like the fields to be returned under, and values are descriptions to be shown to human workers.
+`fields` (optional if using `repeatable_fields`) | object | A dictionary corresponding to the fields to be transcribed. Keys are the identifiers you'd like the fields to be returned using, and values are descriptions to be shown to the Scalers as they complete the task.
+`repeatable_fields` (optional if using `fields`) | object | If your task requires a transcription of items which might be repeated within the attachment, such as rows of an invoice, then this dictionary describes those fields. The format is the same as `fields`.
 `urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
 ## Callback Format
 
-> Example callback response sent on completion
+> Example callback response sent on completion with `fields`
 
 ```json
 {
@@ -1097,9 +1100,35 @@ Parameter | Type | Description
 }
 ```
 
+> Example callback response sent on completion with `repeatable_fields`
+
+```json
+{
+  "response": {
+    "repeatable_fields": [
+      {
+        "description": "Espresso",
+        "amount": "10.00"
+      },
+      {
+        "description": "Ice Cream",
+        "amount": "9.99"
+      }
+    ]
+  },
+  "task_id": "5774cc78b01249ab09f089dd",
+  "task": {
+    // populated task for convenience
+    ...
+  }
+}
+```
+
 The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have a `fields` field.
 
-`fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
+`fields` will have keys corresponding to the keys you provided in the parameters, with values equal to the transcribed value.
+
+If you requested `repeatable_fields`, `repeatable_fields` in the `response` will be an array of such dictionaries, with keys corresponding to the keys you provided in the `repeatable_fields` parameter, and values corresponding to the transcribed value. Each element of the array will correspond to one transcribed value in the attachment.
 
 <aside class="notice">
 See the <a href="#callbacks">Callback section</a> for more details about callbacks.
