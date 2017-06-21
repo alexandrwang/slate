@@ -249,6 +249,8 @@ Metadata is useful for storing additional, structured information on an object. 
 
 Tasks often require a file associated with them that Scale API calls an attachment. For example, an annotation task requires an image file to show to a Scaler. These attachments are not limited to images and may also be audio, video, or pdf files, or a website, or even plain text. For all attachment types except plain text, the attachment must be specified via a URL. See the specific task documentation below for some examples.
 
+Currently we only support fetching urls whose protocol is http or https.  Make sure that the URL is a direct link to the file you wish to use as an attachment and not a document showing a preview of the file.  For certain storage providers we may be able to rewrite URLs that are previews of the file you are trying to attach to the correct direct download URL.
+
 Scale API will attempt to fetch the attachment via the URL you provide. If we do not receive an HTTP 200 response when attempting to fetch your attachment(s), we will send your `callback_url` an error with the bad HTTP codes we received.
 
 # Create Categorization Task
