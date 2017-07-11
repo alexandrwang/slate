@@ -742,13 +742,7 @@ curl "https://api.scaleapi.com/v1/task/annotation" \
   -d objects_to_annotate="big cow" \
   -d with_labels=true \
   -d min_width="30" \
-  -d min_height="30" \
-  -d examples[0][correct]=true \
-  -d examples[0][image]="http://i.imgur.com/lj6e98s.jpg" \
-  -d examples[0][explanation]="The boxes are tight and accurate" \
-  -d examples[1][correct]=false \
-  -d examples[1][image]="http://i.imgur.com/HIrvIDq.jpg" \
-  -d examples[1][explanation]="The boxes are neither accurate nor complete"
+  -d min_height="30"
 ```
 ```python
 import scaleapi
@@ -763,19 +757,7 @@ client.create_annotation_task(
     objects_to_annotate=['baby cow', 'big cow'],
     with_labels=True,
     min_width='30',
-    min_height='30',
-    examples = [
-        {
-            'correct': False,
-            'image': 'http://i.imgur.com/lj6e98s.jpg',
-            'explanation': 'The boxes are tight and accurate'
-        },
-        {
-            'correct': True,
-            'image': 'http://i.imgur.com/HIrvIDq.jpg',
-            'explanation': 'The boxes are neither accurate nor complete'
-        }
-    ]
+    min_height='30'
 )
 ```
 
@@ -792,19 +774,7 @@ client.createAnnotationTask({
   'objects_to_annotate': ['baby cow', 'big cow'],
   'with_labels': true,
   'min_width': '30',
-  'min_height': '30',
-  'examples': [
-    {
-      'correct': false,
-      'image': 'http://i.imgur.com/lj6e98s.jpg',
-      'explanation': 'The boxes are tight and accurate'
-    },
-    {
-      'correct': true,
-      'image': 'http://i.imgur.com/HIrvIDq.jpg',
-      'explanation': 'The boxes are neither accurate nor complete'
-    }
-  ]
+  'min_height': '30'
 }, (err, task) => {
     // do something with task
 });
@@ -822,21 +792,9 @@ scale.create_annotation_task({
   objects_to_annotate: ['baby cow', 'big cow'],
   with_labels: true,
   min_width: '30',
-  min_height: '30',
-  examples: [
-    {
-      correct: false,
-      image: 'http://i.imgur.com/lj6e98s.jpg',
-      explanation: 'The boxes are tight and accurate'
-    },
-    {
-      correct: true,
-      image: 'http://i.imgur.com/HIrvIDq.jpg',
-      explanation: 'The boxes are neither accurate nor complete'
-    }
-  ]
+  min_height: '30'
 })
-=> #<Scale::Api::Tasks::ImageRecognition:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="annotation", @instruction="Draw a box around each **baby cow** and **big cow**", @params={"examples"=>[{"explanation"=>"The boxes are tight and accurate", "image"=>"http://i.imgur.com/lj6e98s.jpg", "correct"=>false}, {"explanation"=>"The boxes are neither accurate nor complete", "image"=>"http://i.imgur.com/HIrvIDq.jpg", "correct"=>true}], "with_labels"=>true, "objects_to_annotate"=>["baby cow", "big cow"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/v4cBreD.jpg"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
+=> #<Scale::Api::Tasks::ImageRecognition:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="annotation", @instruction="Draw a box around each **baby cow** and **big cow**", @params={"with_labels"=>true, "objects_to_annotate"=>["baby cow", "big cow"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/v4cBreD.jpg"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
 ```
 
 > The above command returns an object structured like this:
@@ -851,18 +809,6 @@ scale.create_annotation_task({
   "instruction": "Draw a box around each **baby cow** and **big cow**",
   "urgency": "day",
   "params": {
-    "examples": [
-      {
-        "explanation": "The boxes are tight and accurate",
-        "image": "http://i.imgur.com/lj6e98s.jpg",
-        "correct": true
-      },
-      {
-        "explanation": "The boxes are neither accurate nor complete",
-        "image": "http://i.imgur.com/HIrvIDq.jpg",
-        "correct": false
-      }
-    ],
     "with_labels": true,
     "min_width": 30,
     "min_height": 30,
@@ -905,7 +851,6 @@ Parameter | Type | Description
 `objects_to_annotate` | [string] | An array of strings describing which objects you'd like bounding boxes to be drawn around. Each string should be singular and self-descriptive (ex: "cat", "street sign", "potato"). You may include at most 6 objects.
 `attachment` | string | A URL to the image you'd like to be annotated with bounding boxes.
 `with_labels` (optional, default `false`) | boolean | Specifies whether you'd like labels for each bounding box in the response. Each label will be a member of the `objects_to_annotate` array.
-`examples` (optional) | [object] | A list of examples. Each example requires a `correct` boolean indicating whether it is a correct or incorrect example and an `image` URL to the example image. Optionally, provide an `explanation` for the example explaining why it is correct or incorrect.
 `min_height` (optional) | integer, default 0 | The minimum height in pixels of the bounding boxes you'd like to be made.
 `min_width` (optional) | integer, default 0 | The minimum width in pixels of the bounding boxes you'd like to be made.
 `urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
