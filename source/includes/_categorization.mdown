@@ -1,0 +1,187 @@
+# Create Categorization Task
+
+```shell
+curl "https://api.scaleapi.com/v1/task/categorization" \
+  -u "{{ApiKey}}:" \
+  -d callback_url="http://www.example.com/callback" \
+  -d instruction="Is this company public or private?" \
+  -d attachment_type=website \
+  -d attachment="http://www.google.com/" \
+  -d categories=public \
+  -d categories=private
+```
+
+```python
+import scaleapi
+
+client = scaleapi.ScaleClient('{{ApiKey}}')
+
+client.create_categorization_task(
+    callback_url='http://www.example.com/callback',
+    instruction='Is this company public or private?',
+    attachment_type='website',
+    attachment='http://www.google.com/',
+    categories=['public', 'private']
+)
+
+```
+
+```javascript
+var scaleapi = require('scaleapi');
+
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+client.createCategorizationTask({
+  'callback_url': 'http://www.example.com/callback',
+  'instruction': 'Is this company public or private?',
+  'attachment_type': 'website',
+  'attachment': 'http://www.google.com/',
+  'categories': ['public', 'private']
+}, (err, task) => {
+    // do something with task
+});
+```
+
+```ruby
+require 'scale'
+scale = Scale.new(api_key: '{{ApiKey}}')
+
+scale.create_categorization_task({
+  callback_url: 'http://www.example.com/callback',
+  instruction: 'Is this company public or private?',
+  attachment_type: 'website',
+  attachment: 'https://www.google.com',
+  categories: ['public', 'private']
+})
+=> #<Scale::Api::Tasks::Categorization:0x007fcc11819bf8 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"allow_multiple"=>false, "categories"=>["public", "private"], "attachment"=>"https://www.google.com", "attachment_type"=>"website"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
+```
+
+> The above command returns an object structured like this:
+
+```json
+{
+  "task_id": "576ba74eec471ff9b01557cc",
+  "created_at": "2016-06-23T09:09:34.752Z",
+  "callback_url": "http://www.example.com/callback",
+  "type": "categorization",
+  "status": "pending",
+  "instruction": "Is this company public or private?",
+  "urgency": "day",
+  "params": {
+    "attachment_type": "website",
+    "attachment": "http://www.google.com/",
+    "categories": [
+      "public",
+      "private"
+    ]
+  },
+  "metadata": {}
+}
+```
+
+This endpoint creates a `categorization` task. In this task, one of our workers will view the attachment and choose a category for it according to the instruction. You may allow multiple categories to be chosen by setting `allow_multiple` to `true`. Example use cases are spam detection, copyright detection, product categorization, etc.
+
+This task involves a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction` about how to make the categorization, an `attachment` of what you'd like to categorize, an `attachment_type`, and finally a list of `categories`.
+
+There is an optional `category_ids` parameter, which you can use to impose an id system over the categories. The format of this parameter should be a dictionary, where the keys are the ids (as strings), and then the values are the category values provided in `categories`. An example is:
+
+```"category_ids": {
+  "123": "Blue Cross",
+  "124": "Red Cross"
+}```
+
+If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
+
+The parameters `attachment_type`, `attachment`, `categories`, and `category_ids` (optional) will be stored in the `params` object of the constructed `task` object.
+
+### HTTP Request
+
+`POST https://api.scaleapi.com/v1/task/categorization`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ---- | -------
+`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed. See the [Callback section](#callbacks) for more details about callbacks.
+`instruction` | string | A markdown-enabled string explaining how to categorize the item. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
+`attachment_type` | string | One of `text`, `image`, `video`, `audio`, `website`, or `pdf`. Describes what type of file the attachment is.
+`attachment` | string | The attachment to be categorized. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
+`categories` | [string] | An array of strings for the categories which you'd like the object to be sorted between.
+`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
+`category_ids` (optional) | dictionary | An optional dictionary where the keys are the optional ids, and the values are the category values provided in `categories`.
+`allow_multiple` (optional) | boolean | Default is `false`. Determines whether you allow multiple categories to be chosen for the attachment
+`metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
+
+## Callback Format
+
+> If `allow_multiple` is `false`, the callback body will look like:
+
+```json
+{
+  "response": {
+    "category": "one_of_the_categories"
+  },
+  "task_id": "576ba74eec471ff9b01557cc",
+  "task": {
+    // populated task for convenience
+    ...
+  }
+}
+```
+> If `allow_multiple` is `true`, the callback body will look like:
+
+```json
+{
+  "response": {
+    "category": ["some_of", "the_categories"]
+  },
+  "task_id": "576ba74eec471ff9b01557cc",
+  "task": {
+    // populated task for convenience
+    ...
+  }
+}
+```
+> Example if `category_ids` is provided and `allow_multiple` is `false`
+
+```json
+{
+  "response": {
+    "category": "Blue Cross",
+    "category_id": "123"
+  },
+  "task_id": "576ba74eec471ff9b01557cc",
+  "task": {
+    // populated task for convenience
+    ...
+  }
+}
+```
+> Example if `category_ids` is provided and `allow_multiple` is `true`
+
+```json
+
+{
+  "response": {
+    "category": ["Blue Cross", "Red Cross"],
+    "category_id": ["123", "124"]
+  },
+  "task_id": "576ba74eec471ff9b01557cc",
+  "task": {
+    // populated task for convenience
+    ...
+  }
+}
+```
+
+The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have a `category` field and potentially a `category_id` field.
+
+If `allow_multiple` is `false`, then the value will be a string equal to one of the original categories.
+
+If `allow_multiple` is `true`, the value will be an array of categories, each one being one of the original categories.
+
+If `category_ids` was provided, there will be another field `category_id` corresponding to the given id of the chosen category/categories.
+
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>

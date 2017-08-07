@@ -1,0 +1,511 @@
+# Create Image Annotation Tasks
+
+## Bounding Box Annotation
+
+```shell
+curl "https://api.scaleapi.com/v1/task/annotation" \
+  -u "{{ApiKey}}:" \
+  -d callback_url="http://www.example.com/callback" \
+  -d instruction="Draw a box around each **baby cow** and **big cow**." \
+  -d attachment_type=image \
+  -d attachment="http://i.imgur.com/v4cBreD.jpg" \
+  -d objects_to_annotate="baby cow" \
+  -d objects_to_annotate="big cow" \
+  -d with_labels=true \
+  -d min_width="30" \
+  -d min_height="30"
+```
+```python
+import scaleapi
+
+client = scaleapi.ScaleClient('{{ApiKey}}')
+
+client.create_annotation_task(
+    callback_url='http://www.example.com/callback',
+    instruction='Draw a box around each **baby cow** and **big cow**',
+    attachment_type='image',
+    attachment='http://i.imgur.com/v4cBreD.jpg',
+    objects_to_annotate=['baby cow', 'big cow'],
+    with_labels=True,
+    min_width='30',
+    min_height='30'
+)
+```
+
+```javascript
+var scaleapi = require('scaleapi');
+
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+client.createAnnotationTask({
+  'callback_url': 'http://www.example.com/callback',
+  'instruction': 'Draw a box around each **baby cow** and **big cow**',
+  'attachment_type': 'image',
+  'attachment': 'http://i.imgur.com/v4cBreD.jpg',
+  'objects_to_annotate': ['baby cow', 'big cow'],
+  'with_labels': true,
+  'min_width': '30',
+  'min_height': '30'
+}, (err, task) => {
+    // do something with task
+});
+```
+
+```ruby
+require 'scale'
+scale = Scale.new(api_key: '{{ApiKey}}')
+
+scale.create_annotation_task({
+  callback_url: 'http://www.example.com/callback',
+  instruction: 'Draw a box around each **baby cow** and **big cow**',
+  attachment_type: 'image',
+  attachment: 'http://i.imgur.com/v4cBreD.jpg',
+  objects_to_annotate: ['baby cow', 'big cow'],
+  with_labels: true,
+  min_width: '30',
+  min_height: '30'
+})
+=> #<Scale::Api::Tasks::ImageRecognition:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="annotation", @instruction="Draw a box around each **baby cow** and **big cow**", @params={"with_labels"=>true, "objects_to_annotate"=>["baby cow", "big cow"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/v4cBreD.jpg"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
+```
+
+> The above command returns an object structured like this:
+
+```json
+{
+  "task_id": "5774cc78b01249ab09f089dd",
+  "created_at": "2016-9-03T07:38:32.368Z",
+  "callback_url": "http://www.example.com/callback",
+  "type": "annotation",
+  "status": "pending",
+  "instruction": "Draw a box around each **baby cow** and **big cow**",
+  "urgency": "day",
+  "params": {
+    "with_labels": true,
+    "min_width": 30,
+    "min_height": 30,
+    "objects_to_annotate": [
+      "baby cow",
+      "big cow"
+    ],
+    "attachment_type": "image",
+    "attachment": "http://i.imgur.com/v4cBreD.jpg"
+  },
+  "metadata": {}
+}
+```
+
+This endpoint creates a `annotation` task. In this task, one of our Scalers view the given image and draw bounding boxes around the specified objects, returning the positions and sizes of these boxes.
+
+The required parameters for this task are `callback_url`, `attachment`, and `objects_to_annotate`. The `callback_url` is the URL which will be POSTed on task completion, and is described in more detail in the [Callbacks section](#callbacks). The `attachment` is a URL to an image you'd like to be annotated.
+
+`objects_to_annotate` is an array of strings describing the different types of objects you'd like annotated.
+
+You can optionally provide additional [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) instructions via the `instruction` parameter.
+
+You can also optionally set `with_labels` to `true`, which will have Scalers provide labels for each box specifying what type of object it is. The labels will be strings in the `objects_to_annotate` list.
+
+It is recommended, but not required, for you to flesh out your Markdown instructions with many examples of tasks being done correctly and incorrectly.
+
+You may also provide `min_width` and `min_height` parameters, which will tell Scalers to only annotate objects whose bounding boxes are of dimension at least `min_width` x `min_height`.
+
+If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
+
+### HTTP Request
+
+`POST https://api.scaleapi.com/v1/task/annotation`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ---- | -------
+`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed. See the [Callback section](#callbacks) for more details about callbacks.
+`objects_to_annotate` | [string] | An array of strings describing which objects you'd like bounding boxes to be drawn around. Each string should be singular and self-descriptive (ex: "cat", "street sign", "potato"). You may include at most 6 objects.
+`attachment` | string | A URL to the image you'd like to be annotated with bounding boxes.
+`with_labels` (optional, default `false`) | boolean | Specifies whether you'd like labels for each bounding box in the response. Each label will be a member of the `objects_to_annotate` array.
+`min_height` (optional) | integer, default 0 | The minimum height in pixels of the bounding boxes you'd like to be made.
+`min_width` (optional) | integer, default 0 | The minimum width in pixels of the bounding boxes you'd like to be made.
+`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
+`instruction` (optional) | string | A markdown-enabled string explaining how to draw the bounding boxes. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
+`attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the annotation endpoint.
+`metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
+
+### Callback Format
+
+> Example callback body sent on completion
+
+```json
+{
+  "response": {
+    "annotations": [
+      {
+        "left": 123,
+        "top": 10,
+        "width": 121,
+        "height": 39,
+        "label": "big cow"
+      },
+      {
+        "left": 82,
+        "top": 56,
+        "width": 64,
+        "height": 30,
+        "label": "baby cow"
+      },
+      { ... },
+      { ... }
+    ]
+  },
+  "task_id": "5774cc78b01249ab09f089dd",
+  "task": {
+    // populated task for convenience
+    ...
+  }
+}
+```
+
+The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have either an `error` field or an `annotations` field.
+
+If the annotation was completed successfully, the `annotations` field will contain an array of annotations. Each annotation will have the following values:
+
+* `left`: The distance, in pixels, between the left border of the bounding box and the left border of the image.
+* `top`: The distance, in pixels, between the top border of the bounding box and the top border of the image.
+* `width`: The width, in pixels, of the bounding box.
+* `height`: The height, in pixels, of the bounding box.
+* `label` (if specified `with_labels` as `true`): The label for the bounding box, which will be one of the specified `task.params.objects_to_annotate`.
+
+If the attachment was invalid, the error will be detailed in the `error` field.
+
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
+
+## Line Annotation
+
+```shell
+curl "https://api.scaleapi.com/v1/task/lineannotation" \
+  -u "{{ApiKey}}:" \
+  -d callback_url="http://www.example.com/callback" \
+  -d instruction="Annotate lines over all of the **lane lines** in the street-level image." \
+  -d attachment_type=image \
+  -d attachment="http://i.imgur.com/XOJbalC.jpg" \
+  -d objects_to_annotate="solid line" \
+  -d objects_to_annotate="dashed line" \
+  -d with_labels=true
+```
+```python
+import scaleapi
+
+client = scaleapi.ScaleClient('{{ApiKey}}')
+
+client.create_lineannotation_task(
+    callback_url='http://www.example.com/callback',
+    instruction='Annotate lines over all of the **lane lines** in the street-level image.',
+    attachment_type='image',
+    attachment='http://i.imgur.com/XOJbalC.jpg',
+    objects_to_annotate=['solid line', 'dashed line'],
+    with_labels=True
+)
+```
+
+```javascript
+var scaleapi = require('scaleapi');
+
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+client.createLineannotationTask({
+  'callback_url': 'http://www.example.com/callback',
+  'instruction': 'Annotate lines over all of the **lane lines** in the street-level image.',
+  'attachment_type': 'image',
+  'attachment': 'http://i.imgur.com/XOJbalC.jpg',
+  'objects_to_annotate': ['solid line', 'dashed line'],
+  'with_labels': true
+}, (err, task) => {
+    // do something with task
+});
+```
+
+```ruby
+require 'scale'
+scale = Scale.new(api_key: '{{ApiKey}}')
+
+scale.create_lineannotation_task({
+  callback_url: 'http://www.example.com/callback',
+  instruction: 'Annotate lines over all of the **lane lines** in the street-level image.',
+  attachment_type: 'image',
+  attachment: 'http://i.imgur.com/XOJbalC.jpg',
+  objects_to_annotate: ['solid line', 'dashed line'],
+  with_labels: true
+})
+=> #<Scale::Api::Tasks::Lineannotation:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="lineannotation", @instruction="Annotate lines over all of the **lane lines** in the street-level image.", @params={"with_labels"=>true, "objects_to_annotate"=>["solid line", "dashed line"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/XOJbalC.jpg"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @metadata={}>
+```
+
+> The above command returns an object structured like this:
+
+```json
+{
+  "task_id": "5774cc78b01249ab09f089dd",
+  "created_at": "2016-9-03T07:38:32.368Z",
+  "callback_url": "http://www.example.com/callback",
+  "type": "lineannotation",
+  "status": "pending",
+  "instruction": "Annotate lines over all of the **lane lines** in the street-level image.",
+  "urgency": "day",
+  "params": {
+    "with_labels": true,
+    "objects_to_annotate": [
+      "solid line",
+      "dashed line"
+    ],
+    "attachment_type": "image",
+    "attachment": "http://i.imgur.com/XOJbalC.jpg"
+  },
+  "metadata": {}
+}
+```
+
+This endpoint creates a `lineannotation` task. In this task, one of our Scalers view the given image and draw segmented lines along each object, returning the vertices of these segmented lines.
+
+The required parameters for this task are `callback_url`, `attachment`, and `objects_to_annotate`. The `callback_url` is the URL which will be POSTed on task completion, and is described in more detail in the [Callbacks section](https://docs.scaleapi.com/#callbacks). The attachment is a URL to an image you’d like to be annotated.
+
+`objects_to_annotate` is an array of strings describing the different types of objects you’d like annotated.
+
+You can optionally provide additional [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) instructions via the `instruction` parameter.
+
+You can also optionally set `with_labels` to true, which will have Scalers provide labels for each segmented line specifying what type of object it is. The labels will belong to the `objects_to_annotate` list.
+
+If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
+
+### HTTP Request
+
+`POST https://api.scaleapi.com/v1/task/lineannotation`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ---- | -------
+`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed. See the [Callback section](#callbacks) for more details about callbacks.
+`objects_to_annotate` | [string] | An array of strings describing which objects you’d like segmented lines to be drawn along. Each string should be singular and self-descriptive (ex: “lane line”, “crop line”). You may include at most 3 objects.
+`attachment` | string | A URL to the image you'd like to be annotated with segmented lines.
+`with_labels` (optional, default `false`) | boolean | Specifies whether you’d like labels for each segmented line in the response. Each label will be a member of the `objects_to_annotate` array.
+`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
+`instruction` (optional) | string | A markdown-enabled string explaining how to draw the segmented lines. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
+`attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the line annotation endpoint.
+`splines` (optional, default `false`) | boolean | Specifies whether or not you'd like your lines drawn as cardinal splines instead of segmented lines
+`metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
+
+### Callback Format
+
+> Example callback body sent on completion
+
+```json
+{
+  "response": {
+    "annotations": [
+      {
+        "label": "solid line",
+        "vertices": [
+            {
+                "x": 123,
+                "y": 10
+            },
+            {
+                "x": 140,
+                "y": 49
+            },
+            {
+                "x": 67,
+                "y": 34
+            }
+        ]
+      },
+      { ... },
+      { ... }
+    ]
+  },
+  "task_id": "5774cc78b01249ab09f089dd",
+  "task": {
+    // populated task for convenience
+    ...
+  }
+}
+```
+
+The `response` field, which is part of the callback POST request and permanently stored as part of the task object, will contain either an `annotations` field or an `error` field.
+
+The `annotations` field will contain an array of annotations. Each annotation will have the following values:
+
+* `vertices`: An array describing the vertices of the segmented line, listed in order from one end to another. Each vertex will be described by an object with the following structure:
+    * `x`: The distance, in pixels, between the vertex and the left border of the image.
+    * `y`: The distance, in pixels, between the vertex and the top border of the image.
+* `label` (if specified `with_labels` as `true`): The label for the line, which will be one of the specified `task.params.objects_to_annotate`.
+
+If the attachment was invalid, the error will be detailed in the `error` field.
+
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
+
+## Polygon Annotation
+
+```shell
+curl "https://api.scaleapi.com/v1/task/polygonannotation" \
+  -u "{{ApiKey}}:" \
+  -d callback_url="http://www.example.com/callback" \
+  -d instruction="Draw a tight polygon around every **car** in the image." \
+  -d attachment_type=image \
+  -d attachment="http://i.imgur.com/XOJbalC.jpg" \
+  -d objects_to_annotate="car" \
+  -d objects_to_annotate="truck" \
+  -d with_labels=true
+```
+```python
+import scaleapi
+
+client = scaleapi.ScaleClient('{{ApiKey}}')
+
+client.create_polygonannotation_task(
+    callback_url='http://www.example.com/callback',
+    instruction='Draw a tight polygon around every **car** in the image.',
+    attachment_type='image',
+    attachment='http://i.imgur.com/XOJbalC.jpg',
+    objects_to_annotate=['car', 'truck'],
+    with_labels=True
+)
+```
+
+```javascript
+var scaleapi = require('scaleapi');
+
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+client.createPolygonannotationTask({
+  'callback_url': 'http://www.example.com/callback',
+  'instruction': 'Draw a tight polygon around every **car** in the image.',
+  'attachment_type': 'image',
+  'attachment': 'http://i.imgur.com/XOJbalC.jpg',
+  'objects_to_annotate': ['car', 'truck'],
+  'with_labels': true
+}, (err, task) => {
+    // do something with task
+});
+```
+
+```ruby
+require 'scale'
+scale = Scale.new(api_key: '{{ApiKey}}')
+
+scale.create_polygonannotation_task({
+  callback_url: 'http://www.example.com/callback',
+  instruction: 'Draw a tight polygon around every **car** in the image.',
+  attachment_type: 'image',
+  attachment: 'http://i.imgur.com/XOJbalC.jpg',
+  objects_to_annotate: ['car', 'truck'],
+  with_labels: true
+})
+=> #<Scale::Api::Tasks::Polygonannotation:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="polygonannotation", @instruction="Draw a tight polygon around every **car** in the image.", @params={"with_labels"=>true, "objects_to_annotate"=>["car", "truck"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/XOJbalC.jpg"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
+```
+
+> The above command returns an object structured like this:
+
+```json
+{
+  "task_id": "5774cc78b01249ab09f089dd",
+  "created_at": "2016-9-03T07:38:32.368Z",
+  "callback_url": "http://www.example.com/callback",
+  "type": "polygonannotation",
+  "status": "pending",
+  "instruction": "Draw a tight polygon around every **car** in the image.",
+  "urgency": "day",
+  "params": {
+    "with_labels": true,
+    "objects_to_annotate": [
+      "car",
+      "truck"
+    ],
+    "attachment_type": "image",
+    "attachment": "http://i.imgur.com/XOJbalC.jpg"
+  },
+  "metadata": {}
+}
+```
+
+This endpoint creates a `polygonannotation` task. In this task, one of our Scalers view the given image and draw bounding polygons around the specified objects, returning the vertices of these polygons.
+
+The required parameters for this task are `callback_url`, `attachment`, and `objects_to_annotate`. The `callback_url` is the URL which will be POSTed on task completion, and is described in more detail in the [Callbacks section](https://docs.scaleapi.com/#callbacks). The attachment is a URL to an image you’d like to be annotated.
+
+`objects_to_annotate` is an array of strings describing the different types of objects you’d like annotated.
+
+You can optionally provide additional markdown-enabled (https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) instructions via the `instruction` parameter.
+
+You can also optionally set `with_labels` to true, which will have Scalers provide labels for each polygon specifying what type of object it is. The labels will belong to the `objects_to_annotate` list.
+
+If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
+
+### HTTP Request
+
+`POST https://api.scaleapi.com/v1/task/polygonannotation`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ---- | -------
+`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed. See the [Callback section](#callbacks) for more details about callbacks.
+`objects_to_annotate` | [string] | An array of strings describing which objects you’d like bounding polygons to be drawn around. Each string should be singular and self-descriptive (ex: “cat”, “street sign”, “potato”). You may include at most 6 objects.
+`attachment` | string | A URL to the image you’d like to be annotated with bounding polygons.
+`with_labels` (optional, default `false`) | boolean | Specifies whether you'd like labels for each bounding polygon in the response. Each label will be a member of the `objects_to_annotate` array.
+`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
+`instruction` (optional) | string | A markdown-enabled string explaining how to draw the bounding polygons. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
+`attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the polygon annotation endpoint.
+`metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
+
+### Callback Format
+
+> Example callback body sent on completion
+
+```json
+{
+  "response": {
+    "annotations": [
+      {
+        "label": "car",
+        "vertices": [
+            {
+                "x": 123,
+                "y": 10
+            },
+            {
+                "x": 140,
+                "y": 49
+            },
+            {
+                "x": 67,
+                "y": 34
+            }
+        ]
+      },
+      { ... },
+      { ... }
+    ]
+  },
+  "task_id": "5774cc78b01249ab09f089dd",
+  "task": { 
+    // task inlined for convenience
+    ...
+  }
+}
+```
+
+The `response` field, which is part of the callback POST request and permanently stored as part of the task object, will contain either an `annotations` field or an `error` field.
+
+The `annotations` field will contain an array of annotations. Each annotation will have the following values:
+
+* `vertices`: An array describing the vertices of the polygon, listed in order from one end to another. Each vertex will be described by an object with the following structure:
+    * `x`: The distance, in pixels, between the vertex and the left border of the image.
+    * `y`: The distance, in pixels, between the vertex and the top border of the image.
+* `label` (if specified `with_labels` as `true`): The label for the line, which will be one of the specified `task.params.objects_to_annotate`.
+
+If the attachment was invalid, the error will be detailed in the `error` field.
+
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
