@@ -120,7 +120,7 @@ Currently we have client libraries available for the following languages:
 * [Node.js](https://github.com/scaleapi/scaleapi-node)
 * [Ruby](https://github.com/scaleapi/scaleapi-ruby)
 
-We also have unnoficial SDKs in the following languages:
+We also have unofficial SDKs in the following languages:
 
 * [Android SDK](https://github.com/vanshg/Scale) (thanks to [vanshg](https://github.com/vanshg)!)
 
