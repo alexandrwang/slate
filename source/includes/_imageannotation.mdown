@@ -6,11 +6,11 @@
 curl "https://api.scaleapi.com/v1/task/annotation" \
   -u "{{ApiKey}}:" \
   -d callback_url="http://www.example.com/callback" \
-  -d instruction="Draw a box around each **baby cow** and **big cow**." \
+  -d instruction="Draw a box around each **car** and **pedestrian**." \
   -d attachment_type=image \
-  -d attachment="http://i.imgur.com/v4cBreD.jpg" \
-  -d objects_to_annotate="baby cow" \
-  -d objects_to_annotate="big cow" \
+  -d attachment="http://i.imgur.com/XOJbalC.jpg" \
+  -d objects_to_annotate="car" \
+  -d objects_to_annotate="pedestrian" \
   -d with_labels=true \
   -d min_width="30" \
   -d min_height="30"
@@ -22,10 +22,10 @@ client = scaleapi.ScaleClient('{{ApiKey}}')
 
 client.create_annotation_task(
     callback_url='http://www.example.com/callback',
-    instruction='Draw a box around each **baby cow** and **big cow**',
+    instruction='Draw a box around each **car** and **pedestrian**',
     attachment_type='image',
-    attachment='http://i.imgur.com/v4cBreD.jpg',
-    objects_to_annotate=['baby cow', 'big cow'],
+    attachment='http://i.imgur.com/XOJbalC.jpg',
+    objects_to_annotate=['car', 'pedestrian'],
     with_labels=True,
     min_width='30',
     min_height='30'
@@ -39,10 +39,10 @@ var client = scaleapi.ScaleClient('{{ApiKey}}');
 
 client.createAnnotationTask({
   'callback_url': 'http://www.example.com/callback',
-  'instruction': 'Draw a box around each **baby cow** and **big cow**',
+  'instruction': 'Draw a box around each **car** and **pedestrian**',
   'attachment_type': 'image',
-  'attachment': 'http://i.imgur.com/v4cBreD.jpg',
-  'objects_to_annotate': ['baby cow', 'big cow'],
+  'attachment': 'http://i.imgur.com/XOJbalC.jpg',
+  'objects_to_annotate': ['car', 'pedestrian'],
   'with_labels': true,
   'min_width': '30',
   'min_height': '30'
@@ -57,15 +57,15 @@ scale = Scale.new(api_key: '{{ApiKey}}')
 
 scale.create_annotation_task({
   callback_url: 'http://www.example.com/callback',
-  instruction: 'Draw a box around each **baby cow** and **big cow**',
+  instruction: 'Draw a box around each **car** and **pedestrian**',
   attachment_type: 'image',
-  attachment: 'http://i.imgur.com/v4cBreD.jpg',
-  objects_to_annotate: ['baby cow', 'big cow'],
+  attachment: 'http://i.imgur.com/XOJbalC.jpg',
+  objects_to_annotate: ['car', 'pedestrian'],
   with_labels: true,
   min_width: '30',
   min_height: '30'
 })
-=> #<Scale::Api::Tasks::ImageRecognition:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="annotation", @instruction="Draw a box around each **baby cow** and **big cow**", @params={"with_labels"=>true, "objects_to_annotate"=>["baby cow", "big cow"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/v4cBreD.jpg"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
+=> #<Scale::Api::Tasks::ImageRecognition:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="annotation", @instruction="Draw a box around each **car** and **pedestrian**", @params={"with_labels"=>true, "objects_to_annotate"=>["car", "pedestrian"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/v4cBreD.jpg"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
 ```
 
 > The above command returns an object structured like this:
@@ -77,18 +77,18 @@ scale.create_annotation_task({
   "callback_url": "http://www.example.com/callback",
   "type": "annotation",
   "status": "pending",
-  "instruction": "Draw a box around each **baby cow** and **big cow**",
+  "instruction": "Draw a box around each **car** and **pedestrian**",
   "urgency": "day",
   "params": {
     "with_labels": true,
     "min_width": 30,
     "min_height": 30,
     "objects_to_annotate": [
-      "baby cow",
-      "big cow"
+      "car",
+      "pedestrian"
     ],
     "attachment_type": "image",
-    "attachment": "http://i.imgur.com/v4cBreD.jpg"
+    "attachment": "http://i.imgur.com/XOJbalC.jpg"
   },
   "metadata": {}
 }
@@ -142,14 +142,14 @@ Parameter | Type | Description
         "top": 10,
         "width": 121,
         "height": 39,
-        "label": "big cow"
+        "label": "car"
       },
       {
         "left": 82,
         "top": 56,
         "width": 64,
         "height": 30,
-        "label": "baby cow"
+        "label": "pedestrian"
       },
       { ... },
       { ... }
@@ -172,6 +172,166 @@ If the annotation was completed successfully, the `annotations` field will conta
 * `width`: The width, in pixels, of the bounding box.
 * `height`: The height, in pixels, of the bounding box.
 * `label` (if specified `with_labels` as `true`): The label for the bounding box, which will be one of the specified `task.params.objects_to_annotate`.
+
+If the attachment was invalid, the error will be detailed in the `error` field.
+
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
+
+## Point Annotation
+
+```shell
+curl "https://api.scaleapi.com/v1/task/pointannotation" \
+  -u "{{ApiKey}}:" \
+  -d callback_url="http://www.example.com/callback" \
+  -d instruction="Draw a point on every **headlight** and **brakelight** of a car in the image." \
+  -d attachment_type=image \
+  -d attachment="http://i.imgur.com/XOJbalC.jpg" \
+  -d objects_to_annotate="headlight" \
+  -d objects_to_annotate="brakelight" \
+  -d with_labels=true
+```
+```python
+import scaleapi
+
+client = scaleapi.ScaleClient('{{ApiKey}}')
+
+client.create_pointannotation_task(
+    callback_url='http://www.example.com/callback',
+    instruction='Draw a point on every **headlight** and **brakelight** of a car in the image.',
+    attachment_type='image',
+    attachment='http://i.imgur.com/XOJbalC.jpg',
+    objects_to_annotate=['headlight', 'brakelight'],
+    with_labels=True
+)
+```
+
+```javascript
+var scaleapi = require('scaleapi');
+
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+client.createPointannotationTask({
+  'callback_url': 'http://www.example.com/callback',
+  'instruction': 'Draw a point on every **headlight** and **brakelight** of a car in the image.',
+  'attachment_type': 'image',
+  'attachment': 'http://i.imgur.com/XOJbalC.jpg',
+  'objects_to_annotate': ['headlight', 'brakelight'],
+  'with_labels': true
+}, (err, task) => {
+    // do something with task
+});
+```
+
+```ruby
+require 'scale'
+scale = Scale.new(api_key: '{{ApiKey}}')
+
+scale.create_pointannotation_task({
+  callback_url: 'http://www.example.com/callback',
+  instruction: 'Draw a point on every **headlight** and **brakelight** of a car in the image.',
+  attachment_type: 'image',
+  attachment: 'http://i.imgur.com/XOJbalC.jpg',
+  objects_to_annotate: ['headlight', 'brakelight'],
+  with_labels: true
+})
+=> #<Scale::Api::Tasks::Pointannotation:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="pointannotation", @instruction="Draw a point on every **headlight** and **brakelight** of a car in the image.", @params={"with_labels"=>true, "objects_to_annotate"=>["headlight", "brakelight"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/XOJbalC.jpg"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
+```
+
+> The above command returns an object structured like this:
+
+```json
+{
+  "task_id": "5774cc78b01249ab09f089dd",
+  "created_at": "2016-9-03T07:38:32.368Z",
+  "callback_url": "http://www.example.com/callback",
+  "type": "pointannotation",
+  "status": "pending",
+  "instruction": "Draw a point on every **headlight** and **brakelight** of a car in the image.",
+  "urgency": "day",
+  "params": {
+    "with_labels": true,
+    "objects_to_annotate": [
+      "headlight",
+      "brakelight"
+    ],
+    "attachment_type": "image",
+    "attachment": "http://i.imgur.com/XOJbalC.jpg"
+  },
+  "metadata": {}
+}
+```
+
+This endpoint creates a `pointannotation` task. In this task, one of our Scalers view the given image and draw points at the specified locations, returning the locations of these points.
+
+The required parameters for this task are `callback_url`, `attachment`, and `objects_to_annotate`. The `callback_url` is the URL which will be POSTed on task completion, and is described in more detail in the [Callbacks section](https://docs.scaleapi.com/#callbacks). The attachment is a URL to an image you’d like to be annotated.
+
+`objects_to_annotate` is an array of strings describing the different types of objects you’d like annotated. You may include at most 6 objects in the `objects_to_annotate` parameter.
+
+You can optionally provide additional markdown-enabled (https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) instructions via the `instruction` parameter.
+
+You can also optionally set `with_labels` to true, which will have Scalers provide labels for each polygon specifying what type of object it is. The labels will belong to the `objects_to_annotate` list.
+
+If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
+
+### HTTP Request
+
+`POST https://api.scaleapi.com/v1/task/pointannotation`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ---- | -------
+`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed. See the [Callback section](#callbacks) for more details about callbacks.
+`objects_to_annotate` | [string] | An array of strings describing which objects you’d like points to be drawn on. Each string should be singular and self-descriptive (ex: “cat”, “street sign”, “potato”). You may include at most 6 objects.
+`attachment` | string | A URL to the image you’d like to be annotated with points.
+`with_labels` (optional, default `false`) | boolean | Specifies whether you'd like labels for each bounding polygon in the response. Each label will be a member of the `objects_to_annotate` array.
+`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
+`instruction` (optional) | string | A markdown-enabled string explaining how to draw the points. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
+`attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the polygon annotation endpoint.
+`metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
+
+### Callback Format
+
+> Example callback body sent on completion
+
+```json
+{
+  "response": {
+    "annotations": [
+      {
+        "label": "headlight",
+        "x": 123,
+        "y": 10
+      },
+      {
+        "label": "headlight",
+        "x": 140,
+        "y": 49
+      },
+      {
+        "label": "brakelight",
+        "x": 67,
+        "y": 34
+      }
+    ]
+  },
+  "task_id": "5774cc78b01249ab09f089dd",
+  "task": {
+    // task inlined for convenience
+    ...
+  }
+}
+```
+
+The `response` field, which is part of the callback POST request and permanently stored as part of the task object, will contain either an `annotations` field or an `error` field.
+
+The `annotations` field will contain an array of point annotations. Each annotation will have the following values:
+
+* `x`: The distance, in pixels, between the point and the left border of the image.
+* `y`: The distance, in pixels, between the point and the top border of the image.
+* `label` (if specified `with_labels` as `true`): The label for the point, which will be one of the specified `task.params.objects_to_annotate`.
 
 If the attachment was invalid, the error will be detailed in the `error` field.
 
@@ -488,7 +648,7 @@ Parameter | Type | Description
     ]
   },
   "task_id": "5774cc78b01249ab09f089dd",
-  "task": { 
+  "task": {
     // task inlined for convenience
     ...
   }
@@ -505,6 +665,200 @@ The `annotations` field will contain an array of annotations. Each annotation wi
 * `label` (if specified `with_labels` as `true`): The label for the line, which will be one of the specified `task.params.objects_to_annotate`.
 
 If the attachment was invalid, the error will be detailed in the `error` field.
+
+<aside class="notice">
+See the <a href="#callbacks">Callback section</a> for more details about callbacks.
+</aside>
+
+## Semantic Segmentation
+
+```shell
+curl "https://api.scaleapi.com/v1/task/segmentannotation" \
+  -u "{{ApiKey}}:" \
+  -d callback_url="http://www.example.com/callback" \
+  -d instruction="Please segment the image using the given labels." \
+  -d attachment_type=image \
+  -d attachment="http://i.imgur.com/XOJbalC.jpg" \
+  -d labels="vehicle" \
+  -d labels="background" \
+  -d labels="road" \
+  -d labels="vegetation" \
+  -d labels="lane marking" \
+  -d allow_unlabeled=false
+```
+```python
+import scaleapi
+
+client = scaleapi.ScaleClient('{{ApiKey}}')
+
+client.create_segmentannotation_task(
+    callback_url='http://www.example.com/callback',
+    instruction='Please segment the image using the given labels.',
+    attachment_type='image',
+    attachment='http://i.imgur.com/XOJbalC.jpg',
+    labels=['vehicle', 'background', 'road', 'vegetation', 'lane marking'],
+    allow_unlabeled=False
+)
+```
+
+```javascript
+var scaleapi = require('scaleapi');
+
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+client.createSegmentannotationTask({
+  callback_url: 'http://www.example.com/callback',
+  instruction: 'Please segment the image using the given labels.',
+  attachment_type: 'image',
+  attachment: 'http://i.imgur.com/XOJbalC.jpg',
+  labels: ['vehicle', 'background', 'road', 'vegetation', 'lane marking'],
+  allow_unlabeled: false
+}, (err, task) => {
+    // do something with task
+});
+```
+
+```ruby
+require 'scale'
+scale = Scale.new(api_key: '{{ApiKey}}')
+
+scale.create_segmentannotation_task({
+  callback_url: 'http://www.example.com/callback',
+  instruction: 'Please segment the image using the given labels.',
+  attachment_type: 'image',
+  attachment: 'http://i.imgur.com/XOJbalC.jpg',
+  labels: ['vehicle', 'background', 'road', 'vegetation', 'lane marking'],
+  allow_unlabeled: false
+})
+=> #<Scale::Api::Tasks::Segmentannotation:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="segmentannotation", @instruction="Please segment the image using the given labels.", @params={"allow_unlabeled"=>false, "objects_to_annotate"=>['vehicle', 'background', 'road', 'vegetation', 'lane marking'], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/XOJbalC.jpg"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
+```
+
+> The above command returns an object structured like this:
+
+```json
+{
+  "task_id": "5774cc78b01249ab09f089dd",
+  "created_at": "2016-9-03T07:38:32.368Z",
+  "callback_url": "http://www.example.com/callback",
+  "type": "segmentannotation",
+  "status": "pending",
+  "instruction": "Please segment the image using the given labels.",
+  "urgency": "day",
+  "params": {
+    "allow_unlabeled": false,
+    "objects_to_annotate": [
+      "vehicle",
+      "background",
+      "road",
+      "vegetation",
+      "lane marking"
+    ],
+    "attachment_type": "image",
+    "attachment": "http://i.imgur.com/XOJbalC.jpg"
+  },
+  "metadata": {}
+}
+```
+
+This endpoint creates a `segmentannotation` task. In this task, one of our Scalers view the given image and classify every pixel of the image according to the labels provided. You will get a full semantic, pixel-wise, dense segmentation of the image.
+
+The required parameters for this task are `callback_url`, `attachment`, and `labels`. The `callback_url` is the URL which will be POSTed on task completion, and is described in more detail in the Callbacks section (https://docs.scaleapi.com/#callbacks). The `attachment` is a URL to an image you’d like to be segmented.
+
+`labels` is an array of strings describing the different types of objects you’d like to be used to segment the image.
+
+You can optionally provide additional [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) instructions via the `instruction` parameter.
+
+You can also optionally set `allow_unlabeled` to true, which will allow the existence of unlabeled pixels in the segmentation response - otherwise, all pixels in the image will be classified (in which case it's important that there are labels for everything in the image, to avoid misclassification).
+
+The response you will receive will be a series of images where each pixel's value corresponds to the label, either via a numerical index or a color mapping. You will also get separate masks for each label for convenience.
+
+If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
+
+
+### HTTP Request
+
+`POST https://api.scaleapi.com/v1/task/segmentannotation`
+
+### Parameters
+
+Parameter | Type | Description
+--------- | ---- | -------
+`callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed. See the [Callback section](#callbacks) for more details about callbacks.
+`labels` | [string] | An array of strings describing the different types of objects you’d like to be used to segment the image. Each string should be singular and descriptive (ex: `car`, `background`, `pole`). You may include at most 50 objects.
+`attachment` | string | A URL to the image you’d like to be segmented.
+`allow_unlabeled` (optional, default `false`) | boolean | Specifies whether you'll allow unlabeled pixels in the segmentation. If left with the default value of `false`, all pixels in the image will be classified using the labels you provided.
+`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
+`instruction` (optional) | string | A markdown-enabled string explaining how carry out the semantic segmentation. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
+`attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the semantic segmentation endpoint.
+`metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
+
+### Callback Format
+
+> Example callback body sent on completion
+
+```json
+{
+  "response": {
+    "labelMapping" : {
+      "lane marking" : {
+        "color" : "#9e3fff",
+        "index" : 5
+      },
+      "vehicle" : {
+        "color" : "#8000ff",
+        "index" : 4
+      },
+      "background" : {
+        "color" : "#00ffff",
+        "index" : 3
+      },
+      "road" : {
+        "color" : "#80ff00",
+        "index" : 2
+      },
+      "vegetation" : {
+        "color" : "#ff0000",
+        "index" : 1
+      }
+    },
+    "annotations" : {
+      "combined" : {
+        "indexedImage" : "https://scaleapi-attachments.s3.amazonaws.com/3fe44b90-6809-11e7-bb22-c346fd2b0658",
+        "image" : "https://scaleapi-attachments.s3.amazonaws.com/3f814400-6809-11e7-bb22-c346fd2b0658"
+      },
+      "labeled" : {
+        "lane marking" : null,
+        "vehicle" : "https://scaleapi-attachments.s3.amazonaws.com/3f1821f1-6809-11e7-bb22-c346fd2b0658",
+        "background" : "https://scaleapi-attachments.s3.amazonaws.com/3f1821f0-6809-11e7-bb22-c346fd2b0658",
+        "road" : "https://scaleapi-attachments.s3.amazonaws.com/3f17acc0-6809-11e7-bb22-c346fd2b0658",
+        "vegetation" : "https://scaleapi-attachments.s3.amazonaws.com/3f17b123-6809-11e7-bb22-c346fd2b0658"
+      },
+      "unlabeled" : "https://scaleapi-attachments.s3.amazonaws.com/3f184900-6809-11e7-bb22-c346fd2b0658"
+    }
+  },
+  "task_id": "5774cc78b01249ab09f089dd",
+  "task": {
+    // task inlined for convenience
+    ...
+  }
+}
+```
+
+The `response` field, which is part of the callback POST request and permanently stored as part of the `task` object, will contain a `labelMapping` and an `annotations` field.
+
+`labelMapping` is a dictionary where the keys are each label name, and the value is an object with the `index` and `color` used to represent each label in the response images.
+
+`annotations` is an object that contains URLs of PNG images describing the segmentation result in different ways:
+
+* `combined`: an object containing the URLs of two PNG images describing the segmentation response:
+    * `image`: a 4-channel PNG image URL where each non-transparent colored pixel represents a pixel annotated with a given label, and each transparent pixel represents an unlabeled one. The `color` values in the `labelMapping` object are used.
+    * `indexedImage`: a 1-channel PNG image URL where each positive integer value represents a pixel annotated with a given label, and each 0 value represents an unlabeled pixel. The `index` values in the `labelMapping` object are used.
+* `labeled`: a dictionary where the keys are each label name, and the values are either:
+    *  a 4-channel PNG image URL where each non-transparent colored pixel (using the label's `color`) represents a pixel annotated with that label in the segmentation response, or
+    * `null`, if there is no pixel in the image annotated with that label in the segmentation response
+* `unlabeled`:
+    * a 4-channel PNG image URL where each non-transparent black (#000000) pixel represents a pixel left unlabeled in the segmentation response, or
+    * `null`, if there is no pixel left unlabeled in the segmentation response
 
 <aside class="notice">
 See the <a href="#callbacks">Callback section</a> for more details about callbacks.
