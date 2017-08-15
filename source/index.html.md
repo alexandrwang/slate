@@ -39,7 +39,7 @@ Welcome to the Scale API! You can use our API to access Scale API endpoints, whi
 
 <ul class="products products-first">
   <li>
-    <a href="#create-image-annotation-task">
+    <a href="#create-image-annotation-tasks">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 75"><g fill="none"><ellipse cx="38.39" cy="37.5" fill="#F9B25F" rx="37.47" ry="37.5"/><path fill="#000000" d="M38.39 21.25c-4.3 0-8.44 1.71-11.48 4.76L16.3 36.62a1.25 1.25 0 0 0 0 1.77l10.6 10.56a16.23 16.23 0 0 0 22.95 0l10.6-10.61c.5-.49.5-1.28 0-1.77l-10.6-10.6A16.23 16.23 0 0 0 38.4 21.2v.05z"/><path fill="#FFFFFF" d="M38.39 25c3.31 0 6.5 1.31 8.83 3.66l8.83 8.84-8.83 8.84a12.48 12.48 0 0 1-17.66 0l-8.83-8.84 8.83-8.84A12.4 12.4 0 0 1 38.39 25"/><path fill="#F9B25F" d="M38.39 48.75c6.2 0 11.24-5.04 11.24-11.25H27.15c0 6.21 5.03 11.25 11.24 11.25z"/><path fill="#F9B25F" d="M38.39 26.25c-6.21 0-11.24 5.04-11.24 11.25h22.48c0-6.21-5.04-11.25-11.24-11.25z" opacity=".5"/><ellipse cx="38.39" cy="37.5" fill="#000000" rx="5.62" ry="5.63"/></g></svg>
       <span>Image Annotation</span>
     </a>
