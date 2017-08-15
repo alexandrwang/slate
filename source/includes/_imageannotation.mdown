@@ -762,7 +762,7 @@ scale.create_segmentannotation_task({
 
 This endpoint creates a `segmentannotation` task. In this task, one of our Scalers view the given image and classify every pixel of the image according to the labels provided. You will get a full semantic, pixel-wise, dense segmentation of the image.
 
-The required parameters for this task are `callback_url`, `attachment`, and `labels`. The `callback_url` is the URL which will be POSTed on task completion, and is described in more detail in the Callbacks section (https://docs.scaleapi.com/#callbacks). The `attachment` is a URL to an image you’d like to be segmented.
+The required parameters for this task are `callback_url`, `attachment`, and `labels`. The `callback_url` is the URL which will be POSTed on task completion, and is described in more detail in the [Callbacks section](https://docs.scaleapi.com/#callbacks). The `attachment` is a URL to an image you’d like to be segmented.
 
 `labels` is an array of strings describing the different types of objects you’d like to be used to segment the image.
 
