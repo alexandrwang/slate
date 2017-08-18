@@ -798,49 +798,50 @@ Parameter | Type | Description
 
 ```json
 {
-  "response": {
-    "labelMapping" : {
-      "lane marking" : {
-        "color" : "#9e3fff",
-        "index" : 5
-      },
-      "vehicle" : {
-        "color" : "#8000ff",
-        "index" : 4
-      },
-      "background" : {
-        "color" : "#00ffff",
-        "index" : 3
-      },
-      "road" : {
-        "color" : "#80ff00",
-        "index" : 2
-      },
-      "vegetation" : {
-        "color" : "#ff0000",
-        "index" : 1
-      }
-    },
-    "annotations" : {
-      "combined" : {
-        "indexedImage" : "https://scaleapi-attachments.s3.amazonaws.com/3fe44b90-6809-11e7-bb22-c346fd2b0658",
-        "image" : "https://scaleapi-attachments.s3.amazonaws.com/3f814400-6809-11e7-bb22-c346fd2b0658"
-      },
-      "labeled" : {
-        "lane marking" : null,
-        "vehicle" : "https://scaleapi-attachments.s3.amazonaws.com/3f1821f1-6809-11e7-bb22-c346fd2b0658",
-        "background" : "https://scaleapi-attachments.s3.amazonaws.com/3f1821f0-6809-11e7-bb22-c346fd2b0658",
-        "road" : "https://scaleapi-attachments.s3.amazonaws.com/3f17acc0-6809-11e7-bb22-c346fd2b0658",
-        "vegetation" : "https://scaleapi-attachments.s3.amazonaws.com/3f17b123-6809-11e7-bb22-c346fd2b0658"
-      },
-      "unlabeled" : "https://scaleapi-attachments.s3.amazonaws.com/3f184900-6809-11e7-bb22-c346fd2b0658"
-    }
-  },
-  "task_id": "5774cc78b01249ab09f089dd",
   "task": {
     // task inlined for convenience
     ...
-  }
+  },
+  "response": {
+    "annotations": {
+      "unlabeled": null,
+      "labeled": {
+        "lane marking": "https://scaleapi-attachments.s3.amazonaws.com/3f184900-6809-11e7-bb22-c346fd2b0658",
+        "vehicle": "https://scaleapi-attachments.s3-ap-northeast-1.amazonaws.com/b7566ef0-8119-11e7-ac39-7d56f40a5f60",
+        "road": "https://scaleapi-attachments.s3-ap-northeast-1.amazonaws.com/b756bd10-8119-11e7-ac39-7d56f40a5f60",
+        "vegetation": "https://scaleapi-attachments.s3-ap-northeast-1.amazonaws.com/b756bd11-8119-11e7-ac39-7d56f40a5f60",
+        "background": "https://scaleapi-attachments.s3-ap-northeast-1.amazonaws.com/b7573240-8119-11e7-ac39-7d56f40a5f60"
+      },
+      "combined": {
+        "image": "https://scaleapi-attachments.s3-ap-northeast-1.amazonaws.com/b7573241-8119-11e7-ac39-7d56f40a5f60",
+        "indexedImage": "https://scaleapi-attachments.s3-ap-northeast-1.amazonaws.com/ba9a9d70-8119-11e7-ac39-7d56f40a5f60"
+      }
+    },
+    "labelMapping": {
+      "lane marking": {
+        "color": "#9e3fff",
+        "index": 5
+      },
+      "vehicle": {
+        "color": "#8000ff",
+        "index": 4
+      },
+      "background": {
+        "color": "#00ffff",
+        "index": 3
+      },
+      "road": {
+        "color": "#80ff00",
+        "index": 2
+      },
+      "vegetation": {
+        "color": "#ff0000",
+        "index": 1
+      }
+    },
+    "instances": {}
+  },
+  "task_id": "598e0da3e8068e06002d9407"
 }
 ```
 
