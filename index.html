@@ -1349,49 +1349,50 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
 <p>Example callback body sent on completion</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"labelMapping"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"lane marking"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"color"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"#9e3fff"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"index"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nt">"vehicle"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"color"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"#8000ff"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"index"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nt">"background"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"color"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"#00ffff"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"index"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nt">"road"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"color"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"#80ff00"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"index"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nt">"vegetation"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"color"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"#ff0000"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"index"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"annotations"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"combined"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"indexedImage"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"https://scaleapi-attachments.s3.amazonaws.com/3fe44b90-6809-11e7-bb22-c346fd2b0658"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"image"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"https://scaleapi-attachments.s3.amazonaws.com/3f814400-6809-11e7-bb22-c346fd2b0658"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nt">"labeled"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"lane marking"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"vehicle"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"https://scaleapi-attachments.s3.amazonaws.com/3f1821f1-6809-11e7-bb22-c346fd2b0658"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"background"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"https://scaleapi-attachments.s3.amazonaws.com/3f1821f0-6809-11e7-bb22-c346fd2b0658"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"road"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"https://scaleapi-attachments.s3.amazonaws.com/3f17acc0-6809-11e7-bb22-c346fd2b0658"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"vegetation"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"https://scaleapi-attachments.s3.amazonaws.com/3f17b123-6809-11e7-bb22-c346fd2b0658"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nt">"unlabeled"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"https://scaleapi-attachments.s3.amazonaws.com/3f184900-6809-11e7-bb22-c346fd2b0658"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5774cc78b01249ab09f089dd"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="err">//</span><span class="w"> </span><span class="err">task</span><span class="w"> </span><span class="err">inlined</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">convenience</span><span class="w">
     </span><span class="err">...</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"annotations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"unlabeled"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"labeled"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"lane marking"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://scaleapi-attachments.s3.amazonaws.com/3f184900-6809-11e7-bb22-c346fd2b0658"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"vehicle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://scaleapi-attachments.s3-ap-northeast-1.amazonaws.com/b7566ef0-8119-11e7-ac39-7d56f40a5f60"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"road"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://scaleapi-attachments.s3-ap-northeast-1.amazonaws.com/b756bd10-8119-11e7-ac39-7d56f40a5f60"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"vegetation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://scaleapi-attachments.s3-ap-northeast-1.amazonaws.com/b756bd11-8119-11e7-ac39-7d56f40a5f60"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"background"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://scaleapi-attachments.s3-ap-northeast-1.amazonaws.com/b7573240-8119-11e7-ac39-7d56f40a5f60"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"combined"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://scaleapi-attachments.s3-ap-northeast-1.amazonaws.com/b7573241-8119-11e7-ac39-7d56f40a5f60"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"indexedImage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://scaleapi-attachments.s3-ap-northeast-1.amazonaws.com/ba9a9d70-8119-11e7-ac39-7d56f40a5f60"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"labelMapping"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"lane marking"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#9e3fff"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"vehicle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#8000ff"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"background"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#00ffff"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"road"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#80ff00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"vegetation"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#ff0000"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"instances"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"task_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"598e0da3e8068e06002d9407"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>The <code class="prettyprint">response</code> field, which is part of the callback POST request and permanently stored as part of the <code class="prettyprint">task</code> object, will contain a <code class="prettyprint">labelMapping</code> and an <code class="prettyprint">annotations</code> field.</p>
