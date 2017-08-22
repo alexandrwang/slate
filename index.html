@@ -1967,9 +1967,11 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have a <code class="prettyprint">fields</code> object.</p>
+<p>The <code class="prettyprint">response</code> object, which is part of the callback POST request and permanently stored as part of the task object, will have a <code class="prettyprint">fields</code> object and <code class="prettyprint">time_spent_in_seconds</code>, an integer.</p>
 
 <p><code class="prettyprint">fields</code> will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.</p>
+
+<p><code class="prettyprint">time_spent_in_seconds</code> represents the time spent looking for the data you specified, not including the time spent in our review processes.</p>
 
 <aside class="notice">
 See the <a href="#callbacks">Callback section</a> for more details about callbacks.
