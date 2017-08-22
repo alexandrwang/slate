@@ -127,9 +127,11 @@ Parameter | Type | Description
 }
 ```
 
-The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have a `fields` object.
+The `response` object, which is part of the callback POST request and permanently stored as part of the task object, will have a `fields` object and `time_spent_in_seconds`, an integer.
 
 `fields` will have keys corresponding to the keys you provided in the parameters, with values the transcribed value.
+
+`time_spent_in_seconds` represents the time spent looking for the data you specified, not including the time spent in our review processes.
 
 <aside class="notice">
 See the <a href="#callbacks">Callback section</a> for more details about callbacks.
