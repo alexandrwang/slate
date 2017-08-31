@@ -2313,6 +2313,11 @@ The maximum length of an audio file to be transcribed is 30 minutes, and we will
 <td>object</td>
 <td>A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.</td>
 </tr>
+<tr>
+<td><code class="prettyprint">skip_human_transcription</code> (optional, default <code class="prettyprint">false</code>)</td>
+<td>boolean</td>
+<td>Specifies whether or not to skip human transcription. Skipping human transcription will result in a very fast response and lower price, but will likely have a lower final quality.</td>
+</tr>
 </tbody></table>
 
 <h2 id="callback-format">Callback Format</h2>
