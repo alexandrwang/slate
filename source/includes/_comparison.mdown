@@ -90,6 +90,10 @@ scale.create_comparison_task({
 }
 ```
 
+<aside class="notice">
+This endpoint is not available without prior authorization.  Please contact <a href="mailto:sales@scaleapi.com">sales@scaleapi.com</a> to be enabled.  If you're an existing customer who has been using this endpoint continuously, you don't need to worry as you have already been enabled to use it.
+</aside>
+
 This endpoint creates a `comparison` task. In this task, one of our workers view the given attachments and do any comparison requested.
 
 This task involves a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction`, an array of `attachments`, and an `attachment_type`.

@@ -82,6 +82,10 @@ scale.create_datacollection_task({
 }
 ```
 
+<aside class="notice">
+This endpoint is not available without prior authorization.  Please contact <a href="mailto:sales@scaleapi.com">sales@scaleapi.com</a> to be enabled.  If you're an existing customer who has been using this endpoint continuously, you don't need to worry as you have already been enabled to use it.
+</aside>
+
 This endpoint creates a `datacollection` task. In this task, one of our workers will try to find some information through the internet, following the instructions that you provide. Example use cases could be finding the product page of a particular product on Amazon, or trying to find the email of a particular person given their name and position.
 
 This task involves a [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) `instruction` about how to find the information, an `attachment` detailing the particular data you'd like to collect, an `attachment_type`, and a `fields` parameter, which describes all of the different pieces of information you'd like captured.
