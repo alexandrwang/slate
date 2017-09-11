@@ -79,7 +79,7 @@ scale.create_audiotranscription_task({
 ```
 
 <aside class="notice">
-This endpoint is not available without prior authorization.  Please contact <a href="mailto:sales@scaleapi.com">sales@scaleapi.com</a> to be enabled.  If you're an existing customer who has been using this endpoint continuously, you don't need to worry as you have already been enabled to use it.
+Please contact <a href="mailto:sales@scaleapi.com">sales@scaleapi.com</a> before using this endpoint.
 </aside>
 
 This endpoint creates an `audiotranscription` task. In this task, we will transcribe the speech from the audio file you specify into plaintext.
