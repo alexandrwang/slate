@@ -1722,6 +1722,10 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
   </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+<aside class="notice">
+Please contact <a href="mailto:sales@scaleapi.com">sales@scaleapi.com</a> before using this endpoint.
+</aside>
+
 <p>This endpoint creates a <code class="prettyprint">comparison</code> task. In this task, one of our workers view the given attachments and do any comparison requested.</p>
 
 <p>This task involves a <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown-enabled</a> <code class="prettyprint">instruction</code>, an array of <code class="prettyprint">attachments</code>, and an <code class="prettyprint">attachment_type</code>.</p>
@@ -1889,6 +1893,10 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
   </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+<aside class="notice">
+Please contact <a href="mailto:sales@scaleapi.com">sales@scaleapi.com</a> before using this endpoint.
+</aside>
+
 <p>This endpoint creates a <code class="prettyprint">datacollection</code> task. In this task, one of our workers will try to find some information through the internet, following the instructions that you provide. Example use cases could be finding the product page of a particular product on Amazon, or trying to find the email of a particular person given their name and position.</p>
 
 <p>This task involves a <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown-enabled</a> <code class="prettyprint">instruction</code> about how to find the information, an <code class="prettyprint">attachment</code> detailing the particular data you&rsquo;d like to collect, an <code class="prettyprint">attachment_type</code>, and a <code class="prettyprint">fields</code> parameter, which describes all of the different pieces of information you&rsquo;d like captured.</p>
@@ -2242,6 +2250,10 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
   </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+<aside class="notice">
+Please contact <a href="mailto:sales@scaleapi.com">sales@scaleapi.com</a> before using this endpoint.
+</aside>
+
 <p>This endpoint creates an <code class="prettyprint">audiotranscription</code> task. In this task, we will transcribe the speech from the audio file you specify into plaintext.</p>
 
 <p>You are required to provide a URL to the audio file as the <code class="prettyprint">attachment</code>. The <code class="prettyprint">attachment_type</code> must be <code class="prettyprint">audio</code>.</p>
@@ -2781,6 +2793,10 @@ you can set a default callback URL in your profile, which will be used for tasks
 <tr>
 <td>401</td>
 <td>Unauthorized &ndash; No valid API key provided.</td>
+</tr>
+<tr>
+<td>402</td>
+<td>Not enabled &ndash; Please contact <a href="mailto:sales@scaleapi.com">sales@scaleapi.com</a> before creating this type of task.</td>
 </tr>
 <tr>
 <td>404</td>
