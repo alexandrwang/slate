@@ -269,7 +269,7 @@ The required parameters for this task are `callback_url`, `attachment`, and `obj
 
 `objects_to_annotate` is an array of strings describing the different types of objects you’d like annotated. You may include at most 6 objects in the `objects_to_annotate` parameter.
 
-You can optionally provide additional markdown-enabled (https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) instructions via the `instruction` parameter.
+You can optionally provide additional [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) instructions via the `instruction` parameter.
 
 You can also optionally set `with_labels` to true, which will have Scalers provide labels for each polygon specifying what type of object it is. The labels will belong to the `objects_to_annotate` list.
 
@@ -433,6 +433,10 @@ You can optionally provide additional [markdown-enabled](https://github.com/adam
 
 You can also optionally set `with_labels` to true, which will have Scalers provide labels for each segmented line specifying what type of object it is. The labels will belong to the `objects_to_annotate` list.
 
+If you'd prefer splines as opposed to segmented lines, then you may specify the `splines` flag as true.
+
+You can also optionally set `min_vertices` and/or `max_vertices` which specify the minimum and maximum number of vertices that you would want on a line. Note the range is inclusive of both bounds. For example, if `min_vertices` is 2 and `max_vertices` is 2, then Scale will only return line segments.
+
 If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
 
 ### HTTP Request
@@ -451,6 +455,8 @@ Parameter | Type | Description
 `instruction` (optional) | string | A markdown-enabled string explaining how to draw the segmented lines. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the line annotation endpoint.
 `splines` (optional, default `false`) | boolean | Specifies whether or not you'd like your lines drawn as cardinal splines instead of segmented lines
+`min_vertices` (optional, default 1) | number | An optional parameter defining the minimum number of vertices in a valid line annotation for your request.
+`max_vertices` (optional, default `null`) | number | An optional parameter defining the maximum number of vertices in a valid line annotation for your request. Must be at least `min_vertices`.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
 ### Callback Format
@@ -595,9 +601,11 @@ The required parameters for this task are `callback_url`, `attachment`, and `obj
 
 `objects_to_annotate` is an array of strings describing the different types of objects you’d like annotated.
 
-You can optionally provide additional markdown-enabled (https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) instructions via the `instruction` parameter.
+You can optionally provide additional [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) instructions via the `instruction` parameter.
 
 You can also optionally set `with_labels` to true, which will have Scalers provide labels for each polygon specifying what type of object it is. The labels will belong to the `objects_to_annotate` list.
+
+You can also optionally set `min_vertices` and/or `max_vertices` which specify the minimum and maximum number of vertices that you'd like on a polygon. Note the range is inclusive of both bounds. For example, if `min_vertices` is 3 and `max_vertices` is 5, then Scale will only return triangles, quadrilaterals, and pentagons.
 
 If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
 
@@ -616,6 +624,8 @@ Parameter | Type | Description
 `urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a 6 hour response time.
 `instruction` (optional) | string | A markdown-enabled string explaining how to draw the bounding polygons. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the polygon annotation endpoint.
+`min_vertices` (optional, default 1) | number | An optional parameter defining the minimum number of vertices in a valid polygon annotation for your request.
+`max_vertices` (optional, default `null`) | number | An optional parameter defining the maximum number of vertices in a valid polygon annotation for your request. Must be at least `min_vertices`.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
 ### Callback Format
