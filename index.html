@@ -692,7 +692,7 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
 
 <p><code class="prettyprint">objects_to_annotate</code> is an array of strings describing the different types of objects you’d like annotated. You may include at most 6 objects in the <code class="prettyprint">objects_to_annotate</code> parameter.</p>
 
-<p>You can optionally provide additional markdown-enabled (https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) instructions via the <code class="prettyprint">instruction</code> parameter.</p>
+<p>You can optionally provide additional <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown-enabled</a> instructions via the <code class="prettyprint">instruction</code> parameter.</p>
 
 <p>You can also optionally set <code class="prettyprint">with_labels</code> to true, which will have Scalers provide labels for each polygon specifying what type of object it is. The labels will belong to the <code class="prettyprint">objects_to_annotate</code> list.</p>
 
@@ -883,6 +883,10 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
 
 <p>You can also optionally set <code class="prettyprint">with_labels</code> to true, which will have Scalers provide labels for each segmented line specifying what type of object it is. The labels will belong to the <code class="prettyprint">objects_to_annotate</code> list.</p>
 
+<p>If you&rsquo;d prefer splines as opposed to segmented lines, then you may specify the <code class="prettyprint">splines</code> flag as true.</p>
+
+<p>You can also optionally set <code class="prettyprint">min_vertices</code> and/or <code class="prettyprint">max_vertices</code> which specify the minimum and maximum number of vertices that you would want on a line. Note the range is inclusive of both bounds. For example, if <code class="prettyprint">min_vertices</code> is 2 and <code class="prettyprint">max_vertices</code> is 2, then Scale will only return line segments.</p>
+
 <p>If successful, Scale will immediately return the generated task object, of which you should at least store the <code class="prettyprint">task_id</code>.</p>
 
 <h3 id="http-request">HTTP Request</h3>
@@ -937,6 +941,16 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
 <td><code class="prettyprint">splines</code> (optional, default <code class="prettyprint">false</code>)</td>
 <td>boolean</td>
 <td>Specifies whether or not you&rsquo;d like your lines drawn as cardinal splines instead of segmented lines</td>
+</tr>
+<tr>
+<td><code class="prettyprint">min_vertices</code> (optional, default 1)</td>
+<td>number</td>
+<td>An optional parameter defining the minimum number of vertices in a valid line annotation for your request.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">max_vertices</code> (optional, default <code class="prettyprint">null</code>)</td>
+<td>number</td>
+<td>An optional parameter defining the maximum number of vertices in a valid line annotation for your request. Must be at least <code class="prettyprint">min_vertices</code>.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">metadata</code> (optional, default <code class="prettyprint">{}</code>)</td>
@@ -1079,9 +1093,11 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
 
 <p><code class="prettyprint">objects_to_annotate</code> is an array of strings describing the different types of objects you’d like annotated.</p>
 
-<p>You can optionally provide additional markdown-enabled (https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) instructions via the <code class="prettyprint">instruction</code> parameter.</p>
+<p>You can optionally provide additional <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown-enabled</a> instructions via the <code class="prettyprint">instruction</code> parameter.</p>
 
 <p>You can also optionally set <code class="prettyprint">with_labels</code> to true, which will have Scalers provide labels for each polygon specifying what type of object it is. The labels will belong to the <code class="prettyprint">objects_to_annotate</code> list.</p>
+
+<p>You can also optionally set <code class="prettyprint">min_vertices</code> and/or <code class="prettyprint">max_vertices</code> which specify the minimum and maximum number of vertices that you&rsquo;d like on a polygon. Note the range is inclusive of both bounds. For example, if <code class="prettyprint">min_vertices</code> is 3 and <code class="prettyprint">max_vertices</code> is 5, then Scale will only return triangles, quadrilaterals, and pentagons.</p>
 
 <p>If successful, Scale will immediately return the generated task object, of which you should at least store the <code class="prettyprint">task_id</code>.</p>
 
@@ -1132,6 +1148,16 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
 <td><code class="prettyprint">attachment_type</code> (optional, default <code class="prettyprint">image</code>)</td>
 <td>string</td>
 <td>Describes what type of file the attachment is. We currently only support <code class="prettyprint">image</code> for the polygon annotation endpoint.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">min_vertices</code> (optional, default 1)</td>
+<td>number</td>
+<td>An optional parameter defining the minimum number of vertices in a valid polygon annotation for your request.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">max_vertices</code> (optional, default <code class="prettyprint">null</code>)</td>
+<td>number</td>
+<td>An optional parameter defining the maximum number of vertices in a valid polygon annotation for your request. Must be at least <code class="prettyprint">min_vertices</code>.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">metadata</code> (optional, default <code class="prettyprint">{}</code>)</td>
