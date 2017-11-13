@@ -874,3 +874,121 @@ The `response` field, which is part of the callback POST request and permanently
 <aside class="notice">
 See the <a href="#callbacks">Callback section</a> for more details about callbacks.
 </aside>
+
+## Layers
+> Example layers param with all layer types in use
+
+```json
+{
+    "lines": [
+        {
+            "vertices": [
+                {
+                    "y": 323,
+                    "x": 414
+                },
+                {
+                    "y": 164,
+                    "x": 616
+                },
+                {
+                    "y": 334,
+                    "x": 776
+                }
+            ],
+            "label" : "crosswalk"
+        }
+    ],
+    "polygons": [
+        {
+            "vertices": [
+                {
+                    "y": 145,
+                    "x": 356
+                },
+                {
+                    "y": 103,
+                    "x": 502
+                },
+                {
+                    "y": 264,
+                    "x": 482
+                }
+            ],
+            "label": "building"
+        }
+    ],
+    "boxes": [
+        {
+            "label": "car",
+            "height": 97,
+            "width": 147,
+            "top": 229,
+            "left": 300
+        }
+    ],
+    "cuboids": [
+        {
+            "vertices" : [
+                {
+                    "description" : "face-topleft",
+                    "y" : 219.0,
+                    "x" : 137.0
+                },
+                {
+                    "description" : "face-bottomleft",
+                    "y" : 318.0,
+                    "x" : 137.0
+                },
+                {
+                    "description" : "face-topright",
+                    "y" : 219.0,
+                    "x" : 245.0
+                },
+                {
+                    "description" : "face-bottomright",
+                    "y" : 318.0,
+                    "x" : 245.0
+                },
+                {
+                    "description" : "side-topcorner",
+                    "y" : 165.0,
+                    "x" : 316.0
+                },
+                {
+                    "description" : "side-bottomcorner",
+                    "y" : 264.0,
+                    "x" : 316.0
+                }
+            ],
+            "label" : "car"
+        }
+    ]
+}
+```
+
+“Layers” can be used to specify existing (read-only) boxes, lines, polygons, and/or cuboids to be pre-drawn on an image. For instance, you could specify boxes around the cars of an image, for a task that requires drawing polygons around the currently boxed cars.
+
+To specify layers, you can pass an optional `layers` parameter in the request for `annotation`, `lineannotation`, `polygonannotation`, or `pointannotation` tasks.
+
+The `layers` parameter can contains fields for `boxes`, `lines`, `polygons`, and `cuboids`, which are arrays of the corresponding elements. Each of these elements are specified as in the responses for their respective endpoints, namely:
+
+### Boxes
+Each of the `boxes` is specified with an object containing `left`, `top`, `width`, and `height` keys, and an optional `label`.
+
+### Polygons
+`polygons` are objects with an optional `label` field, and a `vertices` field which contains a list of objects with `x` and `y` attributes.
+
+### Lines
+`lines` are objects with an optional `label` field, and a `vertices` field which contains a list of objects with `x` and `y` attributes, similar to polygons. Additionally, line objects have an optional `spline` flag, which determines whether the curve used is linear (if the value is `false` or the param is not passed) or cardinal (if the value is `true`).
+
+
+### Cuboids
+`cuboids` are described in a similar way as polygons or lines, but the `vertices` also need a `description`, using the following values to identify them:
+
+- face-topleft
+- face-bottomleft
+- face-topright
+- face-bottomright
+- side-topcorner
+- side-bottomcorner
