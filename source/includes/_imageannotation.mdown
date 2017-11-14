@@ -128,7 +128,7 @@ Parameter | Type | Description
 `instruction` (optional) | string | A markdown-enabled string explaining how to draw the bounding boxes. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the annotation endpoint.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
-`layers` (optional) | object | A set of existing read-only objects to be pre-drawn on the image. See the <a href="#layers">Layers section</a> for more detail.
+`layers` (optional) | object | A set of existing read-only objects to be pre-drawn on the image. See the <a href="#annotation-layers">Layers section</a> for more detail.
 
 ### Callback Format
 
@@ -292,7 +292,7 @@ Parameter | Type | Description
 `instruction` (optional) | string | A markdown-enabled string explaining how to draw the points. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the polygon annotation endpoint.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
-`layers` (optional) | object | A set of existing read-only objects to be pre-drawn on the image. See the <a href="#layers">Layers section</a> for more detail.
+`layers` (optional) | object | A set of existing read-only objects to be pre-drawn on the image. See the <a href="#annotation-layers">Layers section</a> for more detail.
 
 ### Callback Format
 
@@ -460,7 +460,7 @@ Parameter | Type | Description
 `min_vertices` (optional, default 1) | number | An optional parameter defining the minimum number of vertices in a valid line annotation for your request.
 `max_vertices` (optional, default `null`) | number | An optional parameter defining the maximum number of vertices in a valid line annotation for your request. Must be at least `min_vertices`.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
-`layers` (optional) | object | A set of existing read-only objects to be pre-drawn on the image. See the <a href="#layers">Layers section</a> for more detail.
+`layers` (optional) | object | A set of existing read-only objects to be pre-drawn on the image. See the <a href="#annotation-layers">Layers section</a> for more detail.
 
 ### Callback Format
 
@@ -630,7 +630,7 @@ Parameter | Type | Description
 `min_vertices` (optional, default 1) | number | An optional parameter defining the minimum number of vertices in a valid polygon annotation for your request.
 `max_vertices` (optional, default `null`) | number | An optional parameter defining the maximum number of vertices in a valid polygon annotation for your request. Must be at least `min_vertices`.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
-`layers` (optional) | object | A set of existing read-only objects to be pre-drawn on the image. See the <a href="#layers">Layers section</a> for more detail.
+`layers` (optional) | object | A set of existing read-only objects to be pre-drawn on the image. See the <a href="#annotation-layers">Layers section</a> for more detail.
 
 ### Callback Format
 
@@ -879,30 +879,77 @@ The `response` field, which is part of the callback POST request and permanently
 See the <a href="#callbacks">Callback section</a> for more details about callbacks.
 </aside>
 
-## Layers
-> Example layers param with all layer types in use
+# Annotation Layers
+> All of these input formats have the same formatting as our responses, so passing one Scale tasks' data to another Scale task is really easy.
+
+```js
+app.post('/polygon_task_callback_handler', function(req, res) {
+  var polygons = req.body.response.annotations;
+
+  var scaleapi = require('scaleapi');
+
+  var client = scaleapi.ScaleClient('{{ApiKey}}')
+
+  client.createAnnotationTask({
+    'callback_url': 'http://www.example.com/callback',
+    'instruction': 'Draw a box around each **car** and **pedestrian**',
+    'attachment_type': 'image',
+    'attachment': 'http://i.imgur.com/XOJbalC.jpg',
+    'objects_to_annotate': ['car', 'pedestrian'],
+    'with_labels': true,
+    'min_width': '30',
+    'min_height': '30',
+    'layers': {
+      'polygons': polygons
+    }
+  }, (err, task) => {
+      // do something with task
+  });
+});
+```
+
+“Layers” can be used to specify existing (read-only) boxes, lines, polygons, and/or cuboids to be pre-drawn on an image.
+
+For instance, you could specify boxes around the cars of an image, for a task that requires drawing polygons around the currently boxed cars. Or you could create a task for drawing boxes around all cars which you hadn't already recognized.
+
+To specify layers, you can pass an optional `layers` parameter in the request for `annotation`, `lineannotation`, `polygonannotation`, or `pointannotation` tasks. They can also be used in `categorization` tasks if the `attachment_type` is `image`.
+
+The `layers` parameter can contains fields for `boxes`, `lines`, `polygons`, and `cuboids`, which are arrays of the corresponding elements. Each of these elements are specified in the same format as the responses for their respective endpoints.
+
+## Boxes
+> Example layers param with boxes
 
 ```json
 {
     "lines": [
+        ...
+    ],
+    "polygons": [
+        ...
+    ],
+    "boxes": [
         {
-            "vertices": [
-                {
-                    "y": 323,
-                    "x": 414
-                },
-                {
-                    "y": 164,
-                    "x": 616
-                },
-                {
-                    "y": 334,
-                    "x": 776
-                }
-            ],
-            "label" : "crosswalk"
+            "label": "car",
+            "height": 97,
+            "width": 147,
+            "top": 229,
+            "left": 300
         }
     ],
+    "cuboids": [
+        ...
+    ]
+}
+```
+
+Each of the `boxes` is specified with an object containing `left`, `top`, `width`, and `height` keys, and an optional `label`.
+
+## Polygons
+> Example layers param with polygons
+
+```json
+{
+    ...
     "polygons": [
         {
             "vertices": [
@@ -921,16 +968,58 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
             ],
             "label": "building"
         }
-    ],
-    "boxes": [
+    ]
+}
+```
+
+`polygons` are objects with an optional `label` field, and a `vertices` field which contains a list of objects with `x` and `y` attributes.
+
+## Lines
+> Example layers param with lines
+
+```json
+{
+    ...
+    "lines": [
         {
-            "label": "car",
-            "height": 97,
-            "width": 147,
-            "top": 229,
-            "left": 300
+            "vertices": [
+                {
+                    "y": 323,
+                    "x": 414
+                },
+                {
+                    "y": 164,
+                    "x": 616
+                },
+                {
+                    "y": 334,
+                    "x": 776
+                }
+            ],
+            "label" : "crosswalk",
+            "spline": true
         }
-    ],
+    ]
+}
+```
+
+`lines` are objects with an optional `label` field, and a `vertices` field which contains a list of objects with `x` and `y` attributes, similar to polygons. Additionally, line objects have an optional `spline` flag, which determines whether the curve used is linear (if the value is `false` or the param is not passed) or cardinal (if the value is `true`).
+
+## Cuboids
+`cuboids` are described in a similar way as polygons or lines, but the `vertices` also need a `description`, using the following values to identify them:
+
+- face-topleft
+- face-bottomleft
+- face-topright
+- face-bottomright
+- side-topcorner
+- side-bottomcorner
+
+> Example layers param with cuboids
+
+```json
+{
+    ...
     "cuboids": [
         {
             "vertices" : [
@@ -970,29 +1059,3 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
     ]
 }
 ```
-
-“Layers” can be used to specify existing (read-only) boxes, lines, polygons, and/or cuboids to be pre-drawn on an image. For instance, you could specify boxes around the cars of an image, for a task that requires drawing polygons around the currently boxed cars.
-
-To specify layers, you can pass an optional `layers` parameter in the request for `annotation`, `lineannotation`, `polygonannotation`, or `pointannotation` tasks.
-
-The `layers` parameter can contains fields for `boxes`, `lines`, `polygons`, and `cuboids`, which are arrays of the corresponding elements. Each of these elements are specified as in the responses for their respective endpoints, namely:
-
-### Boxes
-Each of the `boxes` is specified with an object containing `left`, `top`, `width`, and `height` keys, and an optional `label`.
-
-### Polygons
-`polygons` are objects with an optional `label` field, and a `vertices` field which contains a list of objects with `x` and `y` attributes.
-
-### Lines
-`lines` are objects with an optional `label` field, and a `vertices` field which contains a list of objects with `x` and `y` attributes, similar to polygons. Additionally, line objects have an optional `spline` flag, which determines whether the curve used is linear (if the value is `false` or the param is not passed) or cardinal (if the value is `true`).
-
-
-### Cuboids
-`cuboids` are described in a similar way as polygons or lines, but the `vertices` also need a `description`, using the following values to identify them:
-
-- face-topleft
-- face-bottomleft
-- face-topright
-- face-bottomright
-- side-topcorner
-- side-bottomcorner
