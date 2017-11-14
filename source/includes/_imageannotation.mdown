@@ -884,6 +884,9 @@ See the <a href="#callbacks">Callback section</a> for more details about callbac
 
 ```js
 app.post('/polygon_task_callback_handler', function(req, res) {
+  // Validate callback auth key
+  ...
+
   var polygons = req.body.response.annotations;
 
   var scaleapi = require('scaleapi');
@@ -906,6 +909,57 @@ app.post('/polygon_task_callback_handler', function(req, res) {
       // do something with task
   });
 });
+```
+
+```python
+from flask import request
+import scaleapi
+
+client = scaleapi.ScaleClient('{{ApiKey}}')
+
+@app.route('/polygon_task_callback_handler', methods=['POST'])
+def create_annotation_task():
+  # Validate callback auth key
+  ...
+
+  task = client.create_annotation_task(
+      callback_url='http://www.example.com/callback',
+      instruction='Draw a box around each **car** and **pedestrian**',
+      attachment_type='image',
+      attachment='http://i.imgur.com/XOJbalC.jpg',
+      objects_to_annotate=['car', 'pedestrian'],
+      with_labels=True,
+      min_width='30',
+      min_height='30',
+      layers={'polygons': request.json['response']['annotations']}
+  )
+
+  # do something with the task
+```
+
+```ruby
+require 'scale'
+scale = Scale.new(api_key: '{{ApiKey}}')
+
+# This should be mapped to a POST route
+def create_annotation_task
+  # Validate callback auth key
+  ...
+
+  task = scale.create_annotation_task({
+    callback_url: 'http://www.example.com/callback',
+    instruction: 'Draw a box around each **car** and **pedestrian**',
+    attachment_type: 'image',
+    attachment: 'http://i.imgur.com/XOJbalC.jpg',
+    objects_to_annotate: ['car', 'pedestrian'],
+    with_labels: true,
+    min_width: '30',
+    min_height: '30',
+    layers: {polygons: params['response']['annotations']}
+  })
+
+  # do something with the task
+end
 ```
 
 “Layers” can be used to specify existing (read-only) boxes, lines, polygons, and/or cuboids to be pre-drawn on an image.
