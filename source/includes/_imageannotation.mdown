@@ -2,21 +2,23 @@
 > All of these input formats have the same formatting as our responses, so passing one Scale tasks' data to another Scale task is really easy.
 
 ```js
+var scaleapi = require('scaleapi');
+
+var client = scaleapi.ScaleClient('{{ApiKey}}');
+
+// This example uses express with body-parser
 app.post('/polygon_task_callback_handler', function(req, res) {
   // Validate callback auth key
   ...
 
   var polygons = req.body.response.annotations;
-
-  var scaleapi = require('scaleapi');
-
-  var client = scaleapi.ScaleClient('{{ApiKey}}')
+  var attachment = req.body.task.params.attachment;
 
   client.createAnnotationTask({
-    'callback_url': 'http://www.example.com/callback',
+    'callback_url': 'http://www.example.com/annotation_task_callback_handler',
     'instruction': 'Draw a box around each **car** and **pedestrian**',
     'attachment_type': 'image',
-    'attachment': 'http://i.imgur.com/XOJbalC.jpg',
+    'attachment': attachment,
     'objects_to_annotate': ['car', 'pedestrian'],
     'with_labels': true,
     'min_width': '30',
@@ -36,21 +38,25 @@ import scaleapi
 
 client = scaleapi.ScaleClient('{{ApiKey}}')
 
+# This example uses Flask
 @app.route('/polygon_task_callback_handler', methods=['POST'])
 def create_annotation_task():
   # Validate callback auth key
   ...
 
+  polygons = request.json['response']['annotations']
+  attachment = request.json['task']['params']['attachment']
+
   task = client.create_annotation_task(
-      callback_url='http://www.example.com/callback',
+      callback_url='http://www.example.com/annotation_task_callback_handler',
       instruction='Draw a box around each **car** and **pedestrian**',
       attachment_type='image',
-      attachment='http://i.imgur.com/XOJbalC.jpg',
+      attachment=attachment,
       objects_to_annotate=['car', 'pedestrian'],
       with_labels=True,
       min_width='30',
       min_height='30',
-      layers={'polygons': request.json['response']['annotations']}
+      layers={'polygons': polygons}
   )
 
   # do something with the task
@@ -60,21 +66,24 @@ def create_annotation_task():
 require 'scale'
 scale = Scale.new(api_key: '{{ApiKey}}')
 
-# This should be mapped to a POST route
+# This example uses Rails, and assumes you map this to a POST route
 def create_annotation_task
   # Validate callback auth key
   ...
 
+  polygons = params['response']['annotations']
+  attachment = params['task']['params']['attachment']
+
   task = scale.create_annotation_task({
-    callback_url: 'http://www.example.com/callback',
+    callback_url: 'http://www.example.com/annotation_task_callback_handler',
     instruction: 'Draw a box around each **car** and **pedestrian**',
     attachment_type: 'image',
-    attachment: 'http://i.imgur.com/XOJbalC.jpg',
+    attachment: attachment,
     objects_to_annotate: ['car', 'pedestrian'],
     with_labels: true,
     min_width: '30',
     min_height: '30',
-    layers: {polygons: params['response']['annotations']}
+    layers: {polygons: polygons}
   })
 
   # do something with the task
