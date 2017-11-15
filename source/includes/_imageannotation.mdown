@@ -64,29 +64,34 @@ def create_annotation_task():
 
 ```ruby
 require 'scale'
-scale = Scale.new(api_key: '{{ApiKey}}')
 
-# This example uses Rails, and assumes you map this to a POST route
-def create_annotation_task
-  # Validate callback auth key
-  ...
+class ExampleController < ActionController::Base
+  def initialize
+    @scale = Scale.new(api_key: '{{ApiKey}}')
+  end
 
-  polygons = params['response']['annotations']
-  attachment = params['task']['params']['attachment']
+  # This example uses Rails, and assumes you map this to a POST route
+  def polygon_task_callback_handler
+    # Validate callback auth key
+    ...
 
-  task = scale.create_annotation_task({
-    callback_url: 'http://www.example.com/annotation_task_callback_handler',
-    instruction: 'Draw a box around each **car** and **pedestrian**',
-    attachment_type: 'image',
-    attachment: attachment,
-    objects_to_annotate: ['car', 'pedestrian'],
-    with_labels: true,
-    min_width: '30',
-    min_height: '30',
-    layers: {polygons: polygons}
-  })
+    polygons = params['response']['annotations']
+    attachment = params['task']['params']['attachment']
 
-  # do something with the task
+    task = @scale.create_annotation_task({
+      callback_url: 'http://www.example.com/annotation_task_callback_handler',
+      instruction: 'Draw a box around each **car** and **pedestrian**',
+      attachment_type: 'image',
+      attachment: attachment,
+      objects_to_annotate: ['car', 'pedestrian'],
+      with_labels: true,
+      min_width: '30',
+      min_height: '30',
+      layers: {polygons: polygons}
+    })
+
+    # do something with the task
+  end
 end
 ```
 
