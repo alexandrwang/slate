@@ -2,11 +2,11 @@
 > All of these input formats have the same formatting as our responses, so passing one Scale tasks' data to another Scale task is really easy.
 
 ```js
+// This example uses express with body-parser
 var scaleapi = require('scaleapi');
 
 var client = scaleapi.ScaleClient('{{ApiKey}}');
 
-// This example uses express with body-parser
 app.post('/polygon_task_callback_handler', function(req, res) {
   // Validate callback auth key
   ...
@@ -33,12 +33,14 @@ app.post('/polygon_task_callback_handler', function(req, res) {
 ```
 
 ```python
-from flask import request
+# This example uses Flask
 import scaleapi
+from flask import request, Flask
+
+app = Flask(__name__)
 
 client = scaleapi.ScaleClient('{{ApiKey}}')
 
-# This example uses Flask
 @app.route('/polygon_task_callback_handler', methods=['POST'])
 def create_annotation_task():
   # Validate callback auth key
@@ -63,6 +65,7 @@ def create_annotation_task():
 ```
 
 ```ruby
+# This example uses Rails
 require 'scale'
 
 class ExampleController < ActionController::Base
@@ -70,7 +73,7 @@ class ExampleController < ActionController::Base
     @scale = Scale.new(api_key: '{{ApiKey}}')
   end
 
-  # This example uses Rails, and assumes you map this to a POST route
+  # This should be mapped to a POST route
   def polygon_task_callback_handler
     # Validate callback auth key
     ...
