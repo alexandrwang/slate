@@ -271,7 +271,7 @@ The required parameters for this task are `callback_url`, `attachment`, and `obj
 
 You can optionally provide additional [markdown-enabled](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) instructions via the `instruction` parameter.
 
-You can also optionally set `with_labels` to true, which will have Scalers provide labels for each polygon specifying what type of object it is. The labels will belong to the `objects_to_annotate` list.
+You can also optionally set `with_labels` to true, which will have Scalers provide labels for each point specifying what type of object it is. The labels will belong to the `objects_to_annotate` list.
 
 If successful, Scale will immediately return the generated task object, of which you should at least store the `task_id`.
 
@@ -286,10 +286,10 @@ Parameter | Type | Description
 `callback_url` | string | The full url (including the scheme `http://` or `https://`) of the callback when the task is completed. See the [Callback section](#callbacks) for more details about callbacks.
 `objects_to_annotate` | [string] | An array of strings describing which objects you’d like points to be drawn on. Each string should be singular and self-descriptive (ex: “cat”, “street sign”, “potato”). You may include at most 6 objects.
 `attachment` | string | A URL to the image you’d like to be annotated with points.
-`with_labels` (optional, default `false`) | boolean | Specifies whether you'd like labels for each bounding polygon in the response. Each label will be a member of the `objects_to_annotate` array.
+`with_labels` (optional, default `false`) | boolean | Specifies whether you'd like labels for each point in the response. Each label will be a member of the `objects_to_annotate` array.
 `urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a 6 hour response time.
 `instruction` (optional) | string | A markdown-enabled string explaining how to draw the points. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
-`attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the polygon annotation endpoint.
+`attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the point annotation endpoint.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
 ### Callback Format
