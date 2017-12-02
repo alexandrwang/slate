@@ -14,7 +14,7 @@ app.controller('docsController', ["$scope", "$http", "$resource", function ($sco
   if (jwt) {
     method.get.headers = {'authorization': 'JWT ' + jwt};
   }
-  var CustomerKeys = $resource('https://scaleapi.com/internal/customer_keys', {}, method);
+  var CustomerKeys = $resource('https://dashboard.scaleapi.com/internal/customer_keys', {}, method);
 
   $scope.user = {};
   $scope.ApiKey = 'SCALE_API_KEY';
