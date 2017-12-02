@@ -10,33 +10,27 @@ function getJWTCookie() {
 app.controller('docsController', ["$scope", "$http", "$resource", function ($scope, $http, $resource) {
   $http.defaults.withCredentials = true;
   var jwt = getJWTCookie();
-  var getUser = { get: { method: 'GET' } };
+  var method = { get: { method: 'GET' } };
   if (jwt) {
-    getUser.get.headers = {'authorization': 'JWT ' + jwt};
+    method.get.headers = {'authorization': 'JWT ' + jwt};
   }
-  var User = $resource('https://dashboard.scaleapi.com/internal/logged_in_user', {}, getUser);
-
-  var getCustomerKeys = { get: { method: 'GET' } };
-  if (jwt) {
-    getCustomerKeys.get.headers = {'authorization': 'JWT ' + jwt};
-  }
-  var CustomerKeys = $resource('https://dashboard.scaleapi.com/internal/customer_keys', {}, getCustomerKeys);
+  var CustomerKeys = $resource('https://scaleapi.com/internal/customer_keys', {}, method);
 
   $scope.user = {};
   $scope.ApiKey = 'SCALE_API_KEY';
+  $scope.isLoggedIn = false;
 
-  User.get({}, function(user) {
-    $scope.user = user;
-
-    if ($scope.user.email) {
-      CustomerKeys.get({}, function(customerKeys) {
-        if (!customerKeys || customerKeys.test || customerKeys.test.apiKeys || customerKeys.test.apiKeys.length === 0) {
-          return;
-        }
-
-        $scope.ApiKey = customerKeys.test.apiKeys[0];
-        $scope.user.testApiKey = $scope.ApiKey
-      });
+  CustomerKeys.get({}, function(customerKeys) {
+    if (
+      !customerKeys ||
+      !customerKeys.test ||
+      !customerKeys.test.apiKeys ||
+      !customerKeys.test.apiKeys.length
+    ) {
+      return;
     }
+
+    $scope.ApiKey = customerKeys.test.apiKeys[0].key;
+    $scope.isLoggedIn = true;
   });
 }]);
