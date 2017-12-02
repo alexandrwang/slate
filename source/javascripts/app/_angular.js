@@ -14,15 +14,23 @@ app.controller('docsController', ["$scope", "$http", "$resource", function ($sco
   if (jwt) {
     method.get.headers = {'authorization': 'JWT ' + jwt};
   }
-  var User = $resource('https://dashboard.scaleapi.com/internal/logged_in_user', {}, method);
+  var CustomerKeys = $resource('https://dashboard.scaleapi.com/internal/customer_keys', {}, method);
 
   $scope.user = {};
   $scope.ApiKey = 'SCALE_API_KEY';
+  $scope.isLoggedIn = false;
 
-  User.get({}, function(user) {
-    $scope.user = user;
-    if (user.testApiKey) {
-      $scope.ApiKey = user.testApiKey;
+  CustomerKeys.get({}, function(customerKeys) {
+    if (
+      !customerKeys ||
+      !customerKeys.test ||
+      !customerKeys.test.apiKeys ||
+      !customerKeys.test.apiKeys.length
+    ) {
+      return;
     }
+
+    $scope.ApiKey = customerKeys.test.apiKeys[0].key;
+    $scope.isLoggedIn = true;
   });
 }]);
