@@ -241,8 +241,8 @@ curl <span class="s2">"api_endpoint_here"</span> <span class="se">\</span>
 <span class="o">=&gt;</span> <span class="c1">#&lt;Scale:0x007fcc1292fe88 @api_key="{{ApiKey}}", @callback_auth_key=nil, @default_request_params={:callback_url=&gt;nil}, @logging=false&gt;</span>
 </code></pre>
 <blockquote>
-<p><span ng-if="!user.testApiKey">You must replace <code>{{ApiKey}}</code> with your personal API key. If you <a href="https://dashboard.scaleapi.com/signup">sign up</a> or <a href="https://dashboard.scaleapi.com/login">log in</a>, your API key will be automatically filled in the docs.</span>
-<span ng-if="user.testApiKey">Your test API key <code>{{ApiKey}}</code> is included in all the examples on this page, so you can test any example right away. Only you can see this value.</span></p>
+<p><span ng-if="!isLoggedIn">You must replace <code>{{ApiKey}}</code> with your personal API key. If you <a href="https://dashboard.scaleapi.com/signup">sign up</a> or <a href="https://dashboard.scaleapi.com/login">log in</a>, your API key will be automatically filled in the docs.</span>
+<span ng-if="isLoggedIn">Your test API key <code>{{ApiKey}}</code> is included in all the examples on this page, so you can test any example right away. Only you can see this value.</span></p>
 </blockquote>
 
 <p>Scale uses API keys to allow access to the API. You can find your API keys on your <a href="https://dashboard.scaleapi.com/dashboard">dashboard</a>, which you can access by <a href="https://dashboard.scaleapi.com/login">logging in</a> or <a href="https://dashboard.scaleapi.com/signup">signing up</a>.</p>
@@ -251,11 +251,11 @@ curl <span class="s2">"api_endpoint_here"</span> <span class="se">\</span>
 
 <p><code class="prettyprint">-u &quot;{{ApiKey}}:&quot;</code></p>
 
-<aside class="notice" ng-if="!user.testApiKey">
+<aside class="notice" ng-if="!isLoggedIn">
 You must replace <code>{{ApiKey}}</code> with your personal API key. If you <a href="https://dashboard.scaleapi.com/signup">sign up</a> or <a href="https://dashboard.scaleapi.com/login">log in</a>, your API key will be automatically filled in the docs.
 </aside>
 
-<aside class="notice" ng-if="user.testApiKey">
+<aside class="notice" ng-if="isLoggedIn">
 Your test API key <code>{{ApiKey}}</code> is included in all the examples on this page, so you can test any example right away. Only you can see this value.
 </aside>
 
