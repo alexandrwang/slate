@@ -220,7 +220,7 @@ Attribute | Type | Description
 `type` | string | The type of the task. Currently, we support `categorization`, `transcription`, `audiotranscription`, `comparison`, `annotation`, and `datacollection`.
 `instruction` | string | A markdown-enabled string explaining the instructions for the task. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `params` | object | An object with the parameters of the task based on the type. For `categorization`, for example, this will include `attachment_type`, `attachment`, and `categories`.
-`urgency` | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a one-hour response time.
+`urgency` | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a best effort one-hour response time (turnaround time is typically 1 to 24 hours.)
 `response` | object | An object corresponding to the response once the task is completed. For `categorization`, it will have the attribute `category`, corresponding to the chosen category.
 `callback_url` | string | A string of the URL that should be POSTed once the task is completed for the response data. See the [Callback section](#callbacks) for more details.
 `status` | string | The status of the task, one of `pending`, `completed`, or `canceled`.
