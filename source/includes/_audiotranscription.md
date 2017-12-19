@@ -114,7 +114,7 @@ Parameter | Type | Description
 `attachment_type` (optional, default `audio`) | string | Describes what type of file the attachment is. Only accepts `audio`.
 `verbatim` (optional, default `false`) | boolean | Specifies whether or not to include non-words (ex: "um", "hm") in the transcript.
 `phrases` (optional) | [string] | A list of strings containing words and phrases "hints" so that the audio transcription is more likely to recognize them. This can be used to improve the accuracy for specific words and phrases, or to add additional words to the vocabulary for the transcription.
-`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a 6 hour response time.
+`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a best effort six-hour response time (turnaround time is typically 6 to 24 hours).
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 `skip_human_transcription` (optional, default `false`) | boolean | Specifies whether or not to skip human transcription. Skipping human transcription will result in a very fast response and lower price, but will likely have a lower final quality.
 
