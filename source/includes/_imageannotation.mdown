@@ -392,18 +392,18 @@ Parameter | Type | Description
   "response": {
     "annotations": [
       {
-        "left": 123,
-        "top": 10,
-        "width": 121,
-        "height": 39,
-        "label": "car"
+        "left": 2,
+        "top": 4,
+        "width": 3,
+        "height": 5,
+        "label": "pedestrian"
       },
       {
-        "left": 82,
-        "top": 56,
-        "width": 64,
-        "height": 30,
-        "label": "pedestrian"
+        "left": 7,
+        "top": 5,
+        "width": 14,
+        "height": 5,
+        "label": "car"
       },
       { ... },
       { ... }
@@ -426,6 +426,12 @@ If the annotation was completed successfully, the `annotations` field will conta
 * `width`: The width, in pixels, of the bounding box.
 * `height`: The height, in pixels, of the bounding box.
 * `label` (if specified `with_labels` as `true`): The label for the bounding box, which will be one of the specified `task.params.objects_to_annotate`.
+
+
+Visual representations of the task responses are accessible via the Scale dashboard. In these, the border is drawn inside the bounding box. The example response body (at right) corresponds to the image below.
+
+![alt text](/images/box-annotation-example.png)
+
 
 If the attachment was invalid, the error will be detailed in the `error` field.
 
