@@ -33,12 +33,13 @@
 }
 ```
 
-On your tasks, you will be required to supply a `callback_url`, a fully qualified URL that we will POST with the results of the task when completed. The data will be served as a JSON body (`application/json`). Alternately,
-you can set a default callback URL in your profile, which will be used for tasks that do not specify one.
+On your tasks, you will be required to supply a `callback_url`, a fully qualified URL that we will POST with the results of the task when completed. The data will be served as a JSON body (`application/json`). Alternately, you can set a default callback URL in your profile, which will be used for tasks that do not specify one.
+
+Additionally, in order to simplify testing and add support for email automation pipelines, you may provide an **email address** as the `callback_url`. In this case, each completed task will result in an email sent with the body as the task's JSON payload.
 
 You should respond to the POST request with a 2xx status code. If we do not receive a 2xx status code, we will continue to retry up to 20 times over the course of the next 24 hours.
 
-If we receive a 2xx status code, the task will be populated with a `true` value for the `callback_succeeded` parameter. Otherwise, if we do not recieve a 2xx status code on any retry, the task will be populated with a `false` value for the `callback_succeeded` parameter.
+If we receive a 2xx status code, the task will be populated with a `true` value for the `callback_succeeded` parameter. Otherwise, if we do not receive a 2xx status code on any retry, the task will be populated with a `false` value for the `callback_succeeded` parameter.
 
 ### Getting Started
 
