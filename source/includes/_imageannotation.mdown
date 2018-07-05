@@ -318,7 +318,7 @@ scale.create_annotation_task({
   min_width: '30',
   min_height: '30'
 })
-=> #<Scale::Api::Tasks::ImageRecognition:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="annotation", @instruction="Draw a box around each **car** and **pedestrian**", @params={"with_labels"=>true, "objects_to_annotate"=>["car", "pedestrian"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/v4cBreD.jpg"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
+=> #<Scale::Api::Tasks::ImageRecognition:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="annotation", @instruction="Draw a box around each **car** and **pedestrian**", @params={"with_labels"=>true, "objects_to_annotate"=>["car", "pedestrian"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/v4cBreD.jpg"}, @urgency="medium", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
 ```
 
 > The above command returns an object structured like this:
@@ -331,7 +331,7 @@ scale.create_annotation_task({
   "type": "annotation",
   "status": "pending",
   "instruction": "Draw a box around each **car** and **pedestrian**",
-  "urgency": "day",
+  "urgency": "medium",
   "params": {
     "with_labels": true,
     "min_width": 30,
@@ -377,7 +377,7 @@ Parameter | Type | Description
 `with_labels` (optional, default `false`) | boolean | Specifies whether you'd like labels for each bounding box in the response. Each label will be a member of the `objects_to_annotate` array.
 `min_height` (optional) | integer, default 0 | The minimum height in pixels of the bounding boxes you'd like to be made.
 `min_width` (optional) | integer, default 0 | The minimum width in pixels of the bounding boxes you'd like to be made.
-`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a best effort six-hour response time (turnaround time is typically 6 to 24 hours).
+`urgency` (optional, default `medium`) | string | A string describing the urgency of the response, one of `high`, `medium`, or `low`. See the [Urgency section](#urgency) for more details.
 `instruction` (optional) | string | A markdown-enabled string explaining how to draw the bounding boxes. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the annotation endpoint.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
@@ -496,7 +496,7 @@ scale.create_pointannotation_task({
   objects_to_annotate: ['headlight', 'brakelight'],
   with_labels: true
 })
-=> #<Scale::Api::Tasks::Pointannotation:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="pointannotation", @instruction="Draw a point on every **headlight** and **brakelight** of a car in the image.", @params={"with_labels"=>true, "objects_to_annotate"=>["headlight", "brakelight"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/XOJbalC.jpg"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
+=> #<Scale::Api::Tasks::Pointannotation:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="pointannotation", @instruction="Draw a point on every **headlight** and **brakelight** of a car in the image.", @params={"with_labels"=>true, "objects_to_annotate"=>["headlight", "brakelight"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/XOJbalC.jpg"}, @urgency="medium", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
 ```
 
 > The above command returns an object structured like this:
@@ -509,7 +509,7 @@ scale.create_pointannotation_task({
   "type": "pointannotation",
   "status": "pending",
   "instruction": "Draw a point on every **headlight** and **brakelight** of a car in the image.",
-  "urgency": "day",
+  "urgency": "medium",
   "params": {
     "with_labels": true,
     "objects_to_annotate": [
@@ -547,7 +547,7 @@ Parameter | Type | Description
 `objects_to_annotate` | [string] | An array of strings describing which objects you’d like points to be drawn on. Each string should be singular and self-descriptive (ex: “cat”, “street sign”, “potato”). You may include at most 6 objects.
 `attachment` | string | A URL to the image you’d like to be annotated with points.
 `with_labels` (optional, default `false`) | boolean | Specifies whether you'd like labels for each point in the response. Each label will be a member of the `objects_to_annotate` array.
-`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a best effort six-hour response time (turnaround time is typically 6 to 24 hours).
+`urgency` (optional, default `medium`) | string | A string describing the urgency of the response, one of `high`, `medium`, or `low`. See the [Urgency section](#urgency) for more details.
 `instruction` (optional) | string | A markdown-enabled string explaining how to draw the points. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the point annotation endpoint.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
@@ -657,7 +657,7 @@ scale.create_lineannotation_task({
   objects_to_annotate: ['solid line', 'dashed line'],
   with_labels: true
 })
-=> #<Scale::Api::Tasks::Lineannotation:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="lineannotation", @instruction="Annotate lines over all of the **lane lines** in the street-level image.", @params={"with_labels"=>true, "objects_to_annotate"=>["solid line", "dashed line"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/XOJbalC.jpg"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @metadata={}>
+=> #<Scale::Api::Tasks::Lineannotation:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="lineannotation", @instruction="Annotate lines over all of the **lane lines** in the street-level image.", @params={"with_labels"=>true, "objects_to_annotate"=>["solid line", "dashed line"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/XOJbalC.jpg"}, @urgency="medium", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @metadata={}>
 ```
 
 > The above command returns an object structured like this:
@@ -670,7 +670,7 @@ scale.create_lineannotation_task({
   "type": "lineannotation",
   "status": "pending",
   "instruction": "Annotate lines over all of the **lane lines** in the street-level image.",
-  "urgency": "day",
+  "urgency": "medium",
   "params": {
     "with_labels": true,
     "objects_to_annotate": [
@@ -712,7 +712,7 @@ Parameter | Type | Description
 `objects_to_annotate` | [string] | An array of strings describing which objects you’d like segmented lines to be drawn along. Each string should be singular and self-descriptive (ex: “lane line”, “crop line”). You may include at most 3 objects.
 `attachment` | string | A URL to the image you'd like to be annotated with segmented lines.
 `with_labels` (optional, default `false`) | boolean | Specifies whether you’d like labels for each segmented line in the response. Each label will be a member of the `objects_to_annotate` array.
-`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a best effort six-hour response time (turnaround time is typically 6 to 24 hours).
+`urgency` (optional, default `medium`) | string | A string describing the urgency of the response, one of `high`, `medium`, or `low`. See the [Urgency section](#urgency) for more details.
 `instruction` (optional) | string | A markdown-enabled string explaining how to draw the segmented lines. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the line annotation endpoint.
 `splines` (optional, default `false`) | boolean | Specifies whether or not you'd like your lines drawn as cardinal splines instead of segmented lines
@@ -830,7 +830,7 @@ scale.create_polygonannotation_task({
   objects_to_annotate: ['car', 'truck'],
   with_labels: true
 })
-=> #<Scale::Api::Tasks::Polygonannotation:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="polygonannotation", @instruction="Draw a tight polygon around every **car** in the image.", @params={"with_labels"=>true, "objects_to_annotate"=>["car", "truck"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/XOJbalC.jpg"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
+=> #<Scale::Api::Tasks::Polygonannotation:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="polygonannotation", @instruction="Draw a tight polygon around every **car** in the image.", @params={"with_labels"=>true, "objects_to_annotate"=>["car", "truck"], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/XOJbalC.jpg"}, @urgency="medium", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
 ```
 
 > The above command returns an object structured like this:
@@ -843,7 +843,7 @@ scale.create_polygonannotation_task({
   "type": "polygonannotation",
   "status": "pending",
   "instruction": "Draw a tight polygon around every **car** in the image.",
-  "urgency": "day",
+  "urgency": "medium",
   "params": {
     "with_labels": true,
     "objects_to_annotate": [
@@ -883,7 +883,7 @@ Parameter | Type | Description
 `objects_to_annotate` | [string] | An array of strings describing which objects you’d like bounding polygons to be drawn around. Each string should be singular and self-descriptive (ex: “cat”, “street sign”, “potato”). You may include at most 6 objects.
 `attachment` | string | A URL to the image you’d like to be annotated with bounding polygons.
 `with_labels` (optional, default `false`) | boolean | Specifies whether you'd like labels for each bounding polygon in the response. Each label will be a member of the `objects_to_annotate` array.
-`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a best effort six-hour response time (turnaround time is typically 6 to 24 hours).
+`urgency` (optional, default `medium`) | string | A string describing the urgency of the response, one of `high`, `medium`, or `low`. See the [Urgency section](#urgency) for more details.
 `instruction` (optional) | string | A markdown-enabled string explaining how to draw the bounding polygons. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the polygon annotation endpoint.
 `min_vertices` (optional, default 1) | number | An optional parameter defining the minimum number of vertices in a valid polygon annotation for your request.
@@ -1003,7 +1003,7 @@ scale.create_segmentannotation_task({
   labels: ['vehicle', 'background', 'road', 'vegetation', 'lane marking'],
   allow_unlabeled: false
 })
-=> #<Scale::Api::Tasks::Segmentannotation:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="segmentannotation", @instruction="Please segment the image using the given labels.", @params={"allow_unlabeled"=>false, "objects_to_annotate"=>['vehicle', 'background', 'road', 'vegetation', 'lane marking'], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/XOJbalC.jpg"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
+=> #<Scale::Api::Tasks::Segmentannotation:0x007fcc11092f10 @task_id="58a6363baa9d139b20a4252f", @type="segmentannotation", @instruction="Please segment the image using the given labels.", @params={"allow_unlabeled"=>false, "objects_to_annotate"=>['vehicle', 'background', 'road', 'vegetation', 'lane marking'], "attachment_type"=>"image", "attachment"=>"http://i.imgur.com/XOJbalC.jpg"}, @urgency="medium", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:07 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
 ```
 
 > The above command returns an object structured like this:
@@ -1016,7 +1016,7 @@ scale.create_segmentannotation_task({
   "type": "segmentannotation",
   "status": "pending",
   "instruction": "Please segment the image using the given labels.",
-  "urgency": "day",
+  "urgency": "medium",
   "params": {
     "allow_unlabeled": false,
     "objects_to_annotate": [
@@ -1060,7 +1060,7 @@ Parameter | Type | Description
 `labels` | [string] | An array of strings describing the different types of objects you’d like to be used to segment the image. Each string should be singular and descriptive (ex: `car`, `background`, `pole`). You may include at most 50 objects.
 `attachment` | string | A URL to the image you’d like to be segmented.
 `allow_unlabeled` (optional, default `false`) | boolean | Specifies whether you'll allow unlabeled pixels in the segmentation. If left with the default value of `false`, all pixels in the image will be classified using the labels you provided.
-`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a best effort six-hour response time (turnaround time is typically 6 to 24 hours).
+`urgency` (optional, default `medium`) | string | A string describing the urgency of the response, one of `high`, `medium`, or `low`. See the [Urgency section](#urgency) for more details.
 `instruction` (optional) | string | A markdown-enabled string explaining how carry out the semantic segmentation. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `attachment_type` (optional, default `image`) | string | Describes what type of file the attachment is. We currently only support `image` for the semantic segmentation endpoint.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.

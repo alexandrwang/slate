@@ -197,7 +197,7 @@ The task object represents a single task that you create with Scale and is compl
   "type": "categorization",
   "status": "completed",
   "instruction": "Would you say this item is big or small?",
-  "urgency": "immediate",
+  "urgency": "high",
   "params": {
     "attachment_type": "text",
     "attachment": "car",
@@ -220,7 +220,7 @@ Attribute | Type | Description
 `type` | string | The type of the task. Currently, we support `categorization`, `transcription`, `audiotranscription`, `comparison`, `annotation`, and `datacollection`.
 `instruction` | string | A markdown-enabled string explaining the instructions for the task. You can use [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to show example images, give structure to your instructions, and more.
 `params` | object | An object with the parameters of the task based on the type. For `categorization`, for example, this will include `attachment_type`, `attachment`, and `categories`.
-`urgency` | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a best effort six-hour response time (turnaround time is typically 6 to 24 hours).
+`urgency` | string | A string describing the urgency of the response, one of `high`, `medium`, or `low`. See the [Urgency section](#urgency) for more details.
 `response` | object | An object corresponding to the response once the task is completed. For `categorization`, it will have the attribute `category`, corresponding to the chosen category.
 `callback_url` | string | A string of the URL that should be POSTed once the task is completed for the response data. See the [Callback section](#callbacks) for more details.
 `status` | string | The status of the task, one of `pending`, `completed`, or `canceled`.
@@ -234,6 +234,9 @@ Attribute | Type | Description
 Tasks objects have a metadata parameter. You can use this parameter to attach key-value data to tasks.
 
 Metadata is useful for storing additional, structured information on an object. As an example, you could store a video's unique identifier in your system on its content moderation `categorization` task. You can also use it to denote the end use case for the task, as "content moderation" or "data categorization" for example. Metadata is not used by Scale (e.g., to affect how the task is done).
+
+## Urgency
+One of `high`, `medium`, or `low`. We aim to complete high urgency tasks within several hours, medium urgency tasks within a few days, low urgency tasks within a business week.  Completion times are best-effort for non-enterprise users. If you have more than 1000 requests per month or require a task completion time SLA, [chat with us](https://www.scaleapi.com/sales) about Enterprise Plans!
 
 ## Attachments
 
