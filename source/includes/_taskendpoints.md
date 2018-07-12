@@ -33,7 +33,7 @@ require 'scale'
 scale = Scale.new(api_key: '{{ApiKey}}')
 
 scale.tasks.find("58a63795aa9d139b20a42535")
-=> #<Scale::Api::Tasks::Categorization:0x007fcc10978ab8 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"attachment_type"=>"website", "attachment"=>"https://www.google.com", "categories"=>["public", "private"], "allow_multiple"=>false}, @urgency="medium", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}, @client=#<struct Scale::Api api_key="live_358440e50ba277654e847a079eda9614", callback_auth_key=nil, default_request_params={:callback_url=>nil}, logging=false>>
+=> #<Scale::Api::Tasks::Categorization:0x007fcc10978ab8 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"attachment_type"=>"website", "attachment"=>"https://www.google.com", "categories"=>["public", "private"], "allow_multiple"=>false}, @urgency="standard", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}, @client=#<struct Scale::Api api_key="live_358440e50ba277654e847a079eda9614", callback_auth_key=nil, default_request_params={:callback_url=>nil}, logging=false>>
 ```
 
 > The above command returns an object structured like this:
@@ -47,7 +47,7 @@ scale.tasks.find("58a63795aa9d139b20a42535")
   "type": "categorization",
   "status": "completed",
   "instruction": "Would you say this item is big or small?",
-  "urgency": "medium",
+  "urgency": "standard",
   "params": {
     "attachment_type": "text",
     "attachment": "car",
@@ -112,7 +112,7 @@ require 'scale'
 scale = Scale.new(api_key: '{{ApiKey}}')
 
 canceled_task = scale.tasks.cancel("YOUR_TASK_ID") # Returns the appropriate Task object with status set to canceled
-=> #<Scale::Api::Tasks::Categorization:0x007fcc1108b288 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"attachment_type"=>"website", "attachment"=>"https://www.google.com", "categories"=>["public", "private"], "allow_multiple"=>false}, @urgency="medium", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="canceled", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}, @client=#<struct Scale::Api api_key="live_358440e50ba277654e847a079eda9614", callback_auth_key=nil, default_request_params={:callback_url=>nil}, logging=false>>
+=> #<Scale::Api::Tasks::Categorization:0x007fcc1108b288 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"attachment_type"=>"website", "attachment"=>"https://www.google.com", "categories"=>["public", "private"], "allow_multiple"=>false}, @urgency="standard", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="canceled", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}, @client=#<struct Scale::Api api_key="live_358440e50ba277654e847a079eda9614", callback_auth_key=nil, default_request_params={:callback_url=>nil}, logging=false>>
 
 canceled_task.cancelled?
 => true
@@ -128,7 +128,7 @@ canceled_task.cancelled?
   "type": "categorization",
   "status": "canceled",
   "instruction": "Would you say this item is big or small?",
-  "urgency": "medium",
+  "urgency": "standard",
   "params": {
     "attachment_type": "text",
     "attachment": "car",
@@ -194,7 +194,7 @@ scale = Scale.new(api_key: 'SCALE_API_KEY')
 
 # You can pass params like start_time or end_time as keys to filter results
 scale.tasks.where
-=> #<Scale::Api::TaskList:0x007fcc11822a28 @client=#<struct Scale::Api api_key="live_358440e50ba277654e847a079eda9614", callback_auth_key=nil, default_request_params={:callback_url=>nil}, logging=false>, @docs=[#<Scale::Api::Tasks::Categorization:0x007fcc118227f8 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"attachment_type"=>"website", "attachment"=>"https://www.google.com", "categories"=>["public", "private"], "allow_multiple"=>false}, @urgency="medium", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}, @client=#<struct Scale::Api api_key="live_358440e50ba277654e847a079eda9614", callback_auth_key=nil, default_request_params={:callback_url=>nil}, logging=false>>], @limit=1, @offset=0, @has_more=true, @params={:start_time=>nil, :end_time=>nil, :limit=>1, :offset=>0, :status=>nil, :type=>nil}>
+=> #<Scale::Api::TaskList:0x007fcc11822a28 @client=#<struct Scale::Api api_key="live_358440e50ba277654e847a079eda9614", callback_auth_key=nil, default_request_params={:callback_url=>nil}, logging=false>, @docs=[#<Scale::Api::Tasks::Categorization:0x007fcc118227f8 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"attachment_type"=>"website", "attachment"=>"https://www.google.com", "categories"=>["public", "private"], "allow_multiple"=>false}, @urgency="standard", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}, @client=#<struct Scale::Api api_key="live_358440e50ba277654e847a079eda9614", callback_auth_key=nil, default_request_params={:callback_url=>nil}, logging=false>>], @limit=1, @offset=0, @has_more=true, @params={:start_time=>nil, :end_time=>nil, :limit=>1, :offset=>0, :status=>nil, :type=>nil}>
 # Scale::Api::TaskList implements Enumerable, so it is Array-like.
 ```
 
@@ -211,7 +211,7 @@ scale.tasks.where
       "type": "categorization",
       "status": "completed",
       "instruction": "Is this object big or small?",
-      "urgency": "high",
+      "urgency": "express",
       "params": {
         "attachment_type": "text",
         "attachment": "ant",
@@ -233,7 +233,7 @@ scale.tasks.where
       "type": "categorization",
       "status": "completed",
       "instruction": "Is this object big or small?",
-      "urgency": "medium",
+      "urgency": "standard",
       "params": {
         "attachment_type": "text",
         "attachment": "T-Rex",

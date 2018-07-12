@@ -57,7 +57,7 @@ scale.create_datacollection_task({
     hiring_page: 'Hiring Page URL'
   }
 })
-=> #<Scale::Api::Tasks::Datacollection:0x007fcc109b7a38 @task_id="58a63649aa9d139b20a42531", @type="datacollection", @instruction="Find the URL for the hiring page for the company with attached website.", @params={"fields"=>{"hiring_page"=>"Hiring Page URL"}, "attachment"=>"https://www.scaleapi.com/", "attachment_type"=>"website"}, @urgency="medium", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:21 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
+=> #<Scale::Api::Tasks::Datacollection:0x007fcc109b7a38 @task_id="58a63649aa9d139b20a42531", @type="datacollection", @instruction="Find the URL for the hiring page for the company with attached website.", @params={"fields"=>{"hiring_page"=>"Hiring Page URL"}, "attachment"=>"https://www.scaleapi.com/", "attachment_type"=>"website"}, @urgency="standard", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:31:21 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
 ```
 
 > The above command returns an object structured like this:
@@ -70,7 +70,7 @@ scale.create_datacollection_task({
   "type": "datacollection",
   "status": "pending",
   "instruction": "Find the URL for the hiring page for the company with attached website.",
-  "urgency": "medium",
+  "urgency": "standard",
   "params": {
     "fields": {
       "hiring_page": "Hiring Page URL"
@@ -109,7 +109,7 @@ Parameter | Type | Description
 `attachment_type` | string | One of `text`, `image`, or `website`. Describes what type of file the attachment is.
 `attachment` | string | The attachment detailing the data to be collected. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
 `fields` | dictionary | A dictionary corresponding to the fields of information to be collected. Keys are the keys you'd like the fields to be returned under, and values are descriptions to be shown to human workers.
-`urgency` (optional, default `medium`) | string | A string describing the urgency of the response, one of `high`, `medium`, or `low`. See the [Urgency section](#urgency) for more details.
+`urgency` (optional, default `standard`) | string | A string describing the urgency of the response, one of `express`, `standard`, or `no-rush`. See the [Urgency section](#urgency) for more details.
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
 
 ## Callback Format

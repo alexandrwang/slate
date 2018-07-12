@@ -15,7 +15,7 @@
     "type": "categorization",
     "status": "completed",
     "instruction": "Is this object red or blue?",
-    "urgency": "medium",
+    "urgency": "standard",
     "params": {
       "attachment_type": "text",
       "attachment": "tomato",
