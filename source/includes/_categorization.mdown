@@ -53,7 +53,7 @@ scale.create_categorization_task({
   attachment: 'https://www.google.com',
   categories: ['public', 'private']
 })
-=> #<Scale::Api::Tasks::Categorization:0x007fcc11819bf8 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"allow_multiple"=>false, "categories"=>["public", "private"], "attachment"=>"https://www.google.com", "attachment_type"=>"website"}, @urgency="day", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
+=> #<Scale::Api::Tasks::Categorization:0x007fcc11819bf8 @task_id="58a63795aa9d139b20a42535", @type="categorization", @instruction="Is this company public or private?", @params={"allow_multiple"=>false, "categories"=>["public", "private"], "attachment"=>"https://www.google.com", "attachment_type"=>"website"}, @urgency="standard", @response=nil, @callback_url="http://www.example.com/callback", @created_at=2017-02-16 23:36:53 UTC, @status="pending", @completed_at=nil, @callback_succeeded_at=nil, @metadata={}>
 ```
 
 > The above command returns an object structured like this:
@@ -66,7 +66,7 @@ scale.create_categorization_task({
   "type": "categorization",
   "status": "pending",
   "instruction": "Is this company public or private?",
-  "urgency": "day",
+  "urgency": "standard",
   "params": {
     "attachment_type": "website",
     "attachment": "http://www.google.com/",
@@ -107,7 +107,7 @@ Parameter | Type | Description
 `attachment_type` | string | One of `text`, `image`, `video`, `audio`, `website`, or `pdf`. Describes what type of file the attachment is.
 `attachment` | string | The attachment to be categorized. If `attachment_type` is `text`, then it should be plaintext. Otherwise, it should be a URL pointing to the attachment.
 `categories` | [string] | An array of strings for the categories which you'd like the object to be sorted between.
-`urgency` (optional, default `day`) | string | A string describing the urgency of the response. One of `immediate`, `day`, or `week`, where `immediate` is a best effort six-hour response time (turnaround time is typically 6 to 24 hours).
+`urgency` (optional, default `standard`) | string | A string describing the urgency of the response, one of `express`, `standard`, or `no-rush`. See the [Urgency section](#urgency) for more details.
 `category_ids` (optional) | dictionary | An optional dictionary where the keys are the optional ids, and the values are the category values provided in `categories`.
 `allow_multiple` (optional) | boolean | Default is `false`. Determines whether you allow multiple categories to be chosen for the attachment
 `metadata` (optional, default `{}`) | object | A set of key/value pairs that you can attach to a task object. It can be useful for storing additional information about the task in a structured format.
